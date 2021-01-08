@@ -24,9 +24,6 @@ export default function Header() {
                         </picture>
                     </Logo>
                     <Nav />
-                    <AuthBtn aria-label="Sign Out">
-                        <FontAwesomeIcon icon={faSignOutAlt} title="Sign Out" />
-                    </AuthBtn>
                 </FlexRow>
             </Wrapper>
         </StyledHeader>
@@ -34,16 +31,16 @@ export default function Header() {
 }
 
 const StyledHeader = styled.header`
-
     box-shadow: 0px 4px 8px;
-
 `
 
 const FlexRow = styled.div`
     display: flex;
     justify-content: center;
+    padding: 5px 0;
     @media(min-width: 450px) {
         justify-content: space-between;
+        padding: 0;
     }
 `
 const Logo = styled(Link)`
@@ -54,7 +51,6 @@ const Logo = styled(Link)`
 
     img {
         width: 100%;
-
         object-fit: cover;
     }
 
@@ -83,18 +79,4 @@ const Searchbar = styled.section`
         font-size: 1rem;
     }
 
-`
-const AuthBtn = styled.button`
-    padding: 0 1rem;
-    background: transparent;
-    border: none;
-    color: var(--teal);
-    font-size: 1.15rem;
-    color: var(--teal);
-    @media(min-width: 320px) {
-        font-size: 1.5rem;
-    }
-    @media(min-width: ${media.small}) {
-        font-size: 2rem;
-    }
 `
