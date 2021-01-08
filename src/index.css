@@ -1,10 +1,62 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+
+:root {
+  font-size: 16px;
+  --lite-grey: #f7f8f8;
+  --med-grey: #646e73;
+  --black: #0e1e25;
+  --teal: #146396;
+  --dark-teal: #15847d;
+  --font-default: 'Raleway', sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+}
+
+body, html, section, article, main, div {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  font-family: var(--font-default);
+  color: var(--med-grey);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: var(--teal);
+  font-weight: 500;
+  :visited {
+    color: var(--dark-teal);
+  }
 }
 
 code {

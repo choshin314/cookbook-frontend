@@ -1,8 +1,18 @@
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import Layout from './components/layout/layout'
 
 function App() {
   return (
-    <div>hello
-    </div>
+    <Router>
+    <Layout>
+      <Switch>
+        <Route path="/">
+          <main>Hello</main>
+        </Route>
+      </Switch>
+    </Layout>
+    </Router>
   );
 }
 
