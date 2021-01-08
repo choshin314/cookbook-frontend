@@ -50,6 +50,14 @@ button {
   background-color: transparent;
 }
 
+a {
+  text-decoration: none;
+  color: var(--teal);
+  :visited {
+    color: var(--dark-teal);
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

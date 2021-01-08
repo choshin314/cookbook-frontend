@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 import Header from './header'
+import Footer from './footer'
 
 function Layout({children}) {
     return (
         <FlexColumn>
             <Header />
             {children}
-            <footer>footer</footer>
+            <Footer />
         </FlexColumn>
     )
 }
