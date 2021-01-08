@@ -49,17 +49,17 @@ const Navbar = styled.nav`
     ul {
         display: flex;
         list-style: none;
-        padding-left: 0;
+        padding: 0;
+        margin: 0;
         width: 100%;
+        height: 100%;
         justify-content: center;
-    }
-    li {
-        padding: 1rem;
+        align-items: center;
     }
 `
 
 const ListItem = styled.li`
-    padding: 1rem;
+    padding: 0 1rem;
     a {
         font-size: 1.15rem;
         color: var(--teal);

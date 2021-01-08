@@ -9,6 +9,10 @@ export const media = {
 
 //containers, wrappers, etc
 
+export const Main = styled.main`
+
+`
+
 export const Wrapper = styled.section`
     width: 100%;
     max-width: 1200px;
@@ -19,9 +23,4 @@ export const Wrapper = styled.section`
         padding-left: 3rem;
         padding-right: 3rem;
     }
-`
-
-export const FlexRow = styled.div`
-    display: flex;
-    flex-direction: ${props => props.$column ? 'column' : 'row'};
 `

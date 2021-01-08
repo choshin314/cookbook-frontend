@@ -6,12 +6,14 @@ import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import Nav from './nav'
 import logo from '../../assets/recipeshare-logo.png'
 import logoSm from '../../assets/recipeshare-logo-abbrev.png'
-import {media, Wrapper, FlexRow} from '../commonStyles'
+import {media, Wrapper} from '../commonStyles'
 
 export default function Header() {
-    console.log(logo)
     return (
         <StyledHeader>
+            <Searchbar>
+                <input type="text"/>
+            </Searchbar>
             <Wrapper>
                 <FlexRow>
                     <Logo to="/">
@@ -32,13 +34,18 @@ export default function Header() {
 }
 
 const StyledHeader = styled.header`
-    display: flex;
-    box-shadow: 0px 4px 8px;
-    @media(min-width: ${media.medium}) {
 
-    }
+    box-shadow: 0px 4px 8px;
+
 `
 
+const FlexRow = styled.div`
+    display: flex;
+    justify-content: center;
+    @media(min-width: 450px) {
+        justify-content: space-between;
+    }
+`
 const Logo = styled(Link)`
     margin: auto 0;
     text-align: center;
@@ -61,17 +68,33 @@ const Logo = styled(Link)`
     }
 `
 
-const Searchbar = styled.input`
-    border-radius: 50px;
-    line-height: 1.5;
-    font-size: 1.5rem;
-    width: 200px;
+const Searchbar = styled.section`
+    padding: 10px 0;
+    background-color: var(--teal);
+    display: flex;
+    justify-content: center;
+    input {
+        width: 90%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        border-radius: 50px;
+        line-height: 1.5;
+        font-size: 1rem;
+    }
+
 `
 const AuthBtn = styled.button`
-    padding: 1rem;
+    padding: 0 1rem;
     background: transparent;
     border: none;
-    font-size: 2rem;
     color: var(--teal);
-    
+    font-size: 1.15rem;
+    color: var(--teal);
+    @media(min-width: 320px) {
+        font-size: 1.5rem;
+    }
+    @media(min-width: ${media.small}) {
+        font-size: 2rem;
+    }
 `
