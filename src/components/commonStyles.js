@@ -10,7 +10,7 @@ export const media = {
 //containers, wrappers, etc
 
 export const Main = styled.main`
-
+    padding: 3rem 0;
 `
 
 export const Wrapper = styled.section`
@@ -22,5 +22,19 @@ export const Wrapper = styled.section`
     @media(min-width: ${media.medium}) {
         padding-left: 3rem;
         padding-right: 3rem;
+    }
+`
+
+export const GridContainer = styled.section`
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    @media(min-width: ${media.medium}) {
+        gap: 1.5rem;
+        grid-template-columns: 1fr 1fr;
+    }
+    @media(min-width: ${media.full}) {
+        gap: 2rem;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 `
