@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUsers, faUserCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUsers, faUserCircle, faPlus, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 import {media} from '../commonStyles'
 
@@ -29,6 +29,9 @@ export default function Nav() {
                     label="Profile"
                     icon={faUserCircle}
                 />
+                <AuthBtn aria-label="Sign Out">
+                    <FontAwesomeIcon icon={faSignOutAlt} title="Sign Out" />
+                </AuthBtn>
             </ul>
         </Navbar>
     )
@@ -55,6 +58,9 @@ const Navbar = styled.nav`
         height: 100%;
         justify-content: center;
         align-items: center;
+        @media(min-width: 450px) {
+            justify-content: flex-end;
+        }
     }
 `
 
@@ -69,5 +75,20 @@ const ListItem = styled.li`
         @media(min-width: ${media.small}) {
             font-size: 2rem;
         }
+    }
+`
+
+const AuthBtn = styled.button`
+    padding: 0 1rem;
+    background: transparent;
+    border: none;
+    color: var(--teal);
+    font-size: 1.15rem;
+    color: var(--teal);
+    @media(min-width: 320px) {
+        font-size: 1.5rem;
+    }
+    @media(min-width: ${media.small}) {
+        font-size: 2rem;
     }
 `
