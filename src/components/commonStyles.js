@@ -42,21 +42,20 @@ export const GridContainer = styled.section`
 export const CardWrapper = styled.article`
     border-radius: 5px;
     position: relative;
-    cursor: pointer;
-    overflow: hidden;
+
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    ::before {
+    &::before {
         content: '';
         position: absolute;
         left: 0;
-        right: 0;
         top: 0;
-        bottom: 0;
+        width: 100%;
+        height: 100%;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
         opacity: 0;
         transition: opacity .3s cubic-bezier(.25,.8,.25,1);
     }
-    :hover::before {
+    &:hover::before {
         opacity: 1;
     }
 `

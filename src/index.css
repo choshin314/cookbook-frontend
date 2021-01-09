@@ -31,6 +31,10 @@ body, html, section, article, main, div {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
 h1 {
   font-size: 2.5rem;
 }
