@@ -11,17 +11,15 @@ function App() {
       <Switch>
         <Route path="/">
           <Main>
-            <Wrapper>
-            <GridContainer>
+            <GridContainer colsMd="1" colsLg="1">
               <RecipeCard />
-              <article>Hello</article>
-              <article>Hello</article>
-              <article>Hello</article>
-              <article>Hello</article>
-              <article>Hello</article>
-              <article>Hello</article>
+              <RecipeCard />
+              <RecipeCard />
+              <RecipeCard />
+              <RecipeCard />
+              <RecipeCard />
+              <RecipeCard />
             </GridContainer>
-            </Wrapper>
           </Main>
         </Route>
       </Switch>

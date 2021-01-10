@@ -10,19 +10,16 @@ export const media = {
 //containers, wrappers, etc
 
 export const Main = styled.main`
-    padding: 3rem 0;
+    width: 100%;
+    max-width: 768px;
 `
 
 export const Wrapper = styled.section`
     width: 100%;
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 0 auto;
     padding-left: 1rem;
     padding-right: 1rem;
-    @media(min-width: ${media.medium}) {
-        padding-left: 3rem;
-        padding-right: 3rem;
-    }
 `
 
 export const GridContainer = styled.section`
@@ -31,11 +28,11 @@ export const GridContainer = styled.section`
     gap: 1rem;
     @media(min-width: ${media.medium}) {
         gap: 1.5rem;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(${props => props.colsMd ? props.colsMd : '2'}, 1fr);
     }
     @media(min-width: ${media.full}) {
         gap: 2rem;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(${props => props.colsLg ? props.colsLg : '3'}, 1fr);
     }
 `
 
