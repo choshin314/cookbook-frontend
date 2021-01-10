@@ -16,7 +16,7 @@ function Ratings({rating, reviewCount}) {
         }
     }
     return (
-        <Container title={`${rating} Stars`}>
+        <Container title={`${rating.toFixed(1)} Stars`}>
             <FontAwesomeIcon icon={determineStarFilling(1, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(2, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(3, rating)} />

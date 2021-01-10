@@ -4,12 +4,12 @@ import {Link} from 'react-router-dom'
 function AvatarLink(props) {
     return (
         <AuthorDiv>
-            <Link to={props.profileUrl}>
+            <Link to={`/profiles/${props.userId}`}>
                 <ImgDiv>
                     <img src={props.imgSrc}/>
                 </ImgDiv>
             </Link>
-            {props.name && <NameLink>Concocted by {props.name}</NameLink>}
+            {props.userName && <NameLink to={`/profiles/${props.userId}`}>Created by {props.userName}</NameLink>}
         </AuthorDiv>
     )
 }

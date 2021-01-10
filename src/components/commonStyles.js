@@ -12,6 +12,24 @@ export const media = {
 export const Main = styled.main`
     width: 100%;
     max-width: 768px;
+    margin: .5rem 0;
+    @media(min-width: ${media.medium}) {
+        margin: 1rem 0;
+    }
+`
+
+export const PageTitle = styled.h1`
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+    text-align: center;
+    @media(min-width: ${media.medium}) {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    @media(min-width: ${media.full}) {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
 `
 
 export const Wrapper = styled.section`

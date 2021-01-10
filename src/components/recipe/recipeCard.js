@@ -5,25 +5,25 @@ import {media, CardWrapper} from '../commonStyles'
 import Ratings from './ratings'
 import AvatarLink from '../shared/avatarLink'
 
-export default function RecipeCard(props) {
+export default function RecipeCard({recipe}) {
     return (
         <CardWrapper>
             <CardLayout>
                 <Header>
                     <AvatarLink 
-                        imgSrc="https://i.kinja-img.com/gawker-media/image/upload/t_original/ijsi5fzb1nbkbhxa2gc1.png" 
-                        profileUrl="/someprofile"
-                        name="Joe Smith"
+                        imgSrc={recipe.creatorProfileImg}
+                        userId={recipe.creatorId}
+                        userName={recipe.creatorName}
                     />
                 </Header>
-                <ImgCover to={props.recipeUrl}>
-                    <img src="https://i.kinja-img.com/gawker-media/image/upload/t_original/ijsi5fzb1nbkbhxa2gc1.png" />
+                <ImgCover to={`/recipes/${recipe.id}-${recipe.slug}`}>
+                    <img src={recipe.cover_img} />
                 </ImgCover>
                 <Content>
-                    <Link to={props.recipeUrl}>
-                        <CardTitle>Recipe Title Yum Yum Superlong</CardTitle>
+                    <Link to={`/recipes/${recipe.id}-${recipe.slug}`}>
+                        <CardTitle>{recipe.name}</CardTitle>
                     </Link>
-                    <Ratings rating={3.74} reviewCount={10}/>
+                    <Ratings rating={recipe.rating} reviewCount={recipe.reviewCount}/>
                 </Content>
             </CardLayout>
         </CardWrapper>
