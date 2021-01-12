@@ -21,7 +21,7 @@ export const Main = styled.main`
 export const PageTitle = styled.h1`
     font-size: 1.5rem;
     margin-bottom: .5rem;
-    text-align: center;
+    text-align: ${props => props.align ? props.align : 'center'};
     @media(min-width: ${media.medium}) {
         font-size: 2rem;
         margin-bottom: 1rem;
