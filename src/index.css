@@ -3,6 +3,7 @@
 :root {
   font-size: 16px;
   --lite-grey: #f7f8f8;
+  --lite-med-grey: #E0E0E0;
   --med-grey: #646e73;
   --black: #0e1e25;
   --teal: #146396;
@@ -16,6 +17,7 @@
 
 *, *::before, *::after {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body, html {

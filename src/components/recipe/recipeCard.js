@@ -31,11 +31,14 @@ export default function RecipeCard({recipe}) {
 }
 
 const CardLayout = styled.div`
-    max-height: 500px;
+    max-height: 300px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 3fr 1fr;
     position: relative;
+    @media(min-width: ${media.small}) {
+        max-height: 500px;
+    }
 `
 
 const Header = styled.header`
@@ -45,11 +48,15 @@ const Header = styled.header`
 const ImgCover = styled(Link)`
     grid-row: span 3;
     overflow: hidden;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--med-grey);
     img {
         object-fit: cover;
         object-position: 50% 50%;
-        width: 100%;
-        height: 300px;
+        height: 100%;;
     }
 `
 
@@ -65,10 +72,12 @@ const Content = styled.div`
 `
 
 const CardTitle = styled.h2`
-    font-size: 1.25rem;
+    font-size: 1rem;
     margin-bottom: 1rem;
+    @media(min-width: ${media.small}) {
+        font-size: 1.25rem;
+    }
     @media(min-width:${media.medium}) {
-        font-size: 1.5rem;
         margin-bottom: .5rem;
     }
 `

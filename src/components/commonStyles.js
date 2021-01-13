@@ -42,15 +42,19 @@ export const Wrapper = styled.section`
 
 export const GridContainer = styled.section`
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(${props => props.cols ? props.cols : '1'}, 1fr);
+    gap: ${props => props.gap ? props.gap : '1rem'};
     @media(min-width: ${media.medium}) {
-        gap: 1.5rem;
-        grid-template-columns: repeat(${props => props.colsMd ? props.colsMd : '2'}, 1fr);
+        ${props => props.colsMd ? css`
+            grid-template-columns: repeat(${props => props.colsMd}, 1fr);
+            ` : ''
+        }
     }
     @media(min-width: ${media.full}) {
-        gap: 2rem;
-        grid-template-columns: repeat(${props => props.colsLg ? props.colsLg : '3'}, 1fr);
+        ${props => props.colsLg ? css`
+            grid-template-columns: repeat(${props => props.colsLg}, 1fr);
+            ` : ''
+        }
     }
 `
 

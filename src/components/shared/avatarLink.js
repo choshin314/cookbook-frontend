@@ -5,7 +5,7 @@ function AvatarLink(props) {
     return (
         <AuthorDiv>
             <Link to={`/profiles/${props.userId}`}>
-                <ImgDiv>
+                <ImgDiv size={props.imgSize || '50px'}>
                     <img src={props.imgSrc}/>
                 </ImgDiv>
             </Link>
@@ -21,8 +21,8 @@ const AuthorDiv = styled.div`
     align-items: center;
 `
 const ImgDiv = styled.div`
-    width: 50px;
-    height: 50px;
+    width: ${props => props.size};
+    height: ${props => props.size};
     border-radius: 50%;
     border: 2px solid var(--teal);
     overflow: hidden;
