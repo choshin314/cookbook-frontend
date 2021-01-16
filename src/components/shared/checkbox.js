@@ -6,14 +6,15 @@ import useToggle from '../../hooks/toggle'
 
 function Checkbox({children}) {
     const [isChecked, toggleChecked] = useToggle();
+    const [isFocused, toggleFocused] = useToggle();
     return (
         <Container>
             <label>
-                <DisplayedBox>
+                <DisplayedBox focused={isFocused}>
                     <FontAwesomeIcon icon={isChecked ? faCheckSquare : faSquare} />
                 </DisplayedBox>
                 {children}
-                <input type="checkbox" onClick={toggleChecked}/>
+                <input type="checkbox" tabIndex="0" onClick={toggleChecked} onFocus={toggleFocused} onBlur={toggleFocused} />
             </label>
         </Container>
     )
@@ -41,4 +42,5 @@ const DisplayedBox = styled.div`
     color: var(--teal);
     cursor: pointer;
     margin-right: 1rem;
+    outline: ${props => props.focused ? '1px dashed var(--dark-teal)' : 'none'};
 `
