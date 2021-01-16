@@ -15,17 +15,17 @@ export default function Nav() {
                     icon={faHome}
                 />
                 <NavItem
-                    to="/following"
-                    label="Following"
+                    to="/community"
+                    label="Community"
                     icon={faUsers}
                 />
                 <NavItem
-                    to="/create"
+                    to="/recipes/create"
                     label="Create Recipe"
                     icon={faPlus}
                 />
                 <NavItem
-                    to="/profile"
+                    to="/profile/userId"
                     label="Profile"
                     icon={faUserCircle}
                 />

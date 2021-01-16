@@ -24,11 +24,11 @@ export default function RecipeCard({recipe}) {
                             userName={recipe.creatorName}
                         />
                     </Header>
-                    <ImgCover to={`/recipes/${recipe.id}-${recipe.slug}`}>
+                    <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                         <img src={recipe.cover_img} />
                     </ImgCover>
                     <Content>
-                        <Link to={`/recipes/${recipe.id}-${recipe.slug}`}>
+                        <Link to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                             <CardTitle>{recipe.name}</CardTitle>
                         </Link>
                         <Ratings rating={recipe.rating} reviewCount={recipe.reviewCount}/>

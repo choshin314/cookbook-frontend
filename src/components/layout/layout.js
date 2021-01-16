@@ -30,7 +30,7 @@ const ThreeColumn = styled.div`
     flex: 1 0 auto;
     display: flex;
     width: 100%;
-    aside, *:last-child {
+    aside, & > *:last-child {
         flex: auto;
         position: relative;
     }
