@@ -6,10 +6,10 @@ import { faBookmark, faFolder } from '@fortawesome/free-regular-svg-icons'
 import RecipeCard from '../recipe/recipeCard'
 import {GridContainer, media} from '../commonStyles'
 
-function RecipeGrid({recipes}) {
-    const [ recipeView, setRecipeView ] = useState('user');
-    const USER = 'user'
-    const SAVED = 'saved'
+function RecipeGrid({userRecipes, savedRecipes}) {
+    const [ recipeView, setRecipeView ] = useState('userRecipes');
+    const USER = 'userRecipes'
+    const SAVED = 'savedRecipes'
 
     return (
         <section>
@@ -30,9 +30,12 @@ function RecipeGrid({recipes}) {
                 </ul>
             </GridNav>
             <BorderedDiv>
-                <GridContainer cols="2" colsLg="3" gap="5px">
-                    {recipes.map(r => <RecipeCard key={r.id} recipe={r} />)}
-                </GridContainer>
+                {recipeView === USER && (<GridContainer cols="2" colsLg="3" gap="5px">
+                    {userRecipes.map(r => <RecipeCard key={r.id} recipe={r} />)}
+                </GridContainer>)}
+                {recipeView === SAVED && (<GridContainer cols="2" colsLg="3" gap="5px">
+                    {savedRecipes.map(r => <RecipeCard key={r.id} recipe={r} />)}
+                </GridContainer>)}
             </BorderedDiv>
         </section>
     )
