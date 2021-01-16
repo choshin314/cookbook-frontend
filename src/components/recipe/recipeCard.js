@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 
 import {media, CardWrapper} from '../commonStyles'
 import Ratings from './ratings'
@@ -8,24 +9,32 @@ import AvatarLink from '../shared/avatarLink'
 export default function RecipeCard({recipe}) {
     return (
         <CardWrapper>
-            <CardLayout>
-                <Header>
-                    <AvatarLink 
-                        imgSrc={recipe.creatorProfileImg}
-                        userId={recipe.creatorId}
-                        userName={recipe.creatorName}
-                    />
-                </Header>
-                <ImgCover to={`/recipes/${recipe.id}-${recipe.slug}`}>
-                    <img src={recipe.cover_img} />
-                </ImgCover>
-                <Content>
-                    <Link to={`/recipes/${recipe.id}-${recipe.slug}`}>
-                        <CardTitle>{recipe.name}</CardTitle>
-                    </Link>
-                    <Ratings rating={recipe.rating} reviewCount={recipe.reviewCount}/>
-                </Content>
-            </CardLayout>
+            <CSSTransition
+                in={recipe}
+                appear={true}
+                timeout={300}
+                classNames="fadeExpand"
+                unmountOnExit
+            > 
+                <CardLayout>
+                    <Header>
+                        <AvatarLink 
+                            imgSrc={recipe.creatorProfileImg}
+                            userId={recipe.creatorId}
+                            userName={recipe.creatorName}
+                        />
+                    </Header>
+                    <ImgCover to={`/recipes/${recipe.id}-${recipe.slug}`}>
+                        <img src={recipe.cover_img} />
+                    </ImgCover>
+                    <Content>
+                        <Link to={`/recipes/${recipe.id}-${recipe.slug}`}>
+                            <CardTitle>{recipe.name}</CardTitle>
+                        </Link>
+                        <Ratings rating={recipe.rating} reviewCount={recipe.reviewCount}/>
+                    </Content>
+                </CardLayout>
+            </CSSTransition>
         </CardWrapper>
     )
 }
@@ -38,6 +47,27 @@ const CardLayout = styled.div`
     position: relative;
     @media(min-width: ${media.small}) {
         max-height: 500px;
+    }
+    .fadeExpand-appear {
+        opacity: 0;
+    }
+    .fadeExpand-appear-active {
+        opacity: 1;
+        transition: opacity .3s ease-out;
+    }
+    .fadeExpand-enter {
+        opacity: 0;
+    }
+    .fadeExpand-enter-active {
+        opacity: 1;
+        transition: opacity .3s ease-out;
+    }
+    .fadeExpand-exit {
+        opacity: 1;
+    }
+    .fadeExpand-exit-active {
+        opacity: 0;
+        transition: opacity .3s ease-out;
     }
 `
 

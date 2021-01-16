@@ -77,4 +77,25 @@ export const CardWrapper = styled.article`
     &:hover::before {
         opacity: 1;
     }
+    .fadeExpand-appear {
+        opacity: 0;
+    }
+    .fadeExpand-appear-active {
+        opacity: 1;
+        transition: opacity .3s ease-out;
+    }
+    .fadeExpand-enter {
+        opacity: 0;
+    }
+    .fadeExpand-enter-active {
+        opacity: 1;
+        transition: opacity .3s ease-out;
+    }
+    .fadeExpand-exit {
+        opacity: 1;
+    }
+    .fadeExpand-exit-active {
+        opacity: 0;
+        transition: opacity .3s ease-out;
+    }
 `
