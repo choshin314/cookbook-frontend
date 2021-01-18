@@ -58,6 +58,19 @@ export const GridContainer = styled.section`
     }
 `
 
+export const GridColumn = styled.div`
+    justify-self: ${props => props.justify || 'stretch'};
+    margin: ${props => props.margin || '0'};
+    @media(min-width: ${media.medium}) {
+        grid-column: span ${props => props.colsMd || '1'};
+        margin: ${props => props.marginMd || props.margin || '0'};
+    }
+    @media(min-width: ${media.full}) {
+        grid-column: span ${props => props.colsLg || props.colsMd || '1'};
+        margin: ${props => props.marginLg || props.marginMd || props.margin || '0'};
+    }
+`
+
 export const CardWrapper = styled.article`
     border-radius: 5px;
     position: relative;
@@ -73,6 +86,7 @@ export const CardWrapper = styled.article`
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
         opacity: 0;
         transition: opacity .3s cubic-bezier(.25,.8,.25,1);
+        pointer-events: none;
     }
     &:hover::before {
         opacity: 1;

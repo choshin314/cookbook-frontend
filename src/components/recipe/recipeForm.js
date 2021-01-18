@@ -1,18 +1,113 @@
 import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 
-import { GridContainer, CardWrapper, media } from '../commonStyles'
+import { GridContainer, GridColumn, CardWrapper, media } from '../commonStyles'
 import ImgInput from '../shared/imgInput'
+import Input from '../shared/input'
 
 function RecipeForm() {
     const [file, setFile] = useState(null);
+    const [formState, setFormState] = useState({
+        values: {
+            title: "",
+            introText: "",
+            prepTime: null,
+            cookTime: null,
+            servings: null
+        },
+        errors: {
+        }
+    });
+
+    function handleChange(e) {
+        let {name, value, type} = e.target;
+        if (type === "number") {
+            value = parseFloat(value);
+        }
+        setFormState({ ...formState, values: { ...formState.values, [name]: value } });
+        console.log(formState);
+    }
 
     return (
         <Card>
             <Form>
-                <GridContainer as="div" colsLg="6" gap="0">
-                    <GridColumn colsLg="3" >
+                <GridContainer as="div" colsLg="6" gap="0" className="margin-btm-2">
+                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
                         <ImgInput title="cover" onChange={(e) => setFile(e.target.files[0])} file={file}/>
+                    </GridColumn>
+                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
+                        <Input 
+                            id="title"
+                            name="title"
+                            type="text" 
+                            label={{ text: "Recipe Title", hide: false }}
+                            placeholder="What are we making?" 
+                            onChange={handleChange}
+                            value={formState.values.title}
+                            errorMsg={formState.errors.title}
+                        />
+                        <Input 
+                            id="introText"
+                            name="introText"
+                            type="textarea"
+                            placeholder="Give a short and sweet intro about your recipe"
+                            label={{ text: "Introduction", hide: false }}
+                            onChange={handleChange}
+                            value={formState.values.introText}
+                            charLimit={400}
+                            textRows={8}
+                        />
+                    </GridColumn>
+                </GridContainer>
+                <GridContainer as="div" colsLg="6" gap="0">
+                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
+                        <div>
+                            <Input 
+                                id="tags"
+                                name="tags"
+                                type="text" 
+                                label={{ text: "Add Tags", hide: false }}
+                                placeholder="e.g., keto, low-carb, vegetarian, Indian, Chinese, Mexican, Italian" 
+                                onChange={handleChange}
+                                value={formState.values.title}
+                                errorMsg={formState.errors.title}
+                            />
+                        </div>
+                    </GridColumn>
+                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
+                        <Input 
+                            id="prepTime"
+                            name="prepTime"
+                            type="number" 
+                            min={1}
+                            label={{ text: "Prep Time", hide: false }}
+                            placeholder="" 
+                            onChange={handleChange}
+                            value={formState.values.prepTime}
+                            errorMsg={formState.errors.prepTime}
+                        />
+                        <Input 
+                            id="cookTime"
+                            name="cookTime"
+                            type="number" 
+                            min={1}
+                            label={{ text: "Cook Time", hide: false }}
+                            placeholder="" 
+                            onChange={handleChange}
+                            value={formState.values.cookTime}
+                            errorMsg={formState.errors.cookTime}
+                        />
+                        <Input 
+                            id="servings"
+                            name="servings"
+                            type="number" 
+                            min={1}
+                            label={{ text: "Servings", hide: false }}
+                            placeholder="" 
+                            onChange={handleChange}
+                            value={formState.values.servings}
+                            errorMsg={formState.errors.servings}
+                        />
                     </GridColumn>
                 </GridContainer>
             </Form>
@@ -37,29 +132,3 @@ const Form = styled.form`
         padding: 2rem;
     }
 `
-const GridColumn = styled.div`
-    justify-self: ${props => props.justify || 'stretch'};
-    @media(min-width: ${media.medium}) {
-        grid-column: span ${props => props.colsMd || '1'};
-    }
-    @media(min-width: ${media.full}) {
-        grid-column: span ${props => props.colsLg || props.colsMd || '1'};
-    }
-`
-// export const GridContainer = styled.section`
-//     display: grid;
-//     grid-template-columns: repeat(${props => props.cols ? props.cols : '1'}, 1fr);
-//     gap: ${props => props.gap ? props.gap : '1rem'};
-//     @media(min-width: ${media.medium}) {
-//         ${props => props.colsMd ? css`
-//             grid-template-columns: repeat(${props => props.colsMd}, 1fr);
-//             ` : ''
-//         }
-//     }
-//     @media(min-width: ${media.full}) {
-//         ${props => props.colsLg ? css`
-//             grid-template-columns: repeat(${props => props.colsLg}, 1fr);
-//             ` : ''
-//         }
-//     }
-// `
