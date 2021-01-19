@@ -4,16 +4,18 @@ import styled from 'styled-components'
 import { GridContainer, GridColumn, CardWrapper, media } from '../commonStyles'
 import ImgInput from '../shared/imgInput'
 import Input from '../shared/input'
+import TagInput from '../shared/tagInput'
 
 function RecipeForm() {
     const [file, setFile] = useState(null);
+    const [tags, setTags] = useState([]);
     const [formState, setFormState] = useState({
         values: {
             title: "",
             introText: "",
-            prepTime: null,
-            cookTime: null,
-            servings: null
+            prepTime: "",
+            cookTime: "",
+            servings: ""
         },
         errors: {
         }
@@ -25,13 +27,14 @@ function RecipeForm() {
             value = parseFloat(value);
         }
         setFormState({ ...formState, values: { ...formState.values, [name]: value } });
-        console.log(formState);
     }
+
+    console.log(formState)
 
     return (
         <Card>
             <Form>
-                <GridContainer as="div" colsLg="6" gap="0" className="margin-btm-2">
+                <Grid as="div" colsLg="6" gap="0">
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
                         <ImgInput title="cover" onChange={(e) => setFile(e.target.files[0])} file={file}/>
                     </GridColumn>
@@ -42,8 +45,8 @@ function RecipeForm() {
                             type="text" 
                             label={{ text: "Recipe Title", hide: false }}
                             placeholder="What are we making?" 
-                            onChange={handleChange}
                             value={formState.values.title}
+                            onChange={handleChange}
                             errorMsg={formState.errors.title}
                         />
                         <Input 
@@ -52,27 +55,16 @@ function RecipeForm() {
                             type="textarea"
                             placeholder="Give a short and sweet intro about your recipe"
                             label={{ text: "Introduction", hide: false }}
-                            onChange={handleChange}
                             value={formState.values.introText}
+                            onChange={handleChange}
                             charLimit={400}
                             textRows={8}
                         />
                     </GridColumn>
-                </GridContainer>
-                <GridContainer as="div" colsLg="6" gap="0">
+                </Grid>
+                <Grid as="div" colsLg="6" gap="0">
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
-                        <div>
-                            <Input 
-                                id="tags"
-                                name="tags"
-                                type="text" 
-                                label={{ text: "Add Tags", hide: false }}
-                                placeholder="e.g., keto, low-carb, vegetarian, Indian, Chinese, Mexican, Italian" 
-                                onChange={handleChange}
-                                value={formState.values.title}
-                                errorMsg={formState.errors.title}
-                            />
-                        </div>
+                        <TagInput tags={tags} setTags={setTags} />
                     </GridColumn>
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
                         <Input 
@@ -82,8 +74,8 @@ function RecipeForm() {
                             min={1}
                             label={{ text: "Prep Time", hide: false }}
                             placeholder="" 
-                            onChange={handleChange}
                             value={formState.values.prepTime}
+                            onChange={handleChange}
                             errorMsg={formState.errors.prepTime}
                         />
                         <Input 
@@ -93,8 +85,8 @@ function RecipeForm() {
                             min={1}
                             label={{ text: "Cook Time", hide: false }}
                             placeholder="" 
-                            onChange={handleChange}
                             value={formState.values.cookTime}
+                            onChange={handleChange}
                             errorMsg={formState.errors.cookTime}
                         />
                         <Input 
@@ -104,12 +96,12 @@ function RecipeForm() {
                             min={1}
                             label={{ text: "Servings", hide: false }}
                             placeholder="" 
-                            onChange={handleChange}
                             value={formState.values.servings}
+                            onChange={handleChange}
                             errorMsg={formState.errors.servings}
                         />
                     </GridColumn>
-                </GridContainer>
+                </Grid>
             </Form>
         </Card>
     )
@@ -130,5 +122,10 @@ const Form = styled.form`
     padding: 1rem;
     @media(min-width: ${media.medium}) {
         padding: 2rem;
+    }
+`
+const Grid = styled(GridContainer)`
+    @media(min-width: ${media.full}) {
+        margin-bottom: 2rem;
     }
 `

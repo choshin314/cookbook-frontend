@@ -41,6 +41,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    margin-bottom: 1rem;
 `
 
 const InputWrapper = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 function FormFeedback({errorMsg, charCount, charLimit}) {
     return (
         <Feedback>
-            {errorMsg && <ErrorMsg>Error message!</ErrorMsg>}
+            {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
             {charLimit && !errorMsg && (
                 <CharCount overLimit={charCount > charLimit}>
                     {charCount > charLimit && <span>Oh no! Too many characters!</span>}

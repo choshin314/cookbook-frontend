@@ -113,3 +113,18 @@ export const CardWrapper = styled.article`
         transition: opacity .3s ease-out;
     }
 `
+
+export const Button = styled.button`
+    color: white;
+    background-color: var(--teal);
+    border: none;
+    border-radius: 5px;
+    padding: .5rem 1rem;
+    transform: translateY(-50%);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    :hover {
+        background-color: var(--dark-teal);
+    }
+`

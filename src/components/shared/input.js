@@ -11,7 +11,7 @@ function Input(props) {
         charLimit,
         textRows,
         autoFocus, 
-        onChange, 
+        onChange,
         value, 
         type, 
         label,
@@ -23,31 +23,35 @@ function Input(props) {
     return (
         <Container>
             <Label htmlFor={id} hidden={label.hide}>{label.text}</Label>
-            {type !== "textarea" && (<StyledInput 
-                id={id} 
-                name={name} 
-                type={type}
-                autoFocus={autoFocus}
-                placeholder={placeholder}
-                onChange={(e) => {
-                    setCharCount(e.target.value.length);
-                    onChange(e)
-                }}
-                value={value}
-            />)}
-            {type === "textarea" && (<Textarea
-                id={id} 
-                name={name} 
-                type={type}
-                autoFocus={autoFocus}
-                placeholder={placeholder}
-                onChange={(e) => {
-                    setCharCount(e.target.value.length);
-                    onChange(e)
-                }}
-                value={value}
-                rows={textRows}
-            />)}
+            {type !== "textarea" && (
+                <StyledInput 
+                    id={id} 
+                    name={name} 
+                    type={type}
+                    autoFocus={autoFocus}
+                    placeholder={placeholder}
+                    onChange={(e) => {
+                        setCharCount(e.target.value.length);
+                        onChange(e)
+                    }}
+                    value={value}
+                />
+            )}
+            {type === "textarea" && (
+                <Textarea
+                    id={id} 
+                    name={name} 
+                    type={type}
+                    autoFocus={autoFocus}
+                    placeholder={placeholder}
+                    onChange={(e) => {
+                        setCharCount(e.target.value.length);
+                        onChange(e)
+                    }}
+                    value={value}
+                    rows={textRows}
+                />
+            )}
             <FormFeedback 
                 errorMsg={errorMsg}
                 charCount={charCount}
