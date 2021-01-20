@@ -9,6 +9,7 @@ function Input(props) {
         name, 
         placeholder, 
         charLimit,
+        min,
         textRows,
         autoFocus, 
         onChange,
@@ -34,6 +35,7 @@ function Input(props) {
                         setCharCount(e.target.value.length);
                         onChange(e)
                     }}
+                    min={min}
                     value={value}
                 />
             )}
@@ -93,6 +95,13 @@ const inputStyles = css`
 `
 const StyledInput = styled.input`
     ${inputStyles}
+    &[type=number] {
+        -moz-appearance: textfield;
+    }
+    ::-webkit-outer-spin-button, ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `
 
 const Textarea = styled.textarea`
