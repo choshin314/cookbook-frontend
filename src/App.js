@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import ScrollToTop from './components/shared/scrollToTop'
 import Layout from './components/layout/layout'
 import Home from './pages/home'
 import ProfilePage from './pages/profilePage'
@@ -9,22 +10,23 @@ import RecipeCreatePage from './pages/recipeCreatePage'
 function App() {
   return (
     <Router>
-    <Layout>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/profile/:username">
-          <ProfilePage />
-        </Route>
-        <Route path="/recipes/view/:id">
-          <RecipePage />
-        </Route>
-        <Route path="/recipes/create">
-          <RecipeCreatePage />
-        </Route>
-      </Switch>
-    </Layout>
+      <ScrollToTop />
+      <Layout>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/profile/:username">
+            <ProfilePage />
+          </Route>
+          <Route path="/recipes/view/:id">
+            <RecipePage />
+          </Route>
+          <Route path="/recipes/create">
+            <RecipeCreatePage />
+          </Route>
+        </Switch>
+      </Layout>
     </Router>
   );
 }
