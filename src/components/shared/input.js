@@ -33,7 +33,7 @@ function Input(props) {
                     placeholder={placeholder}
                     onChange={(e) => {
                         setCharCount(e.target.value.length);
-                        onChange(e)
+                        onChange && onChange(e)
                     }}
                     min={min}
                     value={value}

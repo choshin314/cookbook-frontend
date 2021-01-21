@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faImage} from '@fortawesome/free-regular-svg-icons'
 
-function ImgInput({title, file, onChange}) {
+function ImgInput({name, title, file, onChange}) {
     return (
         <Container>
             <InputWrapper>
@@ -19,7 +19,7 @@ function ImgInput({title, file, onChange}) {
                 <Input 
                     id={`${title}-file-input`} 
                     type="file" 
-                    name="img" 
+                    name={name} 
                     accept="image/png, image/jpeg, image/jpg"
                     onChange={onChange} 
                 />

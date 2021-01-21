@@ -63,7 +63,7 @@ function TagInput({ tags, setTags }) {
             <FormFeedback errorMsg={inputState.error} />
             <TagContainer>
                 <Tags>
-                    {tags.map(tag => (
+                    {tags && tags.length > 0 && tags.map(tag => (
                         <Tag key={tag}>
                             <button onClick={() => removeTag(tag)}>X</button>
                             {tag}
@@ -109,7 +109,7 @@ const AddTagBtn = styled(Button)`
 `
 
 const TagContainer = styled.div`
-
+    min-height: 50px;
 `
 const Tags = styled.ol`
     padding: 0;

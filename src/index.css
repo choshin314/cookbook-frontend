@@ -8,6 +8,8 @@
   --black: #0e1e25;
   --teal: #146396;
   --dark-teal: #15847d;
+  --lite-teal: #D7F3FF;
+  --accent: #E29E21;
   --font-default: 'Raleway', sans-serif;
 }
 
@@ -165,4 +167,26 @@ code {
 
 .margin-top-3 {
   margin-top: 2rem;
+}
+
+.fade-appear {
+  opacity: 0;
+}
+.fade-appear-active {
+  opacity: 1;
+  transition: opacity .3s ease-out;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity .3s ease-out;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity .3s ease-out;
 }
