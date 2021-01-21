@@ -36,10 +36,10 @@ function ListInput(props) {
                     onChange={onChange}
                     onKeyDown={e => {
                         if (e.key !== keyDownTrigger) return;
-                        addToList(e)
+                        addToList(e, value)
                     }}
                 />
-                <AddBtn onClick={addToList} title={`Add ${label}`}>
+                <AddBtn onClick={(e) => addToList(e, value)} title={`Add ${label}`}>
                     <FontAwesomeIcon icon={faPlus} />
                 </AddBtn>
             </InputWrapper>

@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {CSSTransition} from 'react-transition-group'
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
+import {faChevronUp, faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import { GridContainer, GridColumn, Button, media } from '../commonStyles'
@@ -10,14 +11,26 @@ import ListInput from '../shared/listInput'
 
 function RecipeFormDetails({step, values, errors, handleChange, setFormState}) {
     const {instructions} = values;
-    const up = (e, itemToMove) => {
+
+    function moveUp(e, itemToMove) {
         e.preventDefault();
-        const currentArr = [...instructions];
+        const stateArrCopy = [...instructions];
         const index = instructions.findIndex(el => el.id === itemToMove.id);
-        currentArr.splice(index, 1);
-        currentArr.splice(index - 1, 0, itemToMove);
-        setFormState(prev => ({...prev, values: {...prev.values, instructions: currentArr }}))
+
+        stateArrCopy.splice(index, 1);
+        stateArrCopy.splice(index - 1, 0, itemToMove);
+        setFormState(prev => ({...prev, values: {...prev.values, instructions: stateArrCopy }}))
     }
+    function moveDown(e, itemToMove) {
+        e.preventDefault();
+        const stateArrCopy = [...instructions];
+        const index = instructions.findIndex(el => el.id === itemToMove.id);
+
+        stateArrCopy.splice(index, 1);
+        stateArrCopy.splice(index + 1, 0, itemToMove);
+        setFormState(prev => ({...prev, values: {...prev.values, instructions: stateArrCopy }}))
+    }
+
 
     return (
         <CSSTransition
@@ -37,13 +50,13 @@ function RecipeFormDetails({step, values, errors, handleChange, setFormState}) {
                     value={values.instructionDraft}
                     errorMsg={errors.instructionDraft}
                     onChange={handleChange}
-                    addToList={(e) => {
+                    addToList={(e, val) => {
                         e.preventDefault();
                         setFormState(prev => (
                             { ...prev, 
                                 values: { 
                                     ...prev.values, 
-                                    instructions: [ ...prev.values.instructions, { id: Math.random().toFixed(4) * 10000, content: e.target.value } ]
+                                    instructions: [ ...prev.values.instructions, { id: Math.random().toFixed(4) * 10000, content: val } ]
                                 }
                             }
                         ));
@@ -51,19 +64,35 @@ function RecipeFormDetails({step, values, errors, handleChange, setFormState}) {
                     }}
                     keyDownTrigger="Enter"
                 >
-                    {instructions && instructions.length > 0 && instructions.map(instruction => (
+                    {instructions && instructions.length > 0 && instructions.map((instruction, i) => (
                         <ListItem key={instruction.id}>
-                            <ListItemContent>{instruction.content}</ListItemContent>
-                            <DeleteBtn 
-                                onClick={e => {
+                            <Btn onClick={e => {
                                     e.preventDefault();
                                     const filtered = instructions.filter(inst => inst.id !== instruction.id);
                                     setFormState(prev => ({ ...prev, values: { ...prev.values, instructions: filtered }}))
                                 }}
                             >
                                 <FontAwesomeIcon icon={faTrash} />
-                            </DeleteBtn>
-                            <button onClick={(e) => up(e, instruction)}>up</button>
+                            </Btn>
+                            <ListItemContent>{instruction.content}</ListItemContent>
+                            <BtnColumn>
+                                <UpDownBtn 
+                                    up={true}
+                                    disabled={i === 0} 
+                                    onClick={(e) => moveUp(e, instruction)}
+                                >
+                                    <FontAwesomeIcon icon={faChevronUp} />
+                                </UpDownBtn>
+                                <UpDownBtn 
+                                    disabled={i == instructions.length - 1} 
+                                    onClick={(e) => moveDown(e, instruction)}
+                                    
+                                >
+                                    <FontAwesomeIcon icon={faChevronDown} />
+                                </UpDownBtn>
+                                
+                            </BtnColumn>
+
                         </ListItem>
                     ))}
                 </ListInput>
@@ -120,6 +149,12 @@ const Flex = styled.div`
     }
 `
 
+const BtnColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+
+`
+
 const ListItem = styled.li`
     padding: .5rem 1rem;
     border-radius: 5px;
@@ -132,9 +167,23 @@ const ListItem = styled.li`
 const ListItemContent = styled.div`
 
 `
-const DeleteBtn = styled(Button)`
+const Btn = styled(Button)`
     transform: none;
     border: none;
+    :focus, :hover {
+        background-color: var(--accent);
+    }
+    :disabled {
+        background-color: var(--dark-teal);
+    }
+    &.margin-right {
+        margin-right: 5px;
+    }
+`
+
+const UpDownBtn = styled(Btn)`
+    padding: 0 5px;
+    border-radius: ${props => props.up ? '5px 5px 0 0' : '0 0 5px 5px'};
 `
 
 const Fieldset = styled.fieldset`
