@@ -35,6 +35,10 @@ body, html, section, article, main, div {
   -moz-osx-font-smoothing: grayscale;
 }
 
+input, textarea {
+  overflow-wrap: break-word;
+}
+
 h1, h2, h3, h4, p {
   margin: 0;
 }
@@ -56,6 +60,7 @@ h3 {
 button {
   cursor: pointer;
   background-color: transparent;
+  font-family: inherit;
 }
 
 a {

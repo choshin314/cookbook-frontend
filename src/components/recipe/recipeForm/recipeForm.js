@@ -1,16 +1,17 @@
 import {useState, useEffect} from 'react'
+import {uuid} from 'uuidv4'
 import styled from 'styled-components'
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {DragDropContext} from 'react-beautiful-dnd'
 
-import { CardWrapper, Button, media } from '../commonStyles'
+import { CardWrapper, Button, media } from '../../commonStyles'
 import RecipeFormIntro from './recipeFormIntro'
 import RecipeFormDetails from './recipeFormDetails'
 
 function RecipeForm() {
     const [step, setStep] = useState(1);
     const [tags, setTags] = useState([]);
-    const [instructions, setInstructions] = useState([]);
     const [formState, setFormState] = useState({
         values: {
             title: "",
@@ -19,7 +20,11 @@ function RecipeForm() {
             cookTime: "",
             servings: "",
             instructionDraft: "",
-            instructions: []
+            instructions: [],
+            ingredientDraft_name: "",
+            ingredientDraft_qty: "",
+            ingredientDraft_unit: "",
+            ingredients: []
         },
         errors: {
         }
@@ -45,22 +50,77 @@ function RecipeForm() {
         setFormState({...formState, values: {...formState.values, [fieldset_field]: value }})
     }
 
-    console.log(formState);
+    function addToInstructions(e) {
+        e.preventDefault();
+        const currentCopy = { ...formState };
+        const newInstruction = {
+            id: uuid(),
+            content: currentCopy.values.instructionDraft
+        }
+        setFormState({ 
+            ...currentCopy, 
+            values: { 
+                ...currentCopy.values, 
+                instructions: [ ...currentCopy.values.instructions, newInstruction ],
+                instructionDraft: ''
+            }    
+        })
+    }
 
+    function addToIngredients(e) {
+        e.preventDefault();
+        const currentCopy = { ...formState };
+        const newIngredient = {
+            id: uuid(),
+            qty: currentCopy.values.ingredientDraft_qty,
+            unit: currentCopy.values.ingredientDraft_unit,
+            name: currentCopy.values.ingredientDraft_name
+        }
+
+        setFormState({
+            ...currentCopy,
+            values: {
+                ...currentCopy.values,
+                ingredientDraft_qty: '',
+                ingredientDraft_unit: '',
+                ingredientDraft_name: '',
+                ingredients: [ ...currentCopy.values.ingredients, newIngredient ]
+            }
+        })
+    }
+
+    function handleDragEnd(result) {
+        const {source, destination} = result;
+        if (!destination) return; 
+        //disallow dragging items to other lists
+        if (source.droppableId !== destination.droppableId) return; 
+        if (    //if no delta, return
+            source.droppableId === destination.droppableId &&
+            source.index === destination.index
+        ) return; 
+
+        const newItems = [...formState.values[source.droppableId]];
+        const draggedItem = newItems[source.index];
+        newItems.splice(source.index, 1);
+        newItems.splice(destination.index, 0, draggedItem);
+        setFormState(prev => ({...prev, values: {...prev.values, [source.droppableId]: newItems}}));
+    }
+    console.log(formState)
     return (
         <Card>
-            <Form>
+            <DragDropContext onDragEnd={handleDragEnd} >
+            <Form onChange={handleChange}>
                 {step === 1 && (
                     <>
                     <RecipeFormIntro 
                         step={step}
                         values={formState.values} 
                         errors={formState.errors} 
-                        handleChange={handleChange} 
+                        handleChange
                         tags={tags}
                         setTags={setTags}
                     />
-                    <FormBtn className="align-right" 
+                    <FormBtn type="button"className="align-right" 
                         onClick={(e) => {
                             e.preventDefault();
                             setStep(2);
@@ -79,8 +139,10 @@ function RecipeForm() {
                         errors={formState.errors}
                         handleChange={handleChange}
                         setFormState={setFormState}
+                        addToInstructions={addToInstructions}
+                        addToIngredients={addToIngredients}
                     />
-                    <FormBtn
+                    <FormBtn type="button"
                         onClick={(e) => {
                             e.preventDefault();
                             setStep(1);
@@ -92,6 +154,7 @@ function RecipeForm() {
                     </>
                 )}
             </Form>
+            </DragDropContext>
         </Card>
     )
 }
@@ -113,6 +176,8 @@ const Form = styled.form`
     @media(min-width: ${media.medium}) {
         padding: 2rem;
     }
+    display: flex;
+    flex-direction: column;
     
 `
 

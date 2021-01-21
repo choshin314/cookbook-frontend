@@ -1,6 +1,9 @@
 import {useState} from 'react'
 import styled, {css} from 'styled-components'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faPlus} from '@fortawesome/free-solid-svg-icons'
 
+import {Button} from '../commonStyles'
 import FormFeedback from './formFeedback'
 
 function Input(props) {
@@ -13,6 +16,8 @@ function Input(props) {
         textRows,
         autoFocus, 
         onChange,
+        onKeyDown,
+        addToList,
         value, 
         type, 
         label,
@@ -24,21 +29,6 @@ function Input(props) {
     return (
         <Container>
             <Label htmlFor={id} hidden={label.hide}>{label.text}</Label>
-            {type !== "textarea" && (
-                <StyledInput 
-                    id={id} 
-                    name={name} 
-                    type={type}
-                    autoFocus={autoFocus}
-                    placeholder={placeholder}
-                    onChange={(e) => {
-                        setCharCount(e.target.value.length);
-                        onChange && onChange(e)
-                    }}
-                    min={min}
-                    value={value}
-                />
-            )}
             {type === "textarea" && (
                 <Textarea
                     id={id} 
@@ -48,11 +38,47 @@ function Input(props) {
                     placeholder={placeholder}
                     onChange={(e) => {
                         setCharCount(e.target.value.length);
-                        onChange(e)
                     }}
                     value={value}
                     rows={textRows}
                 />
+            )}
+            {type !== "textarea" && !addToList && (
+                <StyledInput 
+                    id={id} 
+                    name={name} 
+                    type={type}
+                    autoFocus={autoFocus}
+                    placeholder={placeholder}
+                    onChange={(e) => {
+                        setCharCount(e.target.value.length);
+                    }}
+                    onKeyDown={onKeyDown}
+                    min={min}
+                    value={value}
+                />
+            )}
+            {addToList && (
+                <FlexRow>
+                    <StyledInput 
+                        id={id} 
+                        name={name} 
+                        type={type}
+                        autoFocus={autoFocus}
+                        placeholder={placeholder}
+                        onChange={(e) => {
+                            setCharCount(e.target.value.length);
+                            onChange && onChange(e)
+                        }}
+                        onKeyDown={onKeyDown}
+                        min={min}
+                        value={value}
+                    />
+                    <AddItemBtn type="button" onClick={addToList}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </AddItemBtn>
+                </FlexRow>
+                
             )}
             <FormFeedback 
                 errorMsg={errorMsg}
@@ -65,7 +91,9 @@ function Input(props) {
 
 export default Input;
 
+
 const Container = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -95,6 +123,7 @@ const inputStyles = css`
 `
 const StyledInput = styled.input`
     ${inputStyles}
+    flex: auto;
     &[type=number] {
         -moz-appearance: textfield;
     }
@@ -128,4 +157,14 @@ const Textarea = styled.textarea`
     ::-webkit-scrollbar-thumb:hover {
         background: var(--dark-teal);
     }
+`
+const FlexRow = styled.div`
+    width: 100%;
+    display: flex;
+`
+
+const AddItemBtn = styled(Button)`
+    padding: .5rem;
+    align-self: flex-end;
+    transform: none;
 `

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import {Main} from '../components/commonStyles'
-import RecipeForm from '../components/recipe/recipeForm'
+import RecipeForm from '../components/recipe/recipeForm/recipeForm.js'
 
 function RecipeCreatePage() {
     return (
