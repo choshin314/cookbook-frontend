@@ -17,7 +17,7 @@ function Input(props) {
         autoFocus, 
         onChange,
         onKeyDown,
-        addToList,
+        onClick,
         value, 
         type, 
         label,
@@ -43,7 +43,7 @@ function Input(props) {
                     rows={textRows}
                 />
             )}
-            {type !== "textarea" && !addToList && (
+            {type !== "textarea" && !onClick && (
                 <StyledInput 
                     id={id} 
                     name={name} 
@@ -58,7 +58,7 @@ function Input(props) {
                     value={value}
                 />
             )}
-            {addToList && (
+            {onClick && (
                 <FlexRow>
                     <StyledInput 
                         id={id} 
@@ -68,13 +68,14 @@ function Input(props) {
                         placeholder={placeholder}
                         onChange={(e) => {
                             setCharCount(e.target.value.length);
-                            onChange && onChange(e)
                         }}
                         onKeyDown={onKeyDown}
                         min={min}
                         value={value}
                     />
-                    <AddItemBtn type="button" onClick={addToList}>
+                    <AddItemBtn 
+                        type="button" 
+                        onClick={onClick}>
                         <FontAwesomeIcon icon={faPlus} />
                     </AddItemBtn>
                 </FlexRow>

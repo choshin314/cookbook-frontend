@@ -50,43 +50,35 @@ function RecipeForm() {
         setFormState({...formState, values: {...formState.values, [fieldset_field]: value }})
     }
 
-    function addToInstructions(e) {
-        e.preventDefault();
-        const currentCopy = { ...formState };
-        const newInstruction = {
-            id: uuid(),
-            content: currentCopy.values.instructionDraft
+    function addToList(listKey, draftKeys) {
+        const newListItem = { id: uuid() };
+        if (draftKeys.length > 1) {
+            draftKeys.forEach(key => {
+                //ex. - instructionDraft_qty, instructionDraft_unit 
+                //map to newListItem as qty & unit
+                let keynameTail = key.split('_')[1]
+                newListItem[keynameTail] = formState.values[key];
+            })
+        } else {
+            newListItem.content = formState.values[draftKeys[0]];
         }
-        setFormState({ 
-            ...currentCopy, 
-            values: { 
-                ...currentCopy.values, 
-                instructions: [ ...currentCopy.values.instructions, newInstruction ],
-                instructionDraft: ''
-            }    
+        const clearedDrafts = {};
+        draftKeys.forEach(draftKey => clearedDrafts[draftKey] = '')
+
+        setFormState({
+            ...formState, 
+            values: {
+                ...formState.values, 
+                ...clearedDrafts,
+                [listKey]: [...formState.values[listKey], newListItem],
+            }
         })
     }
 
-    function addToIngredients(e) {
-        e.preventDefault();
-        const currentCopy = { ...formState };
-        const newIngredient = {
-            id: uuid(),
-            qty: currentCopy.values.ingredientDraft_qty,
-            unit: currentCopy.values.ingredientDraft_unit,
-            name: currentCopy.values.ingredientDraft_name
-        }
-
-        setFormState({
-            ...currentCopy,
-            values: {
-                ...currentCopy.values,
-                ingredientDraft_qty: '',
-                ingredientDraft_unit: '',
-                ingredientDraft_name: '',
-                ingredients: [ ...currentCopy.values.ingredients, newIngredient ]
-            }
-        })
+    function removeFromList(listKey, listItemId) {
+        const currentList = formState.values[listKey];
+        const filtered = currentList.filter(el => el.id !== listItemId);
+        setFormState(prev => ({ ...prev, values: { ...prev.values, [listKey]: filtered }}))
     }
 
     function handleDragEnd(result) {
@@ -139,8 +131,8 @@ function RecipeForm() {
                         errors={formState.errors}
                         handleChange={handleChange}
                         setFormState={setFormState}
-                        addToInstructions={addToInstructions}
-                        addToIngredients={addToIngredients}
+                        addToList={addToList}
+                        removeFromList={removeFromList}
                     />
                     <FormBtn type="button"
                         onClick={(e) => {

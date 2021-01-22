@@ -13,7 +13,7 @@ import ListInputWrapper from '../../shared/listInputWrapper'
 
 function RecipeFormDetails(props) {
     const {
-        step, values, errors, handleChange, setFormState, addToInstructions, addToIngredients
+        step, values, errors, handleChange, setFormState, addToList, removeFromList
     } = props;
     const {instructions, ingredients} = values;
 
@@ -34,7 +34,14 @@ function RecipeFormDetails(props) {
                     <IngredientFieldset 
                         values={values}
                         errorMsgs={errors}
-                        addToList={addToIngredients}
+                        addToList={e => {
+                            e.preventDefault()
+                            addToList('ingredients', [
+                                'ingredientDraft_name',
+                                'ingredientDraft_qty',
+                                'ingredientDraft_unit'
+                            ])
+                        }}
                     />
                     {ingredients && ingredients.length > 0 && ingredients.map((ing, i) => (
                         <Draggable draggableId={ing.id} index={i} key={ing.id} >
@@ -45,8 +52,7 @@ function RecipeFormDetails(props) {
                             >
                                 <ItemBtn type="button" onClick={e => {
                                         e.preventDefault();
-                                        const filtered = ingredients.filter(el => el.id !== ing.id);
-                                        setFormState(prev => ({ ...prev, values: { ...prev.values, ingredients: filtered }}))
+                                        removeFromList('ingredients', ing.id)
                                     }}
                                 >
                                     <FontAwesomeIcon icon={faTrash} />
@@ -73,10 +79,13 @@ function RecipeFormDetails(props) {
                         value={values.instructionDraft}
                         errorMsg={errors.instructionDraft}
                         onKeyDown={e => {
-                            if (e.key === "Enter") addToInstructions(e)
-                            return;
+                            if (e.key === "Enter") 
+                            addToList('instructions', ['instructionDraft'])
                         }}
-                        addToList={addToInstructions}
+                        onClick={e => { 
+                            e.preventDefault()
+                            addToList('instructions', ['instructionDraft'])
+                        }}
                     />
                     {instructions && instructions.length > 0 && instructions.map((instruction, i) => (
                         <Draggable draggableId={instruction.id} index={i} key={instruction.id} >
@@ -87,8 +96,7 @@ function RecipeFormDetails(props) {
                             >
                                 <ItemBtn type="button" onClick={e => {
                                         e.preventDefault();
-                                        const filtered = instructions.filter(inst => inst.id !== instruction.id);
-                                        setFormState(prev => ({ ...prev, values: { ...prev.values, instructions: filtered }}))
+                                        removeFromList('instructions', instruction.id)
                                     }}
                                 >
                                     <FontAwesomeIcon icon={faTrash} />

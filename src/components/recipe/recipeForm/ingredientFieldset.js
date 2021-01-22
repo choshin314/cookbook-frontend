@@ -36,7 +36,7 @@ function IngredientFieldset({values, errorMsgs, onChange, addToList}) {
                     label={{ text: 'Ingredient'}}
                     value={values.ingredientDraft_name}
                     errorMsg={errorMsgs.ingredientDraft_name}
-                    addToList={addToList}
+                    onClick={addToList}
                 />
                 
             </Fieldset>
