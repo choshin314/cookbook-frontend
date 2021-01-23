@@ -1,84 +1,73 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useReducer} from 'react'
 import {uuid} from 'uuidv4'
 import styled from 'styled-components'
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {DragDropContext} from 'react-beautiful-dnd'
 
+import {useForm} from '../../../hooks/form'
 import { CardWrapper, Button, media } from '../../commonStyles'
 import RecipeFormIntro from './recipeFormIntro'
 import RecipeFormDetails from './recipeFormDetails'
 
+const initValues = {
+    title: "",
+    introText: "",
+    prepTime: "",
+    cookTime: "",
+    servings: "",
+    instructionDraft: "",
+    instructions: [],
+    ingredientDraft_name: "",
+    ingredientDraft_qty: "",
+    ingredientDraft_unit: "",
+    ingredients: [],
+    tagDraft: "",
+    tags: []
+}
+
+function validateForm(vals) {
+    const errors = {};
+    const requiredFields = [
+        'title', 'introText', 'prepTime', 'cookTime', 'servings'
+    ]
+    const minMaxChars = { title: [8, 50], introText: [50, 400] };
+    const minMaxItems = { instructions: [5, 30], ingredients: [3, 30] };
+
+    for (let required of requiredFields) {
+        if (!vals[required]) errors[required] = "*Required"
+    };
+    for (let field in minMaxChars) {
+        if (vals[field].length < field[0]) {
+            errors[field] = `*Requires at least ${field[0]} characters`
+        } else if (vals[field].length > field[1]) {
+            errors[field] = `*Maximum of ${field[1]} characters`
+        }
+    };
+    for (let list in minMaxItems) {
+        if (vals[list].length < list[0]) {
+            errors[list] = `*Add at least ${list[0]} ${list}`
+        } else if (vals[list].length > list[1]) {
+            errors[list] = `*Too many ${list} (maximum of ${list[1]})`
+        }
+    };
+    return Object.keys(errors).length > 0 ?  errors : null;
+} 
+
 function RecipeForm() {
     const [step, setStep] = useState(1);
-    const [tags, setTags] = useState([]);
-    const [formState, setFormState] = useState({
-        values: {
-            title: "",
-            introText: "",
-            prepTime: "",
-            cookTime: "",
-            servings: "",
-            instructionDraft: "",
-            instructions: [],
-            ingredientDraft_name: "",
-            ingredientDraft_qty: "",
-            ingredientDraft_unit: "",
-            ingredients: []
-        },
-        errors: {
-        }
-    });
+    const {
+        inputVals, 
+        inputErrors, 
+        setInputVals,
+        handleChange, 
+        addToList, 
+        removeFromList, 
+        validateAndSubmit
+    } = useForm(initValues, handleSubmit, validateForm);
 
-    useEffect(() => window.scrollTo(0,0), [step])
+    async function handleSubmit() {
 
-    function handleChange(e) {
-        let {name, value, type, files} = e.target;
-        if (type === "file") {
-            setFormState({ ...formState, values: { ...formState.values, [name]: files[0] }});
-            return;
-        }
-        if (type === "number") {
-            value = parseFloat(value);
-        }
-        setFormState({ ...formState, values: { ...formState.values, [name]: value } });
-    }
-
-    function handleFieldsetChange(e) {
-        let {name, value, type} = e.target;
-        const fieldset_field = `${e.currentTarget.name}_${name}`
-        setFormState({...formState, values: {...formState.values, [fieldset_field]: value }})
-    }
-
-    function addToList(listKey, draftKeys) {
-        const newListItem = { id: uuid() };
-        if (draftKeys.length > 1) {
-            draftKeys.forEach(key => {
-                //ex. - instructionDraft_qty, instructionDraft_unit 
-                //map to newListItem as qty & unit
-                let keynameTail = key.split('_')[1]
-                newListItem[keynameTail] = formState.values[key];
-            })
-        } else {
-            newListItem.content = formState.values[draftKeys[0]];
-        }
-        const clearedDrafts = {};
-        draftKeys.forEach(draftKey => clearedDrafts[draftKey] = '')
-
-        setFormState({
-            ...formState, 
-            values: {
-                ...formState.values, 
-                ...clearedDrafts,
-                [listKey]: [...formState.values[listKey], newListItem],
-            }
-        })
-    }
-
-    function removeFromList(listKey, listItemId) {
-        const currentList = formState.values[listKey];
-        const filtered = currentList.filter(el => el.id !== listItemId);
-        setFormState(prev => ({ ...prev, values: { ...prev.values, [listKey]: filtered }}))
     }
 
     function handleDragEnd(result) {
@@ -91,13 +80,16 @@ function RecipeForm() {
             source.index === destination.index
         ) return; 
 
-        const newItems = [...formState.values[source.droppableId]];
+        const newItems = [...inputVals[source.droppableId]];
         const draggedItem = newItems[source.index];
         newItems.splice(source.index, 1);
         newItems.splice(destination.index, 0, draggedItem);
-        setFormState(prev => ({...prev, values: {...prev.values, [source.droppableId]: newItems}}));
+        setInputVals(prev => ({...prev, [source.droppableId]: newItems}));
     }
-    console.log(formState)
+
+    useEffect(() => window.scrollTo(0,0), [step])
+    console.log(inputVals)
+
     return (
         <Card>
             <DragDropContext onDragEnd={handleDragEnd} >
@@ -106,11 +98,11 @@ function RecipeForm() {
                     <>
                     <RecipeFormIntro 
                         step={step}
-                        values={formState.values} 
-                        errors={formState.errors} 
-                        handleChange
-                        tags={tags}
-                        setTags={setTags}
+                        values={inputVals} 
+                        errors={inputErrors} 
+                        handleChange={handleChange}
+                        addToList={addToList}
+                        removeFromList={removeFromList}
                     />
                     <FormBtn type="button"className="align-right" 
                         onClick={(e) => {
@@ -127,10 +119,9 @@ function RecipeForm() {
                     <>
                     <RecipeFormDetails
                         step={step}
-                        values={formState.values}
-                        errors={formState.errors}
+                        values={inputVals}
+                        errors={inputErrors}
                         handleChange={handleChange}
-                        setFormState={setFormState}
                         addToList={addToList}
                         removeFromList={removeFromList}
                     />

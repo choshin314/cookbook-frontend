@@ -1,13 +1,15 @@
 import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {CSSTransition} from 'react-transition-group'
+import {Draggable} from 'react-beautiful-dnd'
 
 import { GridContainer, GridColumn, media } from '../../commonStyles'
 import ImgInput from '../../shared/imgInput'
 import Input from '../../shared/input'
-import TagInput from '../../shared/tagInput'
+import TagListInput from './tagListInput'
+import ListInputWrapper from '../../shared/listInputWrapper'
 
-function RecipeFormIntro({step, values, errors, handleChange, tags, setTags}) {
+function RecipeFormIntro({step, values, errors, handleChange, addToList, removeFromList}) {
 
     return (
         <CSSTransition
@@ -46,7 +48,12 @@ function RecipeFormIntro({step, values, errors, handleChange, tags, setTags}) {
                 </Grid>
                 <Grid as="div" colsLg="6" gap="0">
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
-                        <TagInput tags={tags} setTags={setTags} />
+                        <TagListInput
+                            addToList={addToList}
+                            removeFromList={removeFromList}
+                            values={values}
+                            errors={errors}
+                        />
                     </GridColumn>
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
                         <Flex>
@@ -58,7 +65,6 @@ function RecipeFormIntro({step, values, errors, handleChange, tags, setTags}) {
                                 label={{ text: "Prep (Mins.)", hide: false }}
                                 placeholder="" 
                                 value={values.prepTime}
-                                // onChange={handleChange}
                                 errorMsg={errors.prepTime}
                             />
                             <Input 
@@ -69,7 +75,6 @@ function RecipeFormIntro({step, values, errors, handleChange, tags, setTags}) {
                                 label={{ text: "Cook (Mins.)", hide: false }}
                                 placeholder="" 
                                 value={values.cookTime}
-                                // onChange={handleChange}
                                 errorMsg={errors.cookTime}
                             />
                             <Input 
@@ -80,7 +85,6 @@ function RecipeFormIntro({step, values, errors, handleChange, tags, setTags}) {
                                 label={{ text: "Servings", hide: false }}
                                 placeholder="" 
                                 value={values.servings}
-                                // onChange={handleChange}
                                 errorMsg={errors.servings}
                             />
                         </Flex>
@@ -110,3 +114,4 @@ const Flex = styled.div`
         }
     }
 `
+

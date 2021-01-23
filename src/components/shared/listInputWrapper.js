@@ -3,11 +3,14 @@ import {Droppable} from 'react-beautiful-dnd'
 import styled from 'styled-components'
 
 import {media} from '../commonStyles'
+import FormFeedback from './formFeedback'
 
 function ListInputWrapper(props) {
     const { 
         droppableId,
+        droppableDirection,
         direction,
+        listErrorMsg,
         children,
     } = props;
 
@@ -18,7 +21,7 @@ function ListInputWrapper(props) {
                     and Tags, IngredientFieldset for ingredients) */}
                 {children[0]} 
             </InputWrapper>
-            <Droppable droppableId={droppableId}>
+            <Droppable droppableId={droppableId} direction={droppableDirection}>
                 {(provided) => (
                     <ListContainer ref={provided.innerRef} {...provided.droppableProps}>
                         <List direction={direction}>
@@ -28,6 +31,9 @@ function ListInputWrapper(props) {
                     </ListContainer>
                 )}
             </Droppable>
+            <FormFeedback 
+                errorMsg={listErrorMsg}
+            />
         </Container>
     )
 }

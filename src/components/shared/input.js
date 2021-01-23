@@ -15,7 +15,6 @@ function Input(props) {
         min,
         textRows,
         autoFocus, 
-        onChange,
         onKeyDown,
         onClick,
         value, 

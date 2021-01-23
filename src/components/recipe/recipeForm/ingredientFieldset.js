@@ -3,15 +3,22 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 
 import Input from '../../shared/input'
+import FormFeedback from '../../shared/formFeedback'
 import {Button} from '../../commonStyles'
 import AddBtn from '../../shared/addBtn'
 
-function IngredientFieldset({values, errorMsgs, onChange, addToList}) {
+function IngredientFieldset({values, draftError, errorMsgs, addToList}) {
 
     return (
         <Container>
             <Label htmlFor="ingredientDraftSet">Add Ingredients</Label>
-            <Fieldset id="ingredientDraftSet" name="ingredientDraft" >
+            <Fieldset 
+                id="ingredientDraftSet" 
+                name="ingredientDraft" 
+                onKeyDown={e => {
+                    if (e.key === "Enter") addToList(e)
+                }}
+            >
                 <Input 
                     type="number"
                     name="ingredientDraft_qty"
@@ -20,6 +27,7 @@ function IngredientFieldset({values, errorMsgs, onChange, addToList}) {
                     min="0"
                     value={values.ingredientDraft_qty}
                     errorMsg={errorMsgs.ingredientDraft_qty}
+                    autoFocus={true}
                 />
                 <Input 
                     type="text"
@@ -40,7 +48,9 @@ function IngredientFieldset({values, errorMsgs, onChange, addToList}) {
                 />
                 
             </Fieldset>
-            
+            <FormFeedback 
+                errorMsg={draftError}
+            />
         </Container>
     )
 }
