@@ -4,22 +4,25 @@ import {Main} from '../components/commonStyles'
 import RecipeForm from '../components/recipe/recipeForm/recipeForm.js'
 
 const initValues = {
-    title: "",
-    introText: "",
-    prepTime: "",
-    cookTime: "",
-    servings: "",
+    title: "Soupy Nuts",
+    introText: "These are my grandma's soupy nuts!",
+    prepTime: 10,
+    cookTime: 15,
+    servings: 3,
     instructionDraft: "",
-    instructions: [],
+    instructions: [
+        {id: "1", content: "Crush dem nuts for fifteen mins!"}, 
+        {id: "2", content: "Then do it again but for 10 minutes!"}
+    ],
     ingredientDraft_name: "",
     ingredientDraft_qty: "",
     ingredientDraft_unit: "",
     ingredients: [],
     tagDraft: "",
-    tags: []
+    tags: [{id: "1", content: "keto"}, {id: "2", content: "carby"}]
 }
 
-function RecipeCreatePage() {
+function RecipeUpdatePage() {
     return (
         <Main>
             <RecipeForm 
@@ -31,7 +34,7 @@ function RecipeCreatePage() {
     )
 }
 
-export default RecipeCreatePage
+export default RecipeUpdatePage
 
 
 function validateForm(vals) {

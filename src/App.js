@@ -6,6 +6,7 @@ import Home from './pages/home'
 import ProfilePage from './pages/profilePage'
 import RecipePage from './pages/recipePage'
 import RecipeCreatePage from './pages/recipeCreatePage'
+import RecipeUpdatePage from './pages/recipeUpdatePage'
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path="/recipes/create">
             <RecipeCreatePage />
+          </Route>
+          <Route path="/recipes/update/:id">
+            <RecipeUpdatePage />
           </Route>
         </Switch>
       </Layout>

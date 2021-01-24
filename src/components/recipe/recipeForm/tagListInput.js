@@ -1,14 +1,18 @@
-import {useState} from 'react'
+import { useState, useContext } from 'react'
 import styled from 'styled-components'
-import {Draggable} from 'react-beautiful-dnd'
 
 import ListInputWrapper from '../../shared/listInputWrapper'
 import Input from '../../shared/input'
+import { RecipeFormContext } from './recipeForm'
 
 const KEYS = [",", "Enter"];
 
-function TagListInput({ addToList, removeFromList, values, errors }) {
-    const [draftError, setDraftError] = useState()
+function TagListInput() {
+    const [ draftError, setDraftError ] = useState();
+    const { 
+        addToList, removeFromList, inputValues : values, inputErrors : errors
+    } = useContext(RecipeFormContext);
+
     function validateAndSubmitTag(e) {
         e.preventDefault();
         setDraftError(null);
@@ -26,7 +30,6 @@ function TagListInput({ addToList, removeFromList, values, errors }) {
 
     return (
         <ListInputWrapper
-            droppableId="tags"
             direction="row"
             listErrorMsg={errors.tags}
         >
@@ -44,22 +47,18 @@ function TagListInput({ addToList, removeFromList, values, errors }) {
             />
 
             {values.tags && values.tags.length > 0 && values.tags.map((tag, i) => (
-                <Draggable draggableId={tag.id} index={i} key={tag.id} >
-                    {(provided) => (
-                        <Tag 
-                            ref={provided.innerRef} 
-                        >
-                            <button
-                                type="button" 
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    removeFromList('tags', tag.id)
-                                }}
-                            >X</button>
-                            {tag.content}
-                        </Tag>
-                    )}
-                </Draggable>
+                <Tag 
+                    key={tag.id}
+                >
+                    <button
+                        type="button" 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            removeFromList('tags', tag.id)
+                        }}
+                    >X</button>
+                    {tag.content}
+                </Tag>
             ))}
         </ListInputWrapper>
     )

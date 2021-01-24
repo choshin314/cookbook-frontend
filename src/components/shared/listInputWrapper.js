@@ -21,7 +21,7 @@ function ListInputWrapper(props) {
                     and Tags, IngredientFieldset for ingredients) */}
                 {children[0]} 
             </InputWrapper>
-            <Droppable droppableId={droppableId} direction={droppableDirection}>
+            {droppableId && (<Droppable droppableId={droppableId} direction={droppableDirection}>
                 {(provided) => (
                     <ListContainer ref={provided.innerRef} {...provided.droppableProps}>
                         <List direction={direction}>
@@ -30,7 +30,12 @@ function ListInputWrapper(props) {
                         </List>
                     </ListContainer>
                 )}
-            </Droppable>
+            </Droppable>)}
+            {!droppableId && (<ListContainer>
+                <List direction={direction}>
+                    {children[1]}
+                </List>
+            </ListContainer>)}
             <FormFeedback 
                 errorMsg={listErrorMsg}
             />

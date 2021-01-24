@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import styled from 'styled-components'
 import {Draggable} from 'react-beautiful-dnd'
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
@@ -8,12 +8,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Button} from '../../commonStyles'
 import ListInputWrapper from '../../shared/listInputWrapper'
 import Input from '../../shared/input'
+import { RecipeFormContext } from './recipeForm'
 
 const KEYS = [",", "Enter"];
 
-function InstructionListInput({ addToList, removeFromList, values, errors }) {
+function InstructionListInput() {
     const [draftError, setDraftError] = useState();
-    const { instructions, instructionDraft } = values;
+    const { addToList, removeFromList, inputValues, inputErrors : errors } = useContext(RecipeFormContext);
+    const { instructions, instructionDraft } = inputValues;
     function validateAndAdd(e) {
         e.preventDefault();
         setDraftError(null);

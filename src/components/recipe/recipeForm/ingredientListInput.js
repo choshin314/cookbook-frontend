@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useContext, useRef} from 'react'
 import styled from 'styled-components'
 import {Draggable} from 'react-beautiful-dnd'
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
@@ -8,15 +8,18 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Button} from '../../commonStyles'
 import ListInputWrapper from '../../shared/listInputWrapper'
 import IngredientFieldset from './ingredientFieldset'
+import { RecipeFormContext } from './recipeForm'
 
-function IngredientListInput({ addToList, removeFromList, values, errors }) {
+function IngredientListInput() {
+    const fieldsetRef = useRef(null);
     const [draftError, setDraftError] = useState();
+    const { addToList, removeFromList, inputValues, inputErrors : errors} = useContext(RecipeFormContext);
     const { 
         ingredients, 
         ingredientDraft_qty, 
         ingredientDraft_unit, 
         ingredientDraft_name 
-    } = values;
+    } = inputValues;
 
     function validateAndAdd(e) {
         e.preventDefault();
@@ -28,6 +31,7 @@ function IngredientListInput({ addToList, removeFromList, values, errors }) {
             return setDraftError('Ingredients must be at least 3 characters')
         } 
         addToList('ingredients', ['ingredientDraft_unit','ingredientDraft_qty','ingredientDraft_name'])
+        fieldsetRef.current.querySelector('input').focus() //refocus on "qty" input
     }
 
     return (
@@ -36,7 +40,8 @@ function IngredientListInput({ addToList, removeFromList, values, errors }) {
             direction="column"
         >
             <IngredientFieldset 
-                values={values}
+                ref={fieldsetRef}
+                values={inputValues}
                 errorMsgs={errors}
                 addToList={validateAndAdd}
                 draftError={draftError}

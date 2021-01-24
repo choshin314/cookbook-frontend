@@ -1,14 +1,14 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import styled, {css} from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 
 import {Button} from '../commonStyles'
 import FormFeedback from './formFeedback'
+import {RecipeFormContext} from '../recipe/recipeForm/recipeForm'
 
 function Input(props) {
     const {
-        id, 
         name, 
         placeholder, 
         charLimit,
@@ -17,20 +17,20 @@ function Input(props) {
         autoFocus, 
         onKeyDown,
         onClick,
-        value, 
         type, 
         label,
         errorMsg
     } = props;
 
     const [charCount, setCharCount] = useState(0);
+    const { inputValues, inputErrors } = useContext(RecipeFormContext);
 
     return (
         <Container>
-            <Label htmlFor={id} hidden={label.hide}>{label.text}</Label>
+            <Label htmlFor={name} hidden={label.hide}>{label.text}</Label>
             {type === "textarea" && (
                 <Textarea
-                    id={id} 
+                    id={name} 
                     name={name} 
                     type={type}
                     autoFocus={autoFocus}
@@ -38,13 +38,13 @@ function Input(props) {
                     onChange={(e) => {
                         setCharCount(e.target.value.length);
                     }}
-                    value={value}
+                    value={inputValues[name]}
                     rows={textRows}
                 />
             )}
             {type !== "textarea" && !onClick && (
                 <StyledInput 
-                    id={id} 
+                    id={name} 
                     name={name} 
                     type={type}
                     autoFocus={autoFocus}
@@ -54,13 +54,13 @@ function Input(props) {
                     }}
                     onKeyDown={onKeyDown}
                     min={min}
-                    value={value}
+                    value={inputValues[name]}
                 />
             )}
             {onClick && (
                 <FlexRow>
                     <StyledInput 
-                        id={id} 
+                        id={name} 
                         name={name} 
                         type={type}
                         autoFocus={autoFocus}
@@ -70,7 +70,7 @@ function Input(props) {
                         }}
                         onKeyDown={onKeyDown}
                         min={min}
-                        value={value}
+                        value={inputValues[name]}
                     />
                     <AddItemBtn 
                         type="button" 
@@ -81,7 +81,7 @@ function Input(props) {
                 
             )}
             <FormFeedback 
-                errorMsg={errorMsg}
+                errorMsg={errorMsg || inputErrors[name]}
                 charCount={charCount}
                 charLimit={charLimit}
             />

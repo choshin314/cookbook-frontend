@@ -1,8 +1,14 @@
+import {useContext} from 'react'
 import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faImage} from '@fortawesome/free-regular-svg-icons'
 
-function ImgInput({name, title, file, onChange}) {
+import {RecipeFormContext} from '../recipe/recipeForm/recipeForm'
+
+function ImgInput({name, title }) {
+    const { inputValues } = useContext(RecipeFormContext);
+    const file = inputValues[name];
+
     return (
         <Container>
             <InputWrapper>
@@ -21,7 +27,6 @@ function ImgInput({name, title, file, onChange}) {
                     type="file" 
                     name={name} 
                     accept="image/png, image/jpeg, image/jpg"
-                    onChange={onChange} 
                 />
                 <Label htmlFor={`${title}-file-input`}>
                     Select {title} image

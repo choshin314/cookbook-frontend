@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
@@ -7,22 +8,22 @@ import FormFeedback from '../../shared/formFeedback'
 import {Button} from '../../commonStyles'
 import AddBtn from '../../shared/addBtn'
 
-function IngredientFieldset({values, draftError, errorMsgs, addToList}) {
-
+const IngredientFieldset = React.forwardRef((props, ref) => {
+    const {values, draftError, errorMsgs, addToList} = props;
     return (
         <Container>
             <Label htmlFor="ingredientDraftSet">Add Ingredients</Label>
             <Fieldset 
+                ref={ref}
                 id="ingredientDraftSet" 
-                name="ingredientDraft" 
+                name="ingredientDraftSet" 
                 onKeyDown={e => {
-                    if (e.key === "Enter") addToList(e)
+                    if (e.key === "Enter") addToList(e);
                 }}
             >
                 <Input 
                     type="number"
                     name="ingredientDraft_qty"
-                    id="qty"
                     label={{ text: 'Qty'}}
                     min="0"
                     value={values.ingredientDraft_qty}
@@ -32,7 +33,6 @@ function IngredientFieldset({values, draftError, errorMsgs, addToList}) {
                 <Input 
                     type="text"
                     name="ingredientDraft_unit"
-                    id="unit"
                     label={{ text: 'Units'}}
                     value={values.ingredientDraft_unit}
                     errorMsg={errorMsgs.ingredientDraft_unit}
@@ -40,7 +40,6 @@ function IngredientFieldset({values, draftError, errorMsgs, addToList}) {
                 <Input 
                     type="text"
                     name="ingredientDraft_name"
-                    id="ingName"
                     label={{ text: 'Ingredient'}}
                     value={values.ingredientDraft_name}
                     errorMsg={errorMsgs.ingredientDraft_name}
@@ -53,7 +52,7 @@ function IngredientFieldset({values, draftError, errorMsgs, addToList}) {
             />
         </Container>
     )
-}
+})
 
 export default IngredientFieldset
 

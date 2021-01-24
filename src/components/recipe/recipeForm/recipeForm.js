@@ -1,5 +1,4 @@
-import {useState, useEffect, useReducer} from 'react'
-import {uuid} from 'uuidv4'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -10,100 +9,34 @@ import { CardWrapper, Button, media } from '../../commonStyles'
 import RecipeFormIntro from './recipeFormIntro'
 import RecipeFormDetails from './recipeFormDetails'
 
-const initValues = {
-    title: "",
-    introText: "",
-    prepTime: "",
-    cookTime: "",
-    servings: "",
-    instructionDraft: "",
-    instructions: [],
-    ingredientDraft_name: "",
-    ingredientDraft_qty: "",
-    ingredientDraft_unit: "",
-    ingredients: [],
-    tagDraft: "",
-    tags: []
-}
+export const RecipeFormContext = React.createContext();
 
-function validateForm(vals) {
-    const errors = {};
-    const requiredFields = [
-        'title', 'introText', 'prepTime', 'cookTime', 'servings'
-    ]
-    const minMaxChars = { title: [8, 50], introText: [50, 400] };
-    const minMaxItems = { instructions: [5, 30], ingredients: [3, 30] };
-
-    for (let required of requiredFields) {
-        if (!vals[required]) errors[required] = "*Required"
-    };
-    for (let field in minMaxChars) {
-        if (vals[field].length < field[0]) {
-            errors[field] = `*Requires at least ${field[0]} characters`
-        } else if (vals[field].length > field[1]) {
-            errors[field] = `*Maximum of ${field[1]} characters`
-        }
-    };
-    for (let list in minMaxItems) {
-        if (vals[list].length < list[0]) {
-            errors[list] = `*Add at least ${list[0]} ${list}`
-        } else if (vals[list].length > list[1]) {
-            errors[list] = `*Too many ${list} (maximum of ${list[1]})`
-        }
-    };
-    return Object.keys(errors).length > 0 ?  errors : null;
-} 
-
-function RecipeForm() {
+function RecipeForm({ initValues, validateForm, handleSubmit }) {
     const [step, setStep] = useState(1);
     const {
-        inputVals, 
+        inputValues, 
         inputErrors, 
-        setInputVals,
         handleChange, 
+        handleDragEnd,
         addToList, 
         removeFromList, 
         validateAndSubmit
-    } = useForm(initValues, handleSubmit, validateForm);
-
-    async function handleSubmit() {
-
-    }
-
-    function handleDragEnd(result) {
-        const {source, destination} = result;
-        if (!destination) return; 
-        //disallow dragging items to other lists
-        if (source.droppableId !== destination.droppableId) return; 
-        if (    //if no delta, return
-            source.droppableId === destination.droppableId &&
-            source.index === destination.index
-        ) return; 
-
-        const newItems = [...inputVals[source.droppableId]];
-        const draggedItem = newItems[source.index];
-        newItems.splice(source.index, 1);
-        newItems.splice(destination.index, 0, draggedItem);
-        setInputVals(prev => ({...prev, [source.droppableId]: newItems}));
-    }
+    } = useForm(initValues, validateForm, handleSubmit );
 
     useEffect(() => window.scrollTo(0,0), [step])
-    console.log(inputVals)
+    console.log(inputValues)
 
     return (
         <Card>
-            <DragDropContext onDragEnd={handleDragEnd} >
+            <RecipeFormContext.Provider value={{
+                inputValues, inputErrors, addToList, removeFromList
+            }}>
+            
+            
             <Form onChange={handleChange}>
                 {step === 1 && (
                     <>
-                    <RecipeFormIntro 
-                        step={step}
-                        values={inputVals} 
-                        errors={inputErrors} 
-                        handleChange={handleChange}
-                        addToList={addToList}
-                        removeFromList={removeFromList}
-                    />
+                    <RecipeFormIntro step={step} />
                     <FormBtn type="button"className="align-right" 
                         onClick={(e) => {
                             e.preventDefault();
@@ -116,15 +49,8 @@ function RecipeForm() {
                     </>
                 )}
                 {step === 2 && (
-                    <>
-                    <RecipeFormDetails
-                        step={step}
-                        values={inputVals}
-                        errors={inputErrors}
-                        handleChange={handleChange}
-                        addToList={addToList}
-                        removeFromList={removeFromList}
-                    />
+                    <DragDropContext onDragEnd={handleDragEnd} >
+                    <RecipeFormDetails step={step} />
                     <FormBtn type="button"
                         onClick={(e) => {
                             e.preventDefault();
@@ -134,10 +60,12 @@ function RecipeForm() {
                         <FontAwesomeIcon icon={faChevronLeft}/>
                         <span>Back to Intro</span>
                     </FormBtn>
-                    </>
+                    </DragDropContext>
                 )}
             </Form>
-            </DragDropContext>
+            
+            
+            </RecipeFormContext.Provider>
         </Card>
     )
 }
