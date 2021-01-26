@@ -10,8 +10,51 @@ import RecipeFormIntro from './recipeFormIntro'
 import RecipeFormDetails from './recipeFormDetails'
 
 export const RecipeFormContext = React.createContext();
+const constraints = {
+    title: {
+        required: true,
+        minChars: 5,
+        maxChars: 50
+    },
+    introText: {
+        required: true,
+        minChars: 50,
+        maxChars: 400
+    },
+    servings: {
+        required: true
+    },
+    prepTime: {
+        required: true
+    },
+    cookTime: {
+        required: true
+    },
+    coverImg: {
+        required: true,
+        size: 5120,
+        type: ["image/jpeg", "image/jpg", "image/png"]
+    },
+    instructions: {
+        required: true,
+        minItems: 4,
+        maxItems: 30
+    },
+    ingredients: {
+        required: true,
+        minItems: 3,
+        maxItems: 30
+    },
+    tags: null,
+    tagDraft: null,
+    instructionDraft: null,
+    ingredientDraft_qty: null,
+    ingredientDraft_unit: null,
+    ingredientDraft_name: null
 
-function RecipeForm({ initValues, validateForm, handleSubmit }) {
+}
+
+function RecipeForm({ initValues, handleSubmit }) {
     const [step, setStep] = useState(1);
     const {
         inputValues, 
@@ -21,7 +64,7 @@ function RecipeForm({ initValues, validateForm, handleSubmit }) {
         addToList, 
         removeFromList, 
         validateAndSubmit
-    } = useForm(initValues, validateForm, handleSubmit );
+    } = useForm(initValues, constraints, handleSubmit, 'recipeForm', 'coverImg' );
 
     useEffect(() => window.scrollTo(0,0), [step])
     console.log(inputValues)
@@ -33,7 +76,7 @@ function RecipeForm({ initValues, validateForm, handleSubmit }) {
             }}>
             
             
-            <Form onChange={handleChange}>
+            <Form onChange={handleChange} onSubmit={validateAndSubmit}>
                 {step === 1 && (
                     <>
                     <RecipeFormIntro step={step} />
@@ -62,6 +105,7 @@ function RecipeForm({ initValues, validateForm, handleSubmit }) {
                     </FormBtn>
                     </DragDropContext>
                 )}
+                <button type="submit" >submit</button>
             </Form>
             
             

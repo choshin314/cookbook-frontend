@@ -38,6 +38,7 @@ function IngredientListInput() {
         <ListInputWrapper 
             droppableId="ingredients"
             direction="column"
+            listErrorMsg={errors.ingredients}
         >
             <IngredientFieldset 
                 ref={fieldsetRef}

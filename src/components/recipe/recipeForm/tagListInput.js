@@ -22,6 +22,7 @@ function TagListInput() {
         if (tagLength < 4 || tagLength > 16) {
             return setDraftError('Tags must be between 4 and 16 characters')
         } 
+        if (!/^[a-zA-Z]+$/.test(trimmed)) return setDraftError('Tags must contain letters only')
         if (tagExists) {
             return setDraftError('That tag has already been added');
         }

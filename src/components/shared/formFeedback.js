@@ -20,6 +20,7 @@ const Feedback = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 5px;
+    min-height: 19px;
 `
 const ErrorMsg = styled.span`
     font-size: 1rem;
