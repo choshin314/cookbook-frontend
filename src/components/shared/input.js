@@ -5,11 +5,11 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons'
 
 import {Button} from '../commonStyles'
 import FormFeedback from './formFeedback'
-import {RecipeFormContext} from '../recipe/recipeForm/recipeForm'
 
 function Input(props) {
     const {
         name, 
+        value,
         placeholder, 
         charLimit,
         min,
@@ -23,11 +23,10 @@ function Input(props) {
     } = props;
 
     const [charCount, setCharCount] = useState(0);
-    const { inputValues, inputErrors } = useContext(RecipeFormContext);
 
     return (
         <Container>
-            <Label htmlFor={name} hidden={label.hide}>{label.text}</Label>
+            <Label htmlFor={name} >{label.text}</Label>
             {type === "textarea" && (
                 <Textarea
                     id={name} 
@@ -38,7 +37,7 @@ function Input(props) {
                     onChange={(e) => {
                         setCharCount(e.target.value.length);
                     }}
-                    value={inputValues[name]}
+                    value={value}
                     rows={textRows}
                 />
             )}
@@ -54,7 +53,7 @@ function Input(props) {
                     }}
                     onKeyDown={onKeyDown}
                     min={min}
-                    value={inputValues[name]}
+                    value={value}
                 />
             )}
             {onClick && (
@@ -70,7 +69,7 @@ function Input(props) {
                         }}
                         onKeyDown={onKeyDown}
                         min={min}
-                        value={inputValues[name]}
+                        value={value}
                     />
                     <AddItemBtn 
                         type="button" 
@@ -81,7 +80,7 @@ function Input(props) {
                 
             )}
             <FormFeedback 
-                errorMsg={errorMsg || inputErrors[name]}
+                errorMsg={errorMsg}
                 charCount={charCount}
                 charLimit={charLimit}
             />

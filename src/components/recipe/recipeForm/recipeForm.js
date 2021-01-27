@@ -79,7 +79,7 @@ function RecipeForm({ initValues, handleSubmit }) {
             <Form onChange={handleChange} onSubmit={validateAndSubmit}>
                 {step === 1 && (
                     <>
-                    <RecipeFormIntro step={step} />
+                    <RecipeFormIntro step={step} inputValues={inputValues} inputErrors={inputErrors}/>
                     <FormBtn type="button"className="align-right" 
                         onClick={(e) => {
                             e.preventDefault();

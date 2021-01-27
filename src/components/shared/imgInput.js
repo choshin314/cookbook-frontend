@@ -3,11 +3,7 @@ import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faImage} from '@fortawesome/free-regular-svg-icons'
 
-import {RecipeFormContext} from '../recipe/recipeForm/recipeForm'
-
-function ImgInput({name, title }) {
-    const { inputValues } = useContext(RecipeFormContext);
-    const file = inputValues[name];
+function ImgInput({name, title, file }) {
 
     return (
         <Container>

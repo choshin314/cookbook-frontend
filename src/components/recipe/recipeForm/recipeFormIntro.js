@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import styled from 'styled-components'
 import {CSSTransition} from 'react-transition-group'
 import {Draggable} from 'react-beautiful-dnd'
@@ -9,7 +9,7 @@ import Input from '../../shared/input'
 import TagListInput from './tagListInput'
 import ListInputWrapper from '../../shared/listInputWrapper'
 
-function RecipeFormIntro({step}) {
+function RecipeFormIntro({step, inputValues, inputErrors}) {
 
     return (
         <CSSTransition
@@ -22,17 +22,21 @@ function RecipeFormIntro({step}) {
             <section>
                 <Grid as="div" colsLg="6" gap="0">
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
-                        <ImgInput name="coverImg" title="cover"/>
+                        <ImgInput name="coverImg" title="cover" file={inputValues.coverImg}/>
                     </GridColumn>
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
                         <Input 
                             name="title"
+                            value={inputValues.title}
+                            errorMsg={inputErrors.title}
                             type="text" 
                             label={{ text: "Recipe Title", hide: false }}
                             placeholder="What are we making?" 
                         />
                         <Input 
                             name="introText"
+                            value={inputValues.introText}
+                            errorMsg={inputErrors.introText}
                             type="textarea"
                             placeholder="Give a short and sweet intro about your recipe"
                             label={{ text: "Introduction", hide: false }}
@@ -49,6 +53,8 @@ function RecipeFormIntro({step}) {
                         <Flex>
                             <Input 
                                 name="prepTime"
+                                value={inputValues.prepTime}
+                                errorMsg={inputErrors.prepTime}
                                 type="number" 
                                 min={1}
                                 label={{ text: "Prep (Mins.)", hide: false }}
@@ -56,6 +62,8 @@ function RecipeFormIntro({step}) {
                             />
                             <Input 
                                 name="cookTime"
+                                value={inputValues.cookTime}
+                                errorMsg={inputErrors.cookTime}
                                 type="number" 
                                 min={1}
                                 label={{ text: "Cook (Mins.)", hide: false }}
@@ -63,6 +71,8 @@ function RecipeFormIntro({step}) {
                             />
                             <Input 
                                 name="servings"
+                                value={inputValues.servings}
+                                errorMsg={inputErrors.servings}
                                 type="number" 
                                 min={1}
                                 label={{ text: "Servings", hide: false }}
