@@ -9,7 +9,7 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
     const [ inputErrors, setInputErrors ] = useState({}); 
     const [ isSubmitting, setIsSubmitting ] = useState(false);
     const [ formErrors, setFormErrors ] = useState([]); //server error msg
-    const [ success, setSuccess ] = useState(false);
+    const [ success, setSuccess ] = useState(null);
 
     useEffect(() => {
         setLocalStorage(formName, { ...inputValues, [imgName]: '' });
@@ -18,33 +18,52 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
     function handleChange(e) {
         const {name, value, type, files } = e.target;
         switch (type) {
-            case "text":
-                setInputValues({ ...inputValues, [name]: value });
-                break;
-            case "textarea":
-                setInputValues({ ...inputValues, [name]: value });
-                break;
             case "number":
                 setInputValues({ ...inputValues, [name]: parseFloat(value) });
                 break;
             case "file":
                 setInputValues({ ...inputValues, [name]: files[0] });
                 break;
+            default: 
+                setInputValues({ ...inputValues, [name]: value });
         }
     }
 
+    function clearInputs() {
+        setInputValues(initValues);
+        localStorage.removeItem(formName);
+    }
+
+    //useForm should take in constraints, which will get passed to the validation function
+    //useForm should also take in handleSubmit
+    //on form submit, validateAndSubmit will:
+        //clear previous form error messages
+        //call form validation function and return any validation errors
+        //if errors, set error messages and exit before any ajax ops
+    //if validation passes, set isSubmitting to true (mount loading spinner)
+    //call the handleSubmit, which will return either:
+        //an error message from the server, or
+        //a 'success' object, which has the message to display on the success modal
+        //and the next path to push to history (e.g., recipe page after recipe creation)
     async function validateAndSubmit(e) {
         e.preventDefault();
+        console.log('hello')
         setInputErrors({});
         setFormErrors([]);
-        let { inputWarnings, formWarnings } = validateForm(inputValues, constraints); //returns errors obj and arr 
-        if (inputWarnings) {
-            setInputErrors(prev => inputWarnings); 
-            return setFormErrors(prev => formWarnings);
+        const validationErrors = validateForm(inputValues, constraints); 
+        //returns errors obj and arr, or null if validation passes 
+        if (validationErrors) {
+            setInputErrors(prev => validationErrors.inputErrors); 
+            return setFormErrors(prev => validationErrors.formErrors);
         }   //exit before ajax 
         setIsSubmitting(prev => true);
-        await handleSubmit(inputValues, setFormErrors, setSuccess);
+        const { error, success } = await handleSubmit(inputValues);
         setIsSubmitting(prev => !prev);
+        if (error) return setFormErrors([error]);
+        if (success) {
+            clearInputs();
+            return setSuccess({ msg: success.msg, nextRoute: success.nextRoute });
+        }
     }
 
     function addToList(listKey, draftKeys) {
@@ -116,47 +135,49 @@ function getInitValuesConstraints(fields) {
 }
 
 function validateForm(values, constraints) {
-    let inputWarnings = {};
-    let formWarnings = [];
+    let inputErrors = {};
+    let formErrors = [];
     for (let key in values) {
         if (!constraints[key]) continue;
         const { 
             required, minChars, maxChars, minItems, maxItems, pattern, size, type
         } = constraints[key]
+        
+        if (!required && !values[key]) continue; //skip validation if not required + no value
 
         if (pattern && pattern.regex && !pattern.regex.test(values[key])) {
-            inputWarnings[key] = pattern.failMsg;
-            formWarnings.push(`${key.toUpperCase()}: ${pattern.failMsg}`)
+            inputErrors[key] = pattern.failMsg;
+            formErrors.push(`${key.toUpperCase()}: ${pattern.failMsg}`)
         }
         if (size && values[key].size > size) {
-            let sizeDisplay = size < 1024 ? `${size}kb` : `${(size/1024).toFixed(1)}mb`
-            inputWarnings[key] = `Maximum file size is ${sizeDisplay}`;
-            formWarnings.push(`IMAGE: Maximum file size is ${sizeDisplay}`)
+            let sizeDisplay = size < 1024000 ? `${size/1000}kb` : `${Math.round(size/1024000)}mb`
+            inputErrors[key] = `Maximum file size is ${sizeDisplay}`;
+            formErrors.push(`IMAGE: Maximum file size is ${sizeDisplay}`)
         }
         if (type && !type.includes(values[key].type)) {
-            inputWarnings[key] = `Must be one of the following: ${type.join(', ')}`;
-            formWarnings.push(`IMAGE: Accepted file types: ${type.join(', ')}`);
+            inputErrors[key] = `Must be one of the following: ${type.join(', ')}`;
+            formErrors.push(`IMAGE: Accepted file types: ${type.join(', ')}`);
         }
         if (minChars && values[key].length < minChars) {
-            inputWarnings[key] = `*Minimum ${minChars} characters`;
-            formWarnings.push(`${key.toUpperCase()}: Minimum ${minChars} characters required`);
+            inputErrors[key] = `*Minimum ${minChars} characters`;
+            formErrors.push(`${key.toUpperCase()}: Minimum ${minChars} characters required`);
         }
         if (maxChars && values[key].length > maxChars) {
-            inputWarnings[key] = `*Maximum ${maxChars} characters`;
-            formWarnings.push(`${key.toUpperCase()}: Maximum ${maxChars} characters allowed`);
+            inputErrors[key] = `*Maximum ${maxChars} characters`;
+            formErrors.push(`${key.toUpperCase()}: Maximum ${maxChars} characters allowed`);
         }
         if (minItems && values[key].length < minItems) {
-            inputWarnings[key] = `*Minimum ${minItems} items`;
-            formWarnings.push(`${key.toUpperCase()}: Minimum ${minItems} items required`);
+            inputErrors[key] = `*Minimum ${minItems} items`;
+            formErrors.push(`${key.toUpperCase()}: Minimum ${minItems} items required`);
         }
         if (maxItems && values[key].length > maxItems) {
-            inputWarnings[key] = `*Maximum ${maxItems} items`;
-            formWarnings.push(`${key.toUpperCase()}: Maximum ${maxItems} items allowed`);
+            inputErrors[key] = `*Maximum ${maxItems} items`;
+            formErrors.push(`${key.toUpperCase()}: Maximum ${maxItems} items allowed`);
         }
         if (required && !values[key]) {
-            inputWarnings[key] = '*Required';
-            formWarnings.push(`${key.toUpperCase()}: Required`);
+            inputErrors[key] = '*Required';
+            formErrors.push(`${key.toUpperCase()}: Required`);
         }
     }
-    return formWarnings.length > 0 ? { inputWarnings, formWarnings } : null;
+    return formErrors.length > 0 ? { inputErrors, formErrors } : null;
 }
