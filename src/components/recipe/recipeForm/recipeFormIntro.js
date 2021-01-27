@@ -22,7 +22,12 @@ function RecipeFormIntro({step, inputValues, inputErrors}) {
             <section>
                 <Grid as="div" colsLg="6" gap="0">
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
-                        <ImgInput name="coverImg" title="cover" file={inputValues.coverImg}/>
+                        <ImgInput 
+                            name="coverImg" 
+                            label={{ text: 'Cover Image' }} 
+                            imgSize="5mb" 
+                            file={inputValues.coverImg}
+                        />
                     </GridColumn>
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
                         <Input 

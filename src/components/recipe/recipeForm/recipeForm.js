@@ -32,7 +32,7 @@ const constraints = {
     },
     coverImg: {
         required: true,
-        size: 5120,
+        size: 5120000,
         type: ["image/jpeg", "image/jpg", "image/png"]
     },
     instructions: {

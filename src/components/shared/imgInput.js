@@ -1,33 +1,35 @@
 import {useContext} from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faImage} from '@fortawesome/free-regular-svg-icons'
+import FormFeedback from './formFeedback'
 
-function ImgInput({name, title, file }) {
+function ImgInput({name, label, file, errorMsg, imgSize="1MB", previewSize="400px", circle }) {
 
     return (
         <Container>
-            <InputWrapper>
-                <PreviewDiv>
+            <InputWrapper previewSize={previewSize}>
+                <PreviewDiv circle={circle}>
                     {!file && (<UploadInstructions>
-                        <h2>Select {title} Image</h2>
+                        <h2>Select {label.text}</h2>
                         <div><FontAwesomeIcon icon={faImage} /></div>
                         <span>Drag and drop photo or click to upload</span>
-                        <span>*Accepts .jpg/.jpeg/.png files less than 3MB</span>
+                        <span>*Accepts .jpg/.jpeg/.png, max size {imgSize}</span>
                     </UploadInstructions>)}
                     
                     {file && <PreviewImg src={URL.createObjectURL(file)} />}
                 </PreviewDiv>
                 <Input 
-                    id={`${title}-file-input`} 
+                    id={name} 
                     type="file" 
                     name={name} 
                     accept="image/png, image/jpeg, image/jpg"
                 />
-                <Label htmlFor={`${title}-file-input`}>
-                    Select {title} image
+                <Label htmlFor={name} hidden={label.hide}>
+                    Select {label.text}
                 </Label>
             </InputWrapper>
+            <FormFeedback errorMsg={errorMsg} />
         </Container>
     )
 }
@@ -47,6 +49,7 @@ const Container = styled.div`
 
 const InputWrapper = styled.div`
     width: 100%;
+    max-width: ${p => p.previewSize};
     height: 100%;
     position: relative;
     flex: auto;
@@ -55,20 +58,29 @@ const InputWrapper = styled.div`
 `
 
 const PreviewDiv = styled.div`
+    --radius: ${p => p.circle ? '50%' : '10px'};
     width: 100%;
-    height: 100%;
+    padding-top: 100%;
+    height: 0px;
     flex: auto;
     position: relative;
     background-color: var(--lite-grey);
-    border-radius: 10px;
+    border-radius: var(--radius);
     overflow: hidden;
 `
 const UploadInstructions = styled.div`
-    height: 100%;
+    position: absolute;
+    width: calc(100% - 40px);
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
     padding: 2rem 1rem;
+    border: dashed 2px var(--med-grey);
+    border-radius: var(--radius);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     color: var(--med-grey);
     h2 {
@@ -86,9 +98,12 @@ const PreviewImg = styled.img`
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     object-fit: cover;
+    border: var(--accent) solid 4px;
+    border-radius: var(--radius);
 `
 
 const Input = styled.input`
@@ -117,5 +132,11 @@ const Label = styled.label`
     position: relative;
     :hover {
         background-color: var(--dark-teal);
-    }                                
+    }
+    ${p => p.hide ? css`
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    ` : ''}                                
 `

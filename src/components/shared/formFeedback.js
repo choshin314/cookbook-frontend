@@ -23,7 +23,7 @@ const Feedback = styled.div`
     min-height: 19px;
 `
 const ErrorMsg = styled.span`
-    font-size: 1rem;
+    font-size: .7rem;
     font-weight: 500;
     color: red;
 `
