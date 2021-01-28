@@ -120,7 +120,6 @@ export const Button = styled.button`
     border: none;
     border-radius: 5px;
     padding: .5rem 1rem;
-    transform: translateY(-50%);
     font-family: inherit;
     font-size: inherit;
     font-weight: 500;

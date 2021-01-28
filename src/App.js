@@ -7,6 +7,7 @@ import ProfilePage from './pages/profilePage'
 import RecipePage from './pages/recipePage'
 import RecipeCreatePage from './pages/recipeCreatePage'
 import RecipeUpdatePage from './pages/recipeUpdatePage'
+import AuthPage from './pages/authPage'
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/register">
+            <AuthPage />
           </Route>
           <Route path="/profile/:username">
             <ProfilePage />
