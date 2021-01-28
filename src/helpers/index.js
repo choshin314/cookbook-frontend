@@ -1,7 +1,15 @@
 export function getLocalStorage(key) {
-    const storedItem = localStorage.getItem(key);
-    return storedItem ? JSON.parse(storedItem) : undefined;
+    try {
+        const storedItem = localStorage.getItem(key);
+        return storedItem ? JSON.parse(storedItem) : undefined;
+    } catch(err) {
+        return undefined;
+    }
 }
 export function setLocalStorage(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch(err) {
+        console.log(err.message);
+    }
 }
