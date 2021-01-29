@@ -50,7 +50,7 @@ const constraints = {
     instructionDraft: null,
     ingredientDraft_qty: null,
     ingredientDraft_unit: null,
-    ingredientDraft_name: null
+    ingredientDraft_content: null
 
 }
 

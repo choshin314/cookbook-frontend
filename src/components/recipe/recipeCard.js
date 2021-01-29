@@ -5,7 +5,14 @@ import { CSSTransition } from 'react-transition-group'
 import {media, CardWrapper} from '../commonStyles'
 import Ratings from './ratings'
 import AvatarLink from '../shared/avatarLink'
-
+const user = {
+    username: 'jsmith1',
+    firstName: 'John',
+    lastName: 'Smith',
+    id: '123',
+    bio: 'little short bio about me',
+    profilePic: 'https://res.cloudinary.com/cookbookshare/image/upload/v1611854339/tfkznkctzjonladqs2lg.jpg'
+}
 export default function RecipeCard({recipe}) {
     return (
         <CardWrapper>
@@ -19,9 +26,7 @@ export default function RecipeCard({recipe}) {
                 <CardLayout>
                     <Header>
                         <AvatarLink 
-                            imgSrc={recipe.creatorProfileImg}
-                            userId={recipe.creatorId}
-                            userName={recipe.creatorName}
+                            user={user}
                         />
                     </Header>
                     <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>

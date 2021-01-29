@@ -39,10 +39,10 @@ const IngredientFieldset = React.forwardRef((props, ref) => {
                 />
                 <Input 
                     type="text"
-                    name="ingredientDraft_name"
+                    name="ingredientDraft_content"
                     label={{ text: 'Ingredient'}}
-                    value={values.ingredientDraft_name}
-                    errorMsg={errorMsgs.ingredientDraft_name}
+                    value={values.ingredientDraft_content}
+                    errorMsg={errorMsgs.ingredientDraft_content}
                     onClick={addToList}
                 />
                 

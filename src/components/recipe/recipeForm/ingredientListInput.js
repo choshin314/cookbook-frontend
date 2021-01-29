@@ -18,7 +18,7 @@ function IngredientListInput() {
         ingredients, 
         ingredientDraft_qty, 
         ingredientDraft_unit, 
-        ingredientDraft_name 
+        ingredientDraft_content 
     } = inputValues;
 
     function validateAndAdd(e) {
@@ -26,11 +26,11 @@ function IngredientListInput() {
         setDraftError(null);
         if (!ingredientDraft_qty) return setDraftError('Quantity is required');
         if (!ingredientDraft_unit) return setDraftError('Unit is required');
-        const length = ingredientDraft_name.trim().length;
+        const length = ingredientDraft_content.trim().length;
         if (length < 3) {
             return setDraftError('Ingredients must be at least 3 characters')
         } 
-        addToList('ingredients', ['ingredientDraft_unit','ingredientDraft_qty','ingredientDraft_name'])
+        addToList('ingredients', ['ingredientDraft_unit','ingredientDraft_qty','ingredientDraft_content'])
         fieldsetRef.current.querySelector('input').focus() //refocus on "qty" input
     }
 
@@ -57,7 +57,7 @@ function IngredientListInput() {
                         <ItemBtn type="button" onClick={e => removeFromList('ingredients', ing.id)}>
                             <FontAwesomeIcon icon={faTrash} />
                         </ItemBtn>
-                        <ListItemContent>{ing.qty} {ing.unit} {ing.name}</ListItemContent>
+                        <ListItemContent>{ing.qty} {ing.unit} {ing.content}</ListItemContent>
                         <ItemBtn type="button" title="drag to reorder" as="span" {...provided.dragHandleProps}>
                             <FontAwesomeIcon icon={faGrip} />
                         </ItemBtn>

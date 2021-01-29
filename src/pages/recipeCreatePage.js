@@ -11,8 +11,13 @@ const initValues = {
     servings: '',
     coverImg: '',
     instructions: [],
+    instructionDraft_qty: '',
+    instructionDraft_unit: '',
+    instructionDraft_content: '',
     ingredients: [],
-    tags: []
+    ingredientDraft: '',
+    tags: [],
+    tagDraft: ''
 }
 
 function RecipeCreatePage() {
