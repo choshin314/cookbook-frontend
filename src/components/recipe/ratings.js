@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faStar as starFull, faStarHalfAlt as starHalf} from '@fortawesome/free-solid-svg-icons'
 import {faStar as starEmpty} from '@fortawesome/free-regular-svg-icons'
 
-function Ratings({rating, reviewCount}) {
+function Ratings({rating=3, reviewCount}) {
     function determineStarFilling(starNum, rating) {
         let halfStarMin = starNum - 0.75;
         let fullStarMin = starNum - .25;

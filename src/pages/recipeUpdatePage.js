@@ -14,7 +14,7 @@ const initValues = {
         {id: "1", content: "Crush dem nuts for fifteen mins!"}, 
         {id: "2", content: "Then do it again but for 10 minutes!"}
     ],
-    ingredientDraft_name: "",
+    ingredientDraft_content: "",
     ingredientDraft_qty: "",
     ingredientDraft_unit: "",
     ingredients: [],

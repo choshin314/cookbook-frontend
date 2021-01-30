@@ -13,3 +13,7 @@ export function setLocalStorage(key, value) {
         console.log(err.message);
     }
 }
+
+export function convertToSlug(str) {
+    return str.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +|_/g,'-');
+}

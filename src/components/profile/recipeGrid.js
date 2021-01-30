@@ -1,16 +1,31 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import {useParams} from 'react-router-dom'
+import {connect} from 'react-redux'
 import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faBookmark, faFolder } from '@fortawesome/free-regular-svg-icons'
 
+import {fetchUserRecipesBookmarks, fetchUserRecipesOwn} from '../../redux/actions/userRecipesActions'
 import RecipeCard from '../recipe/recipeCard'
 import {GridContainer, media} from '../commonStyles'
 
-function RecipeGrid({userRecipes, savedRecipes}) {
-    const [ recipeView, setRecipeView ] = useState('userRecipes');
-    const USER = 'userRecipes'
-    const SAVED = 'savedRecipes'
+const USER = 'user'
+const BOOKMARKS = 'bookmarks'
 
+function RecipeGrid({userRecipes, bookmarks, getBookmarks, getUserRecipes}) {
+    const [ recipeView, setRecipeView ] = useState(USER);
+    const { username } = useParams();
+
+    useEffect(() => {
+        if (!userRecipes.recipes[0]) getUserRecipes(username);
+    }, [])
+
+    useEffect(() => {
+        if(recipeView !== BOOKMARKS || bookmarks.recipes[0]) return;
+        getBookmarks(username);
+    }, [recipeView])
+    
+    console.log(userRecipes)
     return (
         <section>
             <GridNav id="recipe-grid">
@@ -22,7 +37,7 @@ function RecipeGrid({userRecipes, savedRecipes}) {
                         </Tab>
                     </li>
                     <li>
-                        <Tab onClick={() => setRecipeView(SAVED)} className={recipeView === SAVED && 'tab--active'}>
+                        <Tab onClick={() => setRecipeView(BOOKMARKS)} className={recipeView === BOOKMARKS && 'tab--active'}>
                             <FontAwesomeIcon icon={faBookmark} />
                             <span>Saved Recipes</span>
                         </Tab>
@@ -31,17 +46,28 @@ function RecipeGrid({userRecipes, savedRecipes}) {
             </GridNav>
             <BorderedDiv>
                 {recipeView === USER && (<GridContainer cols="2" colsLg="3" gap="5px">
-                    {userRecipes.map(r => <RecipeCard key={r.id} recipe={r} />)}
+                    {!userRecipes || userRecipes.loading && <div>loading recipes</div>}
+                    {userRecipes.recipes && userRecipes.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
                 </GridContainer>)}
-                {recipeView === SAVED && (<GridContainer cols="2" colsLg="3" gap="5px">
-                    {savedRecipes.map(r => <RecipeCard key={r.id} recipe={r} />)}
+                {recipeView === BOOKMARKS && (<GridContainer cols="2" colsLg="3" gap="5px">
+                    {bookmarks.loading && <div>loading bookmarks</div>}
+                    {bookmarks.recipes && bookmarks.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
                 </GridContainer>)}
             </BorderedDiv>
         </section>
     )
 }
 
-export default RecipeGrid;
+const mapStateToProps = (global) => ({ 
+    userRecipes: global.userRecipes.user, 
+    bookmarks: global.userRecipes.bookmarks
+})
+const mapDispatchToProps = {
+    getBookmarks: fetchUserRecipesBookmarks,
+    getUserRecipes: fetchUserRecipesOwn
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeGrid);
 
 const GridNav = styled.nav`
     text-align: center;

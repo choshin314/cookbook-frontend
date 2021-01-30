@@ -42,6 +42,35 @@ function AuthPage({user, setUser}) {
                 }
             }
         } catch(err) {
+            console.log(err.message)
+            return { error: err.message }
+        }
+    }
+    async function handleSubmitLogin(values) {
+        const formData = new FormData();
+        Object.keys(values).forEach(key => {
+            formData.append(key, values[key])
+        })
+        try {
+            const response = await fetch('http://localhost:5000/api/users/login', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            if (response.status < 200 || response.status > 299) {
+                throw new Error(data.message)
+            };
+            console.log(data);
+            setLocalStorage('accessToken', data.accessToken);
+            setUser(data.user);
+            //do some logic here - i.e. set local storage and dispatch to store 
+            return { 
+                success: { 
+                    msg: 'Successfully registered!', 
+                    nextRoute: '/profile/username'
+                }
+            }
+        } catch(err) {
             return { error: err.message }
         }
     }
@@ -51,6 +80,7 @@ function AuthPage({user, setUser}) {
             {!user && (<AuthForm 
                 initValues={initValues}
                 handleSubmit={handleSubmit}
+                handleSubmit2={handleSubmitLogin}
             />)}
             {user && (<div>Logged in as {user.name}</div>)}
         </Main>

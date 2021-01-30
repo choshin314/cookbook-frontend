@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
-function AvatarLink(props) {
-    return (
+function AvatarLink({user, imgSize, showCreatedBy}) {
+    return user ? (
         <AuthorDiv>
-            <Link to={`/profiles/${props.userId}`}>
-                <ImgDiv size={props.imgSize || '50px'}>
-                    <img src={props.imgSrc}/>
+            <Link to={`/profiles/${user.username}`}>
+                <ImgDiv size={imgSize || '50px'}>
+                    <img src={user.profilePic}/>
                 </ImgDiv>
             </Link>
-            {props.userName && <NameLink to={`/profiles/${props.userId}`}>Created by {props.userName}</NameLink>}
+            {showCreatedBy && <NameLink to={`/profiles/${user.username}`}>Created by {user.firstName} {user.lastName}</NameLink>}
         </AuthorDiv>
-    )
+    ) : <div></div>
 }
 
 export default AvatarLink;

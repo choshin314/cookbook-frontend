@@ -13,7 +13,7 @@ const user = {
     bio: 'little short bio about me',
     profilePic: 'https://res.cloudinary.com/cookbookshare/image/upload/v1611854339/tfkznkctzjonladqs2lg.jpg'
 }
-export default function RecipeCard({recipe}) {
+export default function RecipeCard({recipe, user}) {
     return (
         <CardWrapper>
             <CSSTransition
@@ -30,11 +30,11 @@ export default function RecipeCard({recipe}) {
                         />
                     </Header>
                     <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
-                        <img src={recipe.cover_img} />
+                        <img src={recipe.coverImg} />
                     </ImgCover>
                     <Content>
                         <Link to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
-                            <CardTitle>{recipe.name}</CardTitle>
+                            <CardTitle>{recipe.title}</CardTitle>
                         </Link>
                         <Ratings rating={recipe.rating} reviewCount={recipe.reviewCount}/>
                     </Content>
