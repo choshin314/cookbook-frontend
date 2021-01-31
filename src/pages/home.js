@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import styled from 'styled-components'
 
-import RecipeCard from '../components/recipe/recipeCard'
+import RecipeCard from '../components/recipe/RecipeCard'
 import {GridContainer, Wrapper, Main, PageTitle, media} from '../components/commonStyles'
 
 import recipes from '../dummyrecipes.json'

@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faBookmark, faFolder } from '@fortawesome/free-regular-svg-icons'
 
 import {fetchUserRecipesBookmarks, fetchUserRecipesOwn} from '../../redux/actions/userRecipesActions'
-import RecipeCard from '../recipe/recipeCard'
+import RecipeCard from '../recipe/RecipeCard'
 import {GridContainer, media} from '../commonStyles'
 
 const USER = 'user'

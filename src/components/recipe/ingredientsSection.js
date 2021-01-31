@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-import RecipeSection from './recipeSection'
-import Checkbox from '../shared/checkbox'
+import RecipeSection from './RecipeSection'
+import Checkbox from '../shared/Checkbox'
 
 function IngredientsSection({ingredients}) {
     return (

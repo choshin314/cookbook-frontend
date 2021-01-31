@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
-import Nav from './nav'
+import Nav from './Nav'
 import logo from '../../assets/recipeshare-logo.png'
 import logoSm from '../../assets/recipeshare-logo-abbrev.png'
 import {media, Wrapper} from '../commonStyles'

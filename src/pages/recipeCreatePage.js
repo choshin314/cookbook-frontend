@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import {connect} from 'react-redux'
 import {Main} from '../components/commonStyles'
-import RecipeForm from '../components/recipe/recipeForm/recipeForm.js'
+import RecipeForm from '../components/recipe/recipeForm/RecipeForm.js'
 import { getLocalStorage, setLocalStorage } from '../helpers'
 
 const initValues = {

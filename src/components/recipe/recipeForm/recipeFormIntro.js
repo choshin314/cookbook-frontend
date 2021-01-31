@@ -4,10 +4,10 @@ import {CSSTransition} from 'react-transition-group'
 import {Draggable} from 'react-beautiful-dnd'
 
 import { GridContainer, GridColumn, media } from '../../commonStyles'
-import ImgInput from '../../shared/imgInput'
-import Input from '../../shared/input'
-import TagListInput from './tagListInput'
-import ListInputWrapper from '../../shared/listInputWrapper'
+import ImgInput from '../../shared/ImgInput'
+import Input from '../../shared/Input'
+import TagListInput from './TagListInput'
+import ListInputWrapper from '../../shared/ListInputWrapper'
 
 function RecipeFormIntro({step, inputValues, inputErrors}) {
 

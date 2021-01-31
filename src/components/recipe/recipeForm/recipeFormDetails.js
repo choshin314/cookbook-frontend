@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
 import {CSSTransition} from 'react-transition-group'
 
-import InstructionListInput from './instructionListInput'
-import IngredientListInput from './ingredientListInput'
+import InstructionListInput from './InstructionListInput'
+import IngredientListInput from './IngredientListInput'
 
 function RecipeFormDetails(props) {
     const {

@@ -4,11 +4,11 @@ import {useParams, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import {Main, GridContainer, PageTitle, Wrapper} from '../components/commonStyles'
-import RecipeGrid from '../components/profile/recipeGrid'
-import AvatarLink from '../components/shared/avatarLink'
+import RecipeGrid from '../components/profile/RecipeGrid'
+import AvatarLink from '../components/shared/AvatarLink'
 import recipeData from '../dummyrecipes.json'
 import {getLocalStorage, setLocalStorage} from '../helpers'
-import ProfileView from '../components/profile/profileView'
+import ProfileView from '../components/profile/ProfileView'
 import {fetchUserRecipesOwn, fetchUserRecipesBookmarks} from '../redux/actions/userRecipesActions'
 
 function ProfilePage({getRecipes, userRecipes}) {

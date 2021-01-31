@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import {Main} from '../components/commonStyles'
-import RecipeForm from '../components/recipe/recipeForm/recipeForm.js'
+import RecipeForm from '../components/recipe/recipeForm/RecipeForm.js'
 
 const initValues = {
     title: "Soupy Nuts",

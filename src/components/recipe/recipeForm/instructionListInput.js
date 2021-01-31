@@ -6,9 +6,9 @@ import {faGripHorizontal as faGrip} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Button} from '../../commonStyles'
-import ListInputWrapper from '../../shared/listInputWrapper'
-import Input from '../../shared/input'
-import { RecipeFormContext } from './recipeForm'
+import ListInputWrapper from '../../shared/ListInputWrapper'
+import Input from '../../shared/Input'
+import { RecipeFormContext } from './RecipeForm'
 
 const KEYS = [",", "Enter"];
 

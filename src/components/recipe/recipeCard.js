@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 
 import {media, CardWrapper} from '../commonStyles'
-import Ratings from './ratings'
-import AvatarLink from '../shared/avatarLink'
+import Ratings from './Ratings'
+import AvatarLink from '../shared/AvatarLink'
 const user = {
     username: 'jsmith1',
     firstName: 'John',

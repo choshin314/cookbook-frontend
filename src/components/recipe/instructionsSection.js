@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import RecipeSection from './recipeSection'
+import RecipeSection from './RecipeSection'
 
 function InstructionsSection({instructions}) {
     return (

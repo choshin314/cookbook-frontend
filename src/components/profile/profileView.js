@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import {useParams, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Main, GridContainer, PageTitle, Wrapper} from '../commonStyles'
-import RecipeGrid from './recipeGrid'
-import AvatarLink from '../shared/avatarLink'
+import RecipeGrid from './RecipeGrid'
+import AvatarLink from '../shared/AvatarLink'
 
 
 

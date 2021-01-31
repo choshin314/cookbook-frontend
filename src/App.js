@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import ScrollToTop from './components/shared/scrollToTop'
-import Layout from './components/layout/layout'
-import Home from './pages/home'
-import ProfilePage from './pages/profilePage'
-import RecipePage from './pages/recipePage'
-import RecipeCreatePage from './pages/recipeCreatePage'
-import RecipeUpdatePage from './pages/recipeUpdatePage'
-import AuthPage from './pages/authPage'
+import ScrollToTop from './components/shared/ScrollToTop'
+import Layout from './components/layout/Layout'
+import Home from './pages/Home'
+import ProfilePage from './pages/ProfilePage'
+import RecipePage from './pages/RecipePage'
+import RecipeCreatePage from './pages/RecipeCreatePage'
+import RecipeUpdatePage from './pages/RecipeUpdatePage'
+import AuthPage from './pages/AuthPage'
 
 function App() {
   return (
@@ -19,6 +19,9 @@ function App() {
             <Home />
           </Route>
           <Route path="/register">
+            <AuthPage />
+          </Route>
+          <Route path="/login">
             <AuthPage />
           </Route>
           <Route path="/profile/:username">

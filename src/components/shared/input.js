@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 
 import {Button} from '../commonStyles'
-import FormFeedback from './formFeedback'
+import FormFeedback from './FormFeedback'
 
 function Input(props) {
     const {

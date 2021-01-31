@@ -4,9 +4,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {useForm} from '../../hooks/form'
 import { CardWrapper, Button, media } from '../commonStyles'
-import Input from '../shared/input'
-import ImgInput from '../shared/imgInput'
-import FormFeedback from '../shared/formFeedback'
+import Input from '../shared/Input'
+import ImgInput from '../shared/ImgInput'
+import FormFeedback from '../shared/FormFeedback'
 
 // const constraints = {
 //     email: {

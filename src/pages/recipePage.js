@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
 import {Main, PageTitle, Wrapper} from '../components/commonStyles'
-import Ratings from '../components/recipe/ratings'
-import AvatarLink from '../components/shared/avatarLink'
-import IntroSection from '../components/recipe/introSection'
-import IngredientsSection from '../components/recipe/ingredientsSection'
-import InstructionsSection from '../components/recipe/instructionsSection'
+import Ratings from '../components/recipe/Ratings'
+import AvatarLink from '../components/shared/AvatarLink'
+import IntroSection from '../components/recipe/IntroSection'
+import IngredientsSection from '../components/recipe/IngredientsSection'
+import InstructionsSection from '../components/recipe/InstructionsSection'
 
 const dummy = {
     "id": 62,

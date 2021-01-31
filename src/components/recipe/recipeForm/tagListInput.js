@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react'
 import styled from 'styled-components'
 
-import ListInputWrapper from '../../shared/listInputWrapper'
-import Input from '../../shared/input'
-import { RecipeFormContext } from './recipeForm'
+import ListInputWrapper from '../../shared/ListInputWrapper'
+import Input from '../../shared/Input'
+import { RecipeFormContext } from './RecipeForm'
 
 const KEYS = [",", "Enter"];
 

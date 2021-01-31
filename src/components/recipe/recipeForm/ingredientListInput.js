@@ -6,9 +6,9 @@ import {faGripHorizontal as faGrip} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Button} from '../../commonStyles'
-import ListInputWrapper from '../../shared/listInputWrapper'
-import IngredientFieldset from './ingredientFieldset'
-import { RecipeFormContext } from './recipeForm'
+import ListInputWrapper from '../../shared/ListInputWrapper'
+import IngredientFieldset from './IngredientFieldset'
+import { RecipeFormContext } from './RecipeForm'
 
 function IngredientListInput() {
     const fieldsetRef = useRef(null);

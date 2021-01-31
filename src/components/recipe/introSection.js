@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons'
 
-import RecipeSection from './recipeSection'
-import QuickFacts from './quickFacts'
+import RecipeSection from './RecipeSection'
+import QuickFacts from './QuickFacts'
 
 function IntroSection({coverImg, prepTime, cookTime, servings}) {
     return (

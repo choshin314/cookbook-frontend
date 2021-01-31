@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import Header from './header'
-import Footer from './footer'
+import Header from './Header'
+import Footer from './Footer'
 
 function Layout({children}) {
     return (

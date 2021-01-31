@@ -3,7 +3,7 @@ import {Droppable} from 'react-beautiful-dnd'
 import styled from 'styled-components'
 
 import {media} from '../commonStyles'
-import FormFeedback from './formFeedback'
+import FormFeedback from './FormFeedback'
 
 function ListInputWrapper(props) {
     const { 

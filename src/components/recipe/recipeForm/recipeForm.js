@@ -6,8 +6,8 @@ import {DragDropContext} from 'react-beautiful-dnd'
 
 import {useForm} from '../../../hooks/form'
 import { CardWrapper, Button, media } from '../../commonStyles'
-import RecipeFormIntro from './recipeFormIntro'
-import RecipeFormDetails from './recipeFormDetails'
+import RecipeFormIntro from './RecipeFormIntro'
+import RecipeFormDetails from './RecipeFormDetails'
 
 export const RecipeFormContext = React.createContext();
 const constraints = {
