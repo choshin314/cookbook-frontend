@@ -1,18 +1,19 @@
+import {getLocalStorage} from '../../helpers'
 import {
     FETCH_PROFILE_START, 
     FETCH_PROFILE_FAIL, 
     FETCH_PROFILE_SUCCESS, 
     SET_PROFILE_STATS
-} from '../constants/profileConstants'
+} from '../actions/types'
 
-const initProfileState = {
+const initProfileState = getLocalStorage('profile') || {
     loading: false,
     error: null,
     user: null, //firstName, lastName, username, id, profilePic, bio
     stats: null //recipeCount, followerCount, followingCount
 }
 
-export default function profileReducer(profileState=null, action) {
+export default function profileReducer(profileState=initProfileState, action) {
     switch(action.type) {
         case FETCH_PROFILE_START:
             return { ...profileState, loading: true }

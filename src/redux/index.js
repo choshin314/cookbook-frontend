@@ -3,12 +3,12 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 import { setLocalStorage } from '../helpers';
 
-import userReducer from './reducers/userReducer'
+import authReducer from './reducers/authReducer'
 import profileReducer from './reducers/profileReducer'
 import userRecipesReducer from './reducers/userRecipesReducer'
 
 const rootReducer = combineReducers({
-    user: userReducer,
+    auth: authReducer,
     profile: profileReducer,
     userRecipes: userRecipesReducer
 })
@@ -16,7 +16,8 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const unsubscribe = store.subscribe(() => {
-    setLocalStorage('global', store.getState());
+    setLocalStorage('auth', store.getState().auth);
+    setLocalStorage('profile', store.getState().profile);
 });
 
 export { store };

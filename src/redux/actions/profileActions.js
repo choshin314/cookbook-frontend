@@ -3,7 +3,7 @@ import {
     FETCH_PROFILE_START, 
     FETCH_PROFILE_SUCCESS, 
     FETCH_PROFILE_FAIL
-} from '../constants/profileConstants'
+} from './types'
 
 const apiBase = process.env.REACT_APP_API_BASE;
 

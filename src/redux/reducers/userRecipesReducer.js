@@ -2,7 +2,7 @@ import {
     FETCH_USER_RECIPES_START,
     FETCH_USER_RECIPES_SUCCESS,
     FETCH_USER_RECIPES_FAIL
-} from '../constants/userRecipesConstants'
+} from '../actions/types'
 
 const initUserRecipes = {
     user: {
