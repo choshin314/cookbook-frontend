@@ -2,79 +2,97 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
+import logo from '../../assets/recipeshare-logo.png'
 import {useForm} from '../../hooks/form'
 import { CardWrapper, Button, media } from '../commonStyles'
 import Input from '../shared/Input'
 import ImgInput from '../shared/ImgInput'
 import FormFeedback from '../shared/FormFeedback'
+import {connect} from 'react-redux'
+import { registerUser } from '../../redux/actions/authActions'
 
-// const constraints = {
-//     email: {
-//         required: true,
-//         pattern: { 
-//             regex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-//             failMsg: "Valid email address required"
-//         }
-//     },
-//     firstName: {
-//         required: true,
-//         maxChars: 30
-//     },
-//     lastName: {
-//         required: true,
-//         maxChars: 30
-//     },
-//     username: {
-//         required: true,
-//         pattern: {
-//             regex: /^[a-zA-Z0-9]+$/,
-//             failMsg: "Username accepts letters and numbers only"
-//         },
-//         minChars: 2,
-//         maxChars: 30
-//     },
-//     password: {
-//         required: true,
-//         minChars: 8,
-//         maxChars: 16,
-//         pattern: {
-//             regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-//             failMsg: "Password needs one of each: lowercase, uppercase, number"
-//         }
-//     },
-//     bio: {
-//         maxChars: 200
-//     },
-//     profilePic: {
-//         size: 5120000,
-//         type: ["image/jpeg", "image/jpg", "image/png"]
-//     }
-// }
-const constraints = {}
-function AuthForm({ initValues, handleSubmit, handleSubmit2 }) {
-    const [ mode, setMode ] = useState('login');
+const initVals = {
+    email: '', firstName: '', lastName: '', username: '', password: '', password_confirmation: '', profilePic: null, bio: ''
+}
+
+const constraints = {
+    email: {
+        required: true,
+        pattern: { 
+            regex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            failMsg: "Valid email address required"
+        }
+    },
+    firstName: {
+        required: true,
+        maxChars: 30
+    },
+    lastName: {
+        required: true,
+        maxChars: 30
+    },
+    username: {
+        required: true,
+        pattern: {
+            regex: /^[a-zA-Z0-9]+$/,
+            failMsg: "Username accepts letters and numbers only"
+        },
+        minChars: 2,
+        maxChars: 30
+    },
+    password: {
+        required: true,
+        minChars: 8,
+        maxChars: 16,
+        pattern: {
+            regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+            failMsg: "Password needs one of each: lowercase, uppercase, number"
+        }
+    },
+    password_confirmation: {
+        required: true,
+        match: 'password'
+    },
+    bio: {
+        maxChars: 200
+    },
+    profilePic: {
+        size: 5120000,
+        type: ["image/jpeg", "image/jpg", "image/png"]
+    }
+}
+
+function RegisterForm({ register, user, error, submitting }) {
+    const [ mode, setMode ] = useState('register');
     const {
         inputValues, 
-        inputErrors, 
-        handleChange, 
-        validateAndSubmit,
-        formErrors
-    } = useForm(initValues, constraints, handleSubmit2, 'authForm', 'profilePic' );
+        inputErrors,
+        formErrors,
+        validateForm, 
+        handleChange
+    } = useForm(initVals, constraints, null, 'registerForm', 'profilePic' );
 
     const { 
         email, 
         firstName, 
         lastName, 
         username, 
-        password, 
+        password,
+        password_confirmation, 
         profilePic, 
         bio 
     } = inputValues;
 
+    console.log(inputValues)
     return (
         <Card>
-            <StyledHeader>Sign Up for Cookbook</StyledHeader>
-            {mode === "register" && (<Form onChange={handleChange} onSubmit={validateAndSubmit} noValidate={true}>
+            <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
+            <Form onChange={handleChange} onSubmit={async (e) => {
+                e.preventDefault();
+                const validationErrors = validateForm(inputValues, constraints);
+                if (validationErrors) return;
+                await register(inputValues, ['profilePic']);
+            }} noValidate={true}>
                 <StyledDiv>
                     <Input 
                         label={{ text: 'First Name'}} 
@@ -100,20 +118,30 @@ function AuthForm({ initValues, handleSubmit, handleSubmit2 }) {
                         errorMsg={inputErrors.username}
                     />
                     <Input 
+                        label={{ text: 'Email Address'}} 
+                        type="email" 
+                        name="email" 
+                        value={email} 
+                        errorMsg={inputErrors.email}
+                    />
+                    
+                </StyledDiv>
+                <StyledDiv>
+                    <Input 
                         label={{ text: 'Password'}} 
                         type="password" 
                         name="password" 
                         value={password} 
                         errorMsg={inputErrors.password}
                     />
+                    <Input 
+                        label={{ text: 'Confirm Password'}} 
+                        type="password" 
+                        name="password_confirmation" 
+                        value={password_confirmation} 
+                        errorMsg={inputErrors.password_confirmation}
+                    />
                 </StyledDiv>
-                <Input 
-                    label={{ text: 'Email Address'}} 
-                    type="email" 
-                    name="email" 
-                    value={email} 
-                    errorMsg={inputErrors.email}
-                />
                 <ImgInput 
                     type="file" 
                     name="profilePic" 
@@ -134,36 +162,19 @@ function AuthForm({ initValues, handleSubmit, handleSubmit2 }) {
                 />
                 <SubmitBtn type="submit">Get Cookin'</SubmitBtn>
                 <Center>
-                    <FormFeedback errorMsg={formErrors[0]} /> 
+                    <FormFeedback errorMsg={formErrors[0] || error} /> 
                 </Center>
-            </Form>)}
-            {mode === 'login' && (<Form onChange={handleChange} onSubmit={validateAndSubmit} noValidate={true}>
-                <StyledDiv>
-                    <Input 
-                        label={{ text: 'Username'}} 
-                        type="text" 
-                        name="username" 
-                        value={username} 
-                        errorMsg={inputErrors.username}
-                    />
-                    <Input 
-                        label={{ text: 'Password'}} 
-                        type="password" 
-                        name="password" 
-                        value={password} 
-                        errorMsg={inputErrors.password}
-                    />
-                </StyledDiv>
-                <SubmitBtn type="submit">Get Cookin'</SubmitBtn>
-                <Center>
-                    <FormFeedback errorMsg={formErrors[0]} /> 
-                </Center>
-            </Form>)}
+            </Form>
         </Card>
     )
 }
 
-export default AuthForm;
+const mapStateToProps = (global) => ({ 
+    submitting: global.auth.loading, 
+    error: global.auth.error,
+    user: global.auth.user 
+})
+export default connect(null, { register: registerUser })(RegisterForm);
 
 const StyledHeader = styled.h1`
     font-size: 1.5rem;
@@ -173,7 +184,7 @@ const StyledHeader = styled.h1`
 
 const StyledDiv = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(10px, 1fr) minmax(10px, 1fr);
     gap: 1rem;
 `
 

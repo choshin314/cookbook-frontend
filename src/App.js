@@ -7,7 +7,8 @@ import ProfilePage from './pages/ProfilePage'
 import RecipePage from './pages/RecipePage'
 import RecipeCreatePage from './pages/RecipeCreatePage'
 import RecipeUpdatePage from './pages/RecipeUpdatePage'
-import AuthPage from './pages/AuthPage'
+import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -19,10 +20,10 @@ function App() {
             <Home />
           </Route>
           <Route path="/register">
-            <AuthPage />
+            <RegisterPage />
           </Route>
           <Route path="/login">
-            <AuthPage />
+            <LoginPage />
           </Route>
           <Route path="/profile/:username">
             <ProfilePage />
