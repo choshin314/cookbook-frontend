@@ -34,12 +34,12 @@ export const fetchProfile = (username) => {
                 fetch(`${apiBase}/users/${username}`), 
                 fetch(`${apiBase}/users/${username}/stats`)
             ]);
-            const data = await response.map(res => res.json());
-            if (!response[0].ok) throw new Error(data[0].message);
-            if (!response[1].ok) throw new Error(data[1].message);
-            dispatch(fetchProfileSuccess(data))
+            const profileUser = await response[0].json();
+            const profileStats = await response[1].json();
+            if (!response[0].ok) throw new Error(profileUser.message);
+            if (!response[1].ok) throw new Error(profileStats.message);
+            dispatch(fetchProfileSuccess([profileUser, profileStats]))
         } catch(err) {
-            console.log(err.message);
             dispatch(fetchProfileFail(err.message));
         }
     }

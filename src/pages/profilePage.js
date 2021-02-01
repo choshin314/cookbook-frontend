@@ -9,38 +9,28 @@ import AvatarLink from '../components/shared/AvatarLink'
 import recipeData from '../dummyrecipes.json'
 import {getLocalStorage, setLocalStorage} from '../helpers'
 import ProfileView from '../components/profile/ProfileView'
-import {fetchUserRecipesOwn, fetchUserRecipesBookmarks} from '../redux/actions/userRecipesActions'
+import { fetchProfile } from '../redux/actions/profileActions'
 
-function ProfilePage({getRecipes, userRecipes}) {
+function ProfilePage({ profile, fetchProfile }) {
     const { username } = useParams();
-    const [ user, setUser ] = useState(null)
-    const [ userStats, setUserStats ] = useState({});
+    const { user, stats, loading, error } = profile;
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_BASE}/users/${username}`)
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data)
-                setUser(data)
-            })
-        fetch(`${process.env.REACT_APP_API_BASE}/users/${username}/stats`)
-            .then(resp => resp.json())
-            .then(data => setUserStats(data))
+        fetchProfile(username);
     }, [])
 
-    
     return (
         <Main>
-            {user && userStats && (<Container>
+            {!loading && user && stats && (<Container>
                 <HeadSection cols="4">
                     <StyledDiv>
                         <AvatarLink user={user} imgSize="50px"/>
                         <StyledH1>{user.firstName} {user.lastName} (@{user.username})</StyledH1>
                     </StyledDiv>
                     
-                    <UserStatLink to="#recipe-grid">{userStats.recipeCount}<br />Recipes</UserStatLink>
-                    <UserStatLink>{userStats.followerCount}<br />Followers</UserStatLink>
-                    <UserStatLink>{userStats.followingCount}<br />Following</UserStatLink>
+                    <UserStatLink to="#recipe-grid">{stats.recipeCount}<br />Recipes</UserStatLink>
+                    <UserStatLink>{stats.followerCount}<br />Followers</UserStatLink>
+                    <UserStatLink>{stats.followingCount}<br />Following</UserStatLink>
                 </HeadSection>
                 <RecipeGrid />
             </Container>)}
@@ -48,8 +38,8 @@ function ProfilePage({getRecipes, userRecipes}) {
     )
 }
 
-const mapStateToProps = (global) => ({ user: global.user, userRecipes: global.userRecipes });
-const mapDispatchToProps = { getRecipes: fetchUserRecipesOwn, getBookmarks: fetchUserRecipesBookmarks}
+const mapStateToProps = (global) => ({ profile: global.profile });
+const mapDispatchToProps = { fetchProfile: fetchProfile }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
 
