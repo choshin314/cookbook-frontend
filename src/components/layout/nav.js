@@ -1,11 +1,13 @@
+import {connect} from 'react-redux'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUsers, faUserCircle, faPlus, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
+import {logoutUser} from '../../redux/actions/authActions'
 import {media} from '../commonStyles'
 
-export default function Nav() {
+function Nav({logout, user}) {
     return (
         <Navbar>
             <ul>
@@ -29,13 +31,22 @@ export default function Nav() {
                     label="Profile"
                     icon={faUserCircle}
                 />
-                <AuthBtn aria-label="Sign Out">
+                {!user && (<NavItem
+                    to="/account/login"
+                    label="Sign In"
+                    icon={faSignInAlt}
+                />)}
+                {user && (<AuthBtn type="button" aria-label="Sign Out" onClick={logout}>
                     <FontAwesomeIcon icon={faSignOutAlt} title="Sign Out" />
-                </AuthBtn>
+                </AuthBtn>)}
             </ul>
         </Navbar>
     )
 }
+
+const mapStateToProps = global => ({ user: global.auth.user })
+const mapDispatchToProps = { logout: logoutUser }
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);
 
 function NavItem({to, label, icon}) {
     return (

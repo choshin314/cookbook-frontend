@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
@@ -12,7 +13,7 @@ import {connect} from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
 
 const initVals = {
-    email: '', firstName: '', lastName: '', username: '', password: '', password_confirmation: '', profilePic: null, bio: ''
+    email: '', firstName: '', lastName: '', username: '', password: '', password_confirmation: ''
 }
 
 const constraints = {
@@ -52,13 +53,6 @@ const constraints = {
     password_confirmation: {
         required: true,
         match: 'password'
-    },
-    bio: {
-        maxChars: 200
-    },
-    profilePic: {
-        size: 5120000,
-        type: ["image/jpeg", "image/jpg", "image/png"]
     }
 }
 
@@ -70,7 +64,7 @@ function RegisterForm({ register, user, error, submitting }) {
         formErrors,
         validateForm, 
         handleChange
-    } = useForm(initVals, constraints, null, 'registerForm', 'profilePic' );
+    } = useForm(initVals, constraints, null, 'registerForm' );
 
     const { 
         email, 
@@ -78,12 +72,9 @@ function RegisterForm({ register, user, error, submitting }) {
         lastName, 
         username, 
         password,
-        password_confirmation, 
-        profilePic, 
-        bio 
+        password_confirmation
     } = inputValues;
 
-    console.log(inputValues)
     return (
         <Card>
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
@@ -142,25 +133,8 @@ function RegisterForm({ register, user, error, submitting }) {
                         errorMsg={inputErrors.password_confirmation}
                     />
                 </StyledDiv>
-                <ImgInput 
-                    type="file" 
-                    name="profilePic" 
-                    file={profilePic} 
-                    errorMsg={inputErrors.profilePic}
-                    label={{ text: 'Profile Picture', hide: true }} 
-                    circle
-                    previewSize="300px" 
-                    imgSize="5mb"
-                />
-                <Input 
-                    label={{ text: 'Short Bio (Optional)'}} 
-                    type="text" 
-                    name="bio" 
-                    value={bio} 
-                    errorMsg={inputErrors.bio}
-                    placeholder="Tell us a little bit about yourself! (limit 200 characters)"
-                />
                 <SubmitBtn type="submit">Get Cookin'</SubmitBtn>
+                <StyledLink to="/account/login">Already have an account?  Sign in</StyledLink>
                 <Center>
                     <FormFeedback errorMsg={formErrors[0] || error} /> 
                 </Center>
@@ -176,31 +150,31 @@ const mapStateToProps = (global) => ({
 })
 export default connect(null, { register: registerUser })(RegisterForm);
 
-const StyledHeader = styled.h1`
-    font-size: 1.5rem;
-    text-align: center;
-    padding-top: 1rem;
-`
-
 const StyledDiv = styled.div`
     display: grid;
     grid-template-columns: minmax(10px, 1fr) minmax(10px, 1fr);
     gap: 1rem;
 `
 
-const Center = styled.div`
+export const StyledHeader = styled.h1`
+    font-size: 1.5rem;
+    text-align: center;
+    padding-top: 1rem;
+`
+
+export const Center = styled.div`
     margin-top: 1rem;
     text-align: center;
 `
 
-const Card = styled(CardWrapper)`
+export const Card = styled(CardWrapper)`
     margin: 1rem 0;
     :hover::before {
         opacity: 0;
     }
 `
 
-const Form = styled.form`
+export const Form = styled.form`
     background-color: #fff;
     border-radius: 5px;
     padding: 1rem;
@@ -212,6 +186,11 @@ const Form = styled.form`
     flex-direction: column;
 `
 
-const SubmitBtn = styled(Button)`
+export const SubmitBtn = styled(Button)`
     
+`
+export const StyledLink = styled(Link)`
+    font-size: .75rem;
+    font-weight: 500;
+    margin-top: 10px;
 `

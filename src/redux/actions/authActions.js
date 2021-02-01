@@ -15,10 +15,10 @@ export function loginUser(values) {
     }
 }
 
-export function registerUser(values, fileKeysArr) {
+export function registerUser(values) {
     return async (dispatch) =>  {
         dispatch({type: USER_AUTH_START});
-        const result = await sendMulti('/auth/register', values, fileKeysArr);
+        const result = await sendJSON('/auth/register', values);
         if (result.error) {
             setLocalStorage('accessToken', null)
             return dispatch({ type: USER_AUTH_FAIL, payload: result.error });
