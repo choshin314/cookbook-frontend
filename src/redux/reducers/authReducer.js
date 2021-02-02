@@ -1,7 +1,7 @@
 import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, LOGOUT } from '../actions/types'
 import { getLocalStorage } from "../../helpers"
 
-let initAuth = getLocalStorage('auth') || {};
+let initAuth = getLocalStorage('auth') || { accessToken: null, user: null, loading: false, error: null };
 
 export default function authReducer(authState=initAuth, action) {
     switch (action.type) {

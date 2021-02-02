@@ -91,7 +91,8 @@ const ImgCover = styled(Link)`
     img {
         object-fit: cover;
         object-position: 50% 50%;
-        height: 100%;;
+        height: 100%;
+        width: 100%;
     }
 `
 

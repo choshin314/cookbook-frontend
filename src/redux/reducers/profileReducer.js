@@ -17,10 +17,8 @@ export default function profileReducer(profileState=initProfileState, action) {
     switch(action.type) {
         case FETCH_PROFILE_START:
             return { ...profileState, loading: true }
-            break;
         case FETCH_PROFILE_FAIL:
             return { ...profileState, loading: false, error: action.payload }
-            break;
         case FETCH_PROFILE_SUCCESS:
             return { 
                 ...profileState, 
@@ -28,10 +26,8 @@ export default function profileReducer(profileState=initProfileState, action) {
                 user: action.payload[0],
                 stats: action.payload[1]
             }
-            break;
         case SET_PROFILE_STATS:
             return { ...profileState, stats: action.payload }
-            break;
         default: 
             return profileState
     }

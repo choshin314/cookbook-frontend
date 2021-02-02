@@ -27,7 +27,7 @@ function Nav({logout, user}) {
                     icon={faPlus}
                 />
                 <NavItem
-                    to="/profile/userId"
+                    to="/profile/me"
                     label="Profile"
                     icon={faUserCircle}
                 />

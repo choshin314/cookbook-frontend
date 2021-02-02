@@ -1,17 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react'
 import styled from 'styled-components'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import logo from '../../assets/recipeshare-logo.png'
 import {useForm} from '../../hooks/form'
-import { CardWrapper, Button, media } from '../commonStyles'
 import { StyledHeader, Center, Card, Form, SubmitBtn, StyledLink } from './RegisterForm'
 import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'
 import {connect} from 'react-redux'
 import { loginUser } from '../../redux/actions/authActions'
-import { setLocalStorage } from '../../helpers'
 
 const initVals = { emailUsername: null, password: null };
 

@@ -1,13 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import logo from '../../assets/recipeshare-logo.png'
 import {useForm} from '../../hooks/form'
 import { CardWrapper, Button, media } from '../commonStyles'
 import Input from '../shared/Input'
-import ImgInput from '../shared/ImgInput'
 import FormFeedback from '../shared/FormFeedback'
 import {connect} from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
@@ -57,7 +55,6 @@ const constraints = {
 }
 
 function RegisterForm({ register, user, error, submitting }) {
-    const [ mode, setMode ] = useState('register');
     const {
         inputValues, 
         inputErrors,
@@ -169,6 +166,7 @@ export const Center = styled.div`
 
 export const Card = styled(CardWrapper)`
     margin: 1rem 0;
+    position: relative;
     :hover::before {
         opacity: 0;
     }

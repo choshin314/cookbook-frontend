@@ -2,7 +2,8 @@ import {getLocalStorage} from './index'
 
 const baseURL = process.env.REACT_APP_API_BASE;
 
-export async function sendMulti(apiPath, values, fileKeysArray) {
+export async function sendMulti(apiPath, values, fileKeysArray, token) {
+    const authHeader = token ? { authorization: `Bearer ${token}` } : null;
     const formData = new FormData();
     const stringified = {};
     fileKeysArray.forEach(fileKey => formData.append(fileKey, values[fileKey]));
@@ -14,7 +15,7 @@ export async function sendMulti(apiPath, values, fileKeysArray) {
         const res = await fetch(baseURL + apiPath, { 
             method: 'POST', 
             body: formData,
-            headers: { Authorization: `Bearer ${getLocalStorage('accessToken')}` }
+            headers: { ...authHeader }
         });
         const data = await res.json();
         if (res.status < 200 || res.status > 299) throw new Error(data.message);
@@ -24,14 +25,15 @@ export async function sendMulti(apiPath, values, fileKeysArray) {
     }
 }
 
-export async function sendJSON(apiPath, values) {
+export async function sendJSON(apiPath, values, token) {
+    const authHeader = token ? { authorization: `Bearer ${token}` } : null;
     try {
         const res = await fetch(baseURL + apiPath, { 
             method: 'POST', 
             body: JSON.stringify(values),
             headers: { 
                 'Content-Type': 'application/json', 
-                Authorization: `Bearer ${getLocalStorage('accessToken')}`
+                ...authHeader
             } 
         });
         const data = await res.json();
@@ -42,6 +44,18 @@ export async function sendJSON(apiPath, values) {
     }
 }
 
-
-//localStorage setItem (token, res.token);
-//
+export async function getAjax(apiPath, token=null) {
+    const authHeader = token ? { authorization: `Bearer ${token}` } : null;
+    try {
+        const res = await fetch(baseURL + apiPath, { 
+            headers: { 
+                ...authHeader
+            } 
+        });
+        const data = await res.json();
+        if (res.status < 200 || res.status > 299) throw new Error(data.message);
+        return { data: data }
+    } catch(err) {
+        return { error: err.message }
+    }
+}
