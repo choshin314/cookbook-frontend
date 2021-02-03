@@ -4,7 +4,7 @@ import { setLocalStorage } from '../helpers';
 
 import authReducer from './reducers/authReducer'
 import profileReducer from './reducers/profileReducer'
-import userRecipesReducer from './reducers/userRecipesReducer'
+import profileRecipesReducer from './reducers/profileRecipesReducer'
 import flashReducer from './reducers/flashReducer'
 import redirectReducer from './reducers/redirectReducer'
 import publicFeedReducer from './reducers/publicFeedReducer'
@@ -13,7 +13,7 @@ import privateFeedReducer from './reducers/privateFeedReducer'
 const rootReducer = combineReducers({
     auth: authReducer,
     profile: profileReducer,
-    userRecipes: userRecipesReducer,
+    profileRecipes: profileRecipesReducer,
     flash: flashReducer,
     redirect: redirectReducer,
     publicFeed: publicFeedReducer,

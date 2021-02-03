@@ -5,19 +5,19 @@ import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faBookmark, faFolder } from '@fortawesome/free-regular-svg-icons'
 
-import {fetchUserRecipesBookmarks, fetchUserRecipesOwn} from '../../redux/actions/userRecipesActions'
+import {fetchProfileRecipesBookmarks, fetchProfileRecipesOwn} from '../../redux/actions/profileRecipesActions'
 import RecipeCard from '../recipe/RecipeCard'
 import {GridContainer, media} from '../commonStyles'
 
 const USER = 'user'
 const BOOKMARKS = 'bookmarks'
 
-function RecipeGrid({userRecipes, bookmarks, getBookmarks, getUserRecipes}) {
+function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
     const [ recipeView, setRecipeView ] = useState(USER);
     const { username } = useParams();
 
     useEffect(() => {
-        if (!userRecipes.recipes[0]) getUserRecipes(username);
+        if (!recipes.recipes[0]) getRecipes(username);
     }, [])
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function RecipeGrid({userRecipes, bookmarks, getBookmarks, getUserRecipes}) {
         getBookmarks(username);
     }, [recipeView])
     
-    console.log(userRecipes)
+    console.log(recipes)
     return (
         <section>
             <GridNav id="recipe-grid">
@@ -46,8 +46,8 @@ function RecipeGrid({userRecipes, bookmarks, getBookmarks, getUserRecipes}) {
             </GridNav>
             <BorderedDiv>
                 {recipeView === USER && (<GridContainer cols="2" colsLg="3" gap="5px">
-                    {!userRecipes || userRecipes.loading && <div>loading recipes</div>}
-                    {userRecipes.recipes && userRecipes.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
+                    {!recipes || recipes.loading && <div>loading recipes</div>}
+                    {recipes.recipes && recipes.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
                 </GridContainer>)}
                 {recipeView === BOOKMARKS && (<GridContainer cols="2" colsLg="3" gap="5px">
                     {bookmarks.loading && <div>loading bookmarks</div>}
@@ -59,12 +59,12 @@ function RecipeGrid({userRecipes, bookmarks, getBookmarks, getUserRecipes}) {
 }
 
 const mapStateToProps = (global) => ({ 
-    userRecipes: global.userRecipes.user, 
-    bookmarks: global.userRecipes.bookmarks
+    recipes: global.profileRecipes.user, 
+    bookmarks: global.profileRecipes.bookmarks
 })
 const mapDispatchToProps = {
-    getBookmarks: fetchUserRecipesBookmarks,
-    getUserRecipes: fetchUserRecipesOwn
+    getBookmarks: fetchProfileRecipesBookmarks,
+    getRecipes: fetchProfileRecipesOwn
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeGrid);
