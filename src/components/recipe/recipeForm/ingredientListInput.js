@@ -1,4 +1,4 @@
-import {useState, useContext, useRef} from 'react'
+import {useState, useRef} from 'react'
 import styled from 'styled-components'
 import {Draggable} from 'react-beautiful-dnd'
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
@@ -8,18 +8,17 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Button} from '../../commonStyles'
 import ListInputWrapper from '../../shared/ListInputWrapper'
 import IngredientFieldset from './IngredientFieldset'
-import { RecipeFormContext } from './RecipeForm'
 
-function IngredientListInput() {
+function IngredientListInput(props) {
     const fieldsetRef = useRef(null);
     const [draftError, setDraftError] = useState();
-    const { addToList, removeFromList, inputValues, inputErrors : errors} = useContext(RecipeFormContext);
+    const { addToList, removeFromList, values, errors } = props;
     const { 
         ingredients, 
         ingredientDraft_qty, 
         ingredientDraft_unit, 
         ingredientDraft_content 
-    } = inputValues;
+    } = values;
 
     function validateAndAdd(e) {
         e.preventDefault();
@@ -34,6 +33,8 @@ function IngredientListInput() {
         fieldsetRef.current.querySelector('input').focus() //refocus on "qty" input
     }
 
+    console.log(ingredients)
+
     return (
         <ListInputWrapper 
             droppableId="ingredients"
@@ -42,8 +43,8 @@ function IngredientListInput() {
         >
             <IngredientFieldset 
                 ref={fieldsetRef}
-                values={inputValues}
-                errorMsgs={errors}
+                values={values}
+                errors={errors}
                 addToList={validateAndAdd}
                 draftError={draftError}
             />

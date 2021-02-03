@@ -5,6 +5,7 @@ import RecipeCard from '../components/recipe/RecipeCard'
 import {GridContainer, Wrapper, Main, PageTitle, media} from '../components/commonStyles'
 
 import recipes from '../dummyrecipes.json'
+import FeedList from '../components/feed/FeedList'
 
 function Home() {
     const [popularRecipes, setPopularRecipes] = useState(null);
@@ -20,7 +21,7 @@ function Home() {
     return (
         <Main>
             <PageTitle>Popular Recipes</PageTitle>
-            <GridContainer colsMd="1" colsLg="1">
+            {/* <GridContainer colsMd="1" colsLg="1">
                 {loading && <div>...loading</div>}
                 {popularRecipes && popularRecipes.map(r => (
                     <RecipeCard
@@ -28,7 +29,8 @@ function Home() {
                         recipe={r}
                     />
                 ))}
-            </GridContainer>
+            </GridContainer> */}
+            <FeedList />
         </Main>
     )
 }

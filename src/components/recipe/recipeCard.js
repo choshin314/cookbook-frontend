@@ -5,19 +5,12 @@ import { CSSTransition } from 'react-transition-group'
 import {media, CardWrapper} from '../commonStyles'
 import Ratings from './Ratings'
 import AvatarLink from '../shared/AvatarLink'
-const user = {
-    username: 'jsmith1',
-    firstName: 'John',
-    lastName: 'Smith',
-    id: '123',
-    bio: 'little short bio about me',
-    profilePic: 'https://res.cloudinary.com/cookbookshare/image/upload/v1611854339/tfkznkctzjonladqs2lg.jpg'
-}
-export default function RecipeCard({recipe, user}) {
+
+export default function RecipeCard({recipe}) {
     return (
         <CardWrapper>
             <CSSTransition
-                in={recipe}
+                in={!!recipe}
                 appear={true}
                 timeout={300}
                 classNames="fadeExpand"
@@ -26,7 +19,8 @@ export default function RecipeCard({recipe, user}) {
                 <CardLayout>
                     <Header>
                         <AvatarLink 
-                            user={user}
+                            user={recipe.user}
+                            showCreatedBy
                         />
                     </Header>
                     <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
@@ -36,7 +30,7 @@ export default function RecipeCard({recipe, user}) {
                         <Link to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                             <CardTitle>{recipe.title}</CardTitle>
                         </Link>
-                        <Ratings rating={recipe.rating} reviewCount={recipe.reviewCount}/>
+                        <Ratings rating={recipe.avgRating} reviewCount={recipe.reviewCount}/>
                     </Content>
                 </CardLayout>
             </CSSTransition>

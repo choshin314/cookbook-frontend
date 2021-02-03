@@ -7,9 +7,11 @@ function IngredientsSection({ingredients}) {
     return (
         <RecipeSection sectionTitle="Ingredients">
             <IngredientList>
-                {ingredients.map(item => (
-                    <li key={item.id}>
-                        <Checkbox>{item.text}</Checkbox>
+                {ingredients.map(ing => (
+                    <li key={ing.id}>
+                        <Checkbox>
+                            {ing.qty} {ing.unit} {ing.content}
+                        </Checkbox>
                     </li>
                 ))}
             </IngredientList>
@@ -22,6 +24,4 @@ export default IngredientsSection;
 const IngredientList = styled.ol`
     list-style: none;
     padding-left: 0;
-    font-size: 1.25rem;
-    line-height: 1.5;
 `

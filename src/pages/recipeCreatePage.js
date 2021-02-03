@@ -21,9 +21,9 @@ const initValues = {
     tagDraft: ''
 }
 
-function RecipeCreatePage({user}) {
+function RecipeCreatePage({auth}) {
     async function handleSubmit(values) {
-        const result = await sendMulti('/recipes', values, ['coverImg'])
+        const result = await sendMulti('/recipes', values, ['coverImg'], auth.accessToken)
         if (result.error) return { error: result.error }
         return { 
             data: result.data, 
@@ -40,7 +40,7 @@ function RecipeCreatePage({user}) {
         </Main>
     )
 }
-const mapStateToProps = (global) => ({ user: global.user });
+const mapStateToProps = (global) => ({ auth: global.auth });
 const mapDispatchToProps = {  }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeCreatePage)

@@ -8,7 +8,8 @@ function InstructionsSection({instructions}) {
             <Instructions>
                 {instructions.map((item, i) => (
                     <li key={item.id}>
-                        <span>{i+1}.</span><span>{item.display_text}</span>
+                        <span>{i+1}.</span>
+                        <span>{item.content}</span>
                     </li>
                 ))}
             </Instructions>
@@ -21,8 +22,6 @@ export default InstructionsSection;
 const Instructions = styled.ol`
     list-style: none;
     padding-left: 0;
-    font-size: 1.25rem;
-    line-height: 1.5;
     li {
         display: flex;
     }

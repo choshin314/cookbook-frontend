@@ -9,7 +9,7 @@ import Input from '../../shared/Input'
 import TagListInput from './TagListInput'
 import ListInputWrapper from '../../shared/ListInputWrapper'
 
-function RecipeFormIntro({step, inputValues, inputErrors}) {
+function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
 
     return (
         <CSSTransition
@@ -26,22 +26,23 @@ function RecipeFormIntro({step, inputValues, inputErrors}) {
                             name="coverImg" 
                             label={{ text: 'Cover Image' }} 
                             imgSize="5mb" 
-                            file={inputValues.coverImg}
+                            file={values.coverImg}
+                            errorMsg={errors.coverImg}
                         />
                     </GridColumn>
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
                         <Input 
                             name="title"
-                            value={inputValues.title}
-                            errorMsg={inputErrors.title}
+                            value={values.title}
+                            errorMsg={errors.title}
                             type="text" 
                             label={{ text: "Recipe Title", hide: false }}
                             placeholder="What are we making?" 
                         />
                         <Input 
                             name="introText"
-                            value={inputValues.introText}
-                            errorMsg={inputErrors.introText}
+                            value={values.introText}
+                            errorMsg={errors.introText}
                             type="textarea"
                             placeholder="Give a short and sweet intro about your recipe"
                             label={{ text: "Introduction", hide: false }}
@@ -52,14 +53,19 @@ function RecipeFormIntro({step, inputValues, inputErrors}) {
                 </Grid>
                 <Grid as="div" colsLg="6" gap="0">
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
-                        <TagListInput />
+                        <TagListInput 
+                            addToList={addToList} 
+                            removeFromList={removeFromList} 
+                            values={values} 
+                            errors={errors}
+                        />
                     </GridColumn>
                     <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
                         <Flex>
                             <Input 
                                 name="prepTime"
-                                value={inputValues.prepTime}
-                                errorMsg={inputErrors.prepTime}
+                                value={values.prepTime}
+                                errorMsg={errors.prepTime}
                                 type="number" 
                                 min={1}
                                 label={{ text: "Prep (Mins.)", hide: false }}
@@ -67,8 +73,8 @@ function RecipeFormIntro({step, inputValues, inputErrors}) {
                             />
                             <Input 
                                 name="cookTime"
-                                value={inputValues.cookTime}
-                                errorMsg={inputErrors.cookTime}
+                                value={values.cookTime}
+                                errorMsg={errors.cookTime}
                                 type="number" 
                                 min={1}
                                 label={{ text: "Cook (Mins.)", hide: false }}
@@ -76,8 +82,8 @@ function RecipeFormIntro({step, inputValues, inputErrors}) {
                             />
                             <Input 
                                 name="servings"
-                                value={inputValues.servings}
-                                errorMsg={inputErrors.servings}
+                                value={values.servings}
+                                errorMsg={errors.servings}
                                 type="number" 
                                 min={1}
                                 label={{ text: "Servings", hide: false }}

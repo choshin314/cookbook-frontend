@@ -71,15 +71,16 @@ function RecipeForm({ initValues, handleSubmit }) {
 
     return (
         <Card>
-            <RecipeFormContext.Provider value={{
-                inputValues, inputErrors, addToList, removeFromList
-            }}>
-            
-            
             <Form onChange={handleChange} onSubmit={validateAndSubmit}>
                 {step === 1 && (
                     <>
-                    <RecipeFormIntro step={step} inputValues={inputValues} inputErrors={inputErrors}/>
+                    <RecipeFormIntro 
+                        step={step} 
+                        values={inputValues} 
+                        errors={inputErrors}
+                        addToList={addToList}
+                        removeFromList={removeFromList}
+                    />
                     <FormBtn type="button"className="align-right" 
                         onClick={(e) => {
                             e.preventDefault();
@@ -93,7 +94,13 @@ function RecipeForm({ initValues, handleSubmit }) {
                 )}
                 {step === 2 && (
                     <DragDropContext onDragEnd={handleDragEnd} >
-                    <RecipeFormDetails step={step} />
+                    <RecipeFormDetails 
+                        step={step} 
+                        values={inputValues} 
+                        errors={inputErrors}
+                        addToList={addToList}
+                        removeFromList={removeFromList}
+                    />
                     <FormBtn type="button"
                         onClick={(e) => {
                             e.preventDefault();
@@ -107,9 +114,6 @@ function RecipeForm({ initValues, handleSubmit }) {
                 )}
                 <button type="submit" >submit</button>
             </Form>
-            
-            
-            </RecipeFormContext.Provider>
         </Card>
     )
 }

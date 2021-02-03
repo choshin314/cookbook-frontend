@@ -17,6 +17,8 @@ const Section = styled(Wrapper)`
     position: relative;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    line-height: 1.5;
+    font-size: 1rem;
     ::before {
         content: '';
         position: absolute;
@@ -31,6 +33,7 @@ const Section = styled(Wrapper)`
 const SectionTitle = styled.h2`
     text-align: left;
     margin: 1rem 0;
+    font-size: 1.25rem;
     @media(min-width: ${media.full}) {
         margin: 2rem 0;
     }

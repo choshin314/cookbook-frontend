@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react'
+import { useState } from 'react'
 import styled, {css} from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'

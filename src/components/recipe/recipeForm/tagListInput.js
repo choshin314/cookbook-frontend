@@ -1,17 +1,14 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import ListInputWrapper from '../../shared/ListInputWrapper'
 import Input from '../../shared/Input'
-import { RecipeFormContext } from './RecipeForm'
 
 const KEYS = [",", "Enter"];
 
-function TagListInput() {
+function TagListInput(props) {
     const [ draftError, setDraftError ] = useState();
-    const { 
-        addToList, removeFromList, inputValues : values, inputErrors : errors
-    } = useContext(RecipeFormContext);
+    const { addToList, removeFromList, values, errors } = props;
 
     function validateAndSubmitTag(e) {
         e.preventDefault();
@@ -19,8 +16,8 @@ function TagListInput() {
         const trimmed = values.tagDraft.trim();
         const tagLength = trimmed.length;
         const tagExists = values.tags.findIndex(el => el.content === trimmed) > -1 ? true : false;
-        if (tagLength < 4 || tagLength > 16) {
-            return setDraftError('Tags must be between 4 and 16 characters')
+        if (tagLength < 3 || tagLength > 20) {
+            return setDraftError('Tags must be between 3 and 20 characters')
         } 
         if (!/^[a-zA-Z]+$/.test(trimmed)) return setDraftError('Tags must contain letters only')
         if (tagExists) {

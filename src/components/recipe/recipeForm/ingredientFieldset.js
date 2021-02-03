@@ -9,7 +9,7 @@ import {Button} from '../../commonStyles'
 import AddBtn from '../../shared/AddBtn'
 
 const IngredientFieldset = React.forwardRef((props, ref) => {
-    const {values, draftError, errorMsgs, addToList} = props;
+    const {values, draftError, errors, addToList} = props;
     return (
         <Container>
             <Label htmlFor="ingredientDraftSet">Add Ingredients</Label>
@@ -27,7 +27,7 @@ const IngredientFieldset = React.forwardRef((props, ref) => {
                     label={{ text: 'Qty'}}
                     min="0"
                     value={values.ingredientDraft_qty}
-                    errorMsg={errorMsgs.ingredientDraft_qty}
+                    errorMsg={errors.ingredientDraft_qty}
                     autoFocus={true}
                 />
                 <Input 
@@ -35,14 +35,14 @@ const IngredientFieldset = React.forwardRef((props, ref) => {
                     name="ingredientDraft_unit"
                     label={{ text: 'Units'}}
                     value={values.ingredientDraft_unit}
-                    errorMsg={errorMsgs.ingredientDraft_unit}
+                    errorMsg={errors.ingredientDraft_unit}
                 />
                 <Input 
                     type="text"
                     name="ingredientDraft_content"
                     label={{ text: 'Ingredient'}}
                     value={values.ingredientDraft_content}
-                    errorMsg={errorMsgs.ingredientDraft_content}
+                    errorMsg={errors.ingredientDraft_content}
                     onClick={addToList}
                 />
                 

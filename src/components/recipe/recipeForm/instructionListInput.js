@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react'
+import {useState } from 'react'
 import styled from 'styled-components'
 import {Draggable} from 'react-beautiful-dnd'
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
@@ -8,21 +8,20 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Button} from '../../commonStyles'
 import ListInputWrapper from '../../shared/ListInputWrapper'
 import Input from '../../shared/Input'
-import { RecipeFormContext } from './RecipeForm'
 
 const KEYS = [",", "Enter"];
 
-function InstructionListInput() {
+function InstructionListInput(props) {
     const [draftError, setDraftError] = useState();
-    const { addToList, removeFromList, inputValues, inputErrors : errors } = useContext(RecipeFormContext);
-    const { instructions, instructionDraft } = inputValues;
+    const { addToList, removeFromList, values, errors } = props;
+    const { instructions, instructionDraft } = values;
     function validateAndAdd(e) {
         e.preventDefault();
         setDraftError(null);
         const trimmed = instructionDraft.trim();
         const length = trimmed.length;
-        if (length < 15) {
-            return setDraftError('Elaborate! (minimum 15 characters)')
+        if (length < 5) {
+            return setDraftError('Elaborate! (minimum 5 characters)')
         } 
         addToList('instructions', ['instructionDraft'])
     }

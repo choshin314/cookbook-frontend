@@ -16,7 +16,7 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
     }, [inputValues])
 
     useEffect(() => {
-        return () => setLocalStorage(formName, {})
+        return () => setLocalStorage(formName, initValues)
     }, [])
 
     function clearErrors() {

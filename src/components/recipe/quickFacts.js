@@ -12,7 +12,7 @@ function QuickFacts(props) {
                     <th scope="col">Prep</th>
                     <th scope="col">Cook</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Servings</th>
+                    <th scope="col">Serves</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,14 +39,15 @@ const Container = styled.div`
 const Table = styled.table`
     border-radius: 5px;
     width: 100%;
+    font-size: .75rem;
     caption {
         margin-bottom: 5px;
-        font-size: 1.5rem;
+        font-size: 1rem;
         font-weight: 500;
     }
     tr {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(10px, 1fr));
         text-align: center;
     }
 
@@ -62,7 +63,7 @@ const Table = styled.table`
         padding: .5rem 1rem;
     }
 
-    @media(min-width: ${media.full}) {
-        font-size: 1.25rem;
+    @media(min-width: ${media.medium}) {
+        font-size: 1rem;
     }
 `

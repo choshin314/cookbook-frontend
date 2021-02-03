@@ -5,6 +5,7 @@ import {faStar as starEmpty} from '@fortawesome/free-regular-svg-icons'
 
 function Ratings({rating=3, reviewCount}) {
     function determineStarFilling(starNum, rating) {
+        if (!rating) return starEmpty;
         let halfStarMin = starNum - 0.75;
         let fullStarMin = starNum - .25;
         if (rating >= fullStarMin) {
@@ -16,7 +17,7 @@ function Ratings({rating=3, reviewCount}) {
         }
     }
     return (
-        <Container title={`${rating.toFixed(1)} Stars`}>
+        <Container title={rating ? `${rating.toFixed(1)} Stars` : 'No reviews yet'}>
             <FontAwesomeIcon icon={determineStarFilling(1, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(2, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(3, rating)} />
