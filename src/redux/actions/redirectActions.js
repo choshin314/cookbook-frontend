@@ -3,7 +3,6 @@ import { SET_REDIRECT, CLEAR_REDIRECT, SET_REFERRER, REDIRECT_WITH_REFERRER, BAC
 export function setRedirect(path) {
     return (dispatch) => {
         dispatch({ type: SET_REDIRECT, payload: path });
-        dispatch({ type: CLEAR_REDIRECT })
     }
 }
 

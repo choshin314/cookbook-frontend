@@ -9,6 +9,7 @@ import flashReducer from './reducers/flashReducer'
 import redirectReducer from './reducers/redirectReducer'
 import publicFeedReducer from './reducers/publicFeedReducer'
 import privateFeedReducer from './reducers/privateFeedReducer'
+import socialReducer from './reducers/socialReducer'
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     flash: flashReducer,
     redirect: redirectReducer,
     publicFeed: publicFeedReducer,
-    privateFeed: privateFeedReducer
+    privateFeed: privateFeedReducer,
+    social: socialReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
