@@ -69,13 +69,13 @@ export const deleteSuccess = (category, dataName, data) => ({
 export function addSocial(category, dataName, id) {
     return async (dispatch, getState) => {
         dispatch(fetchSocialStart(category));
-        const {data, error} = await ajax.post(`/social/${category}`, id, getState().auth.accessToken);
+        const {data, error} = await ajax.post(`/social/${category}`, { id: id }, getState().auth.accessToken);
         if (error) dispatch(fetchSocialFail(category, error));
         if (error === "Not authorized to access") {
             dispatch(setFlash('error', 'Login required'));
             dispatch(setRedirect('/account/login'));
         }
-        if (data) dispatch(addSocialSuccess(category, dataName, data));
+        if (data) dispatch(addSocialSuccess(category, dataName, data ));
         //if successful, backend will send back the newly added recipeId(bookmarks / likes) 
         //or userId(following) in format { id: id }
     }

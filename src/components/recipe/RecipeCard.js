@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import {media, CardWrapper} from '../commonStyles'
 import Ratings from './Ratings'
 import AvatarLink from '../shared/AvatarLink'
+import BookmarkBtn from './BookmarkBtn'
 
 export default function RecipeCard({recipe}) {
     return (
@@ -22,6 +23,7 @@ export default function RecipeCard({recipe}) {
                             user={recipe.user}
                             showCreatedBy
                         />
+                        <BookmarkBtn recipeId={recipe.id} />
                     </Header>
                     <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                         <img src={recipe.coverImg} />
@@ -72,6 +74,8 @@ const CardLayout = styled.div`
 
 const Header = styled.header`
     padding: 1.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
 `
 
 const ImgCover = styled(Link)`

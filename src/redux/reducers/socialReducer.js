@@ -103,10 +103,7 @@ export default function reducer(social=initSocial, action) {
                 ...social,
                 [category]: {
                     ...social[category],
-                    [dataName]: { 
-                        ...social[category][dataName], 
-                        [data.id]: true 
-                    },
+                    [dataName]: { ...social[category][dataName], [data.id]: true },
                     loading: false
                 }
             }
@@ -114,9 +111,6 @@ export default function reducer(social=initSocial, action) {
 
         case DELETE_SOCIAL_SUCCESS: {
             let { category, dataName, data } = action.payload;
-            let filtered = social[category][dataName].filter(socialItem => (
-                socialItem.id !== data.id
-            ))
             return {
                 ...social,
                 [category]: {
