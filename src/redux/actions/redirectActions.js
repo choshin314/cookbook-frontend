@@ -1,15 +1,17 @@
-import { SET_REDIRECT, CLEAR_REDIRECT, SET_REFERRER } from './types'
+import { SET_REDIRECT, CLEAR_REDIRECT, SET_REFERRER, REDIRECT_WITH_REFERRER, BACK_TO_REFERRER } from './types'
 
 export function setRedirect(path) {
     return (dispatch) => {
-        setTimeout(() => dispatch({ type: CLEAR_REDIRECT }), 0);
         dispatch({ type: SET_REDIRECT, payload: path });
+        dispatch({ type: CLEAR_REDIRECT })
     }
 }
 
-export function setReferrer(path) {
-    return {
-        type: SET_REFERRER,
-        payload: path
-    }
-}
+export const setReferrer = (path) => ({ type: SET_REFERRER, payload: path })
+
+export const redirectWithReferrer = (path, referrer) => ({
+    type: REDIRECT_WITH_REFERRER,
+    payload: { to: path, referrer: referrer }
+})
+
+export const backToReferrer = () => ({ type: BACK_TO_REFERRER })

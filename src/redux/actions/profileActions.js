@@ -1,3 +1,5 @@
+import { ajax } from '../../helpers/sendAjax'
+
 import {
     SET_PROFILE_STATS, 
     FETCH_PROFILE_START, 
@@ -29,18 +31,9 @@ export const fetchProfileFail = (errorMsg) => ({
 export const fetchProfile = (username) => {
     return async (dispatch, getState) => {
         dispatch(fetchProfileStart());
-        try {
-            const response = await Promise.all([
-                fetch(`${apiBase}/users/${username}`), 
-                fetch(`${apiBase}/users/${username}/stats`)
-            ]);
-            const profileUser = await response[0].json();
-            const profileStats = await response[1].json();
-            if (!response[0].ok) throw new Error(profileUser.message);
-            if (!response[1].ok) throw new Error(profileStats.message);
-            dispatch(fetchProfileSuccess([profileUser, profileStats]))
-        } catch(err) {
-            dispatch(fetchProfileFail(err.message));
-        }
+        const { data:userData, error:userErr } = await ajax.get(`/users/${username}`);
+        const { data:statsData, error:statsErr } = await ajax.get(`/users/${username}/stats`);
+        if (userErr || statsErr) return dispatch(fetchProfileFail('Could not retrieve profile info'));
+        dispatch(fetchProfileSuccess([userData, statsData]))
     }
 }

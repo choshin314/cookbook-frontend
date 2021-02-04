@@ -1,53 +1,50 @@
-import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, LOGOUT, SET_REDIRECT, REDIRECT_WITH_REFERRER, BACK_TO_REFERRER } from './types'
+import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, LOGOUT, BACK_TO_REFERRER } from './types'
 import {setFlash} from './flashActions'
-import {sendJSON, getAjax} from '../../helpers/sendAjax'
+import { setRedirect, redirectWithReferrer, backToReferrer } from './redirectActions'
+import { ajax } from '../../helpers/sendAjax'
 
 //ajax return is always either error msg (string) or { accessToken, user }
+export const userAuthStart = () => ({ type: USER_AUTH_START })
+export const userAuthFail = (error) => ({ type: USER_AUTH_FAIL, payload: error }) 
+export const userAuthSuccess = (data) => ({ type: USER_AUTH_SUCCESS, payload: data })
+
 export function loginUser(values) {
     return async (dispatch) => {
-        dispatch({type: USER_AUTH_START});
-        const result = await sendJSON('/auth/login', values);
-        if (result.error) {
-            return dispatch({ type: USER_AUTH_FAIL, payload: result.error });
-        }
-        dispatch({ type: USER_AUTH_SUCCESS, payload: result.data });
-        dispatch(setFlash('success', `Welcome back ${result.data.user.firstName}`))
-        return dispatch({ type: BACK_TO_REFERRER });
+        dispatch(userAuthStart());
+        const { data, error } = await ajax.post('/auth/login', values);
+        if (error) return dispatch(userAuthFail(error));
+        dispatch(userAuthSuccess(data))
+        dispatch(setFlash('success', `Welcome back ${data.user.firstName}`))
+        dispatch(backToReferrer()) 
     }
 }
 
 export function registerUser(values) {
     return async (dispatch) =>  {
-        dispatch({type: USER_AUTH_START});
-        const result = await sendJSON('/auth/register', values);
-        if (result.error) {
-            return dispatch({ type: USER_AUTH_FAIL, payload: result.error });
-        }
-        return dispatch({ type: USER_AUTH_SUCCESS, payload: result.data })
+        dispatch(userAuthStart());
+        const result = await ajax.post('/auth/register', values);
+        if (result.data) dispatch(userAuthSuccess(result.data));
+        if (result.error) dispatch(userAuthFail(result.error));
     }
 }
 
 export function logoutUser() {
     return dispatch => {
         localStorage.clear();
-        dispatch({ type: SET_REDIRECT, payload: '/account/login' });
+        dispatch(setRedirect('/account/login'));
         dispatch({ type: LOGOUT });
     }
 }
 
 export function checkAuth(referrer) {
     return async (dispatch, getState) => {
-        dispatch({ type: USER_AUTH_START });
-        const token = getState().auth.accessToken;
-        const result = await getAjax('/auth/user', token);
+        dispatch(userAuthStart());
+        const result = await ajax.get('/auth/user', getState().auth.accessToken);
         if (result.error) {
             localStorage.clear();
-            dispatch({ type: USER_AUTH_FAIL, payload: result.error })
-            return dispatch({ type: REDIRECT_WITH_REFERRER, payload: { to: '/account/login', referrer: referrer} });
+            dispatch(userAuthFail(result.error))
+            dispatch(redirectWithReferrer('/account/login', referrer));
         }
-        return dispatch({ 
-            type: USER_AUTH_SUCCESS, 
-            payload: result.data
-        })
+        dispatch(userAuthSuccess(result.data))
     }
 }

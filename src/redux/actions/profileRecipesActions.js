@@ -1,3 +1,4 @@
+import { ajax } from '../../helpers/sendAjax'
 import {
     FETCH_PROFILE_RECIPES_START,
     FETCH_PROFILE_RECIPES_SUCCESS,
@@ -26,21 +27,19 @@ export function fetchProfileRecipesFail(category, error) {
 }
 
 export const fetchProfileRecipesOwn = (username) => {
-    return function(dispatch, getState) {
+    return async function(dispatch, getState) {
         dispatch(fetchProfileRecipesStart('user'));
-        fetch(`http://localhost:5000/api/recipes/user/${username}`)
-            .then(res => res.json())
-            .then(recipes => dispatch(fetchProfileRecipesSuccess('user', recipes)))
-            .catch(err => dispatch(fetchProfileRecipesFail('user', err.message)))
+        const { data, error } = await ajax.get(`/recipes/user/${username}`);
+        if (error) return dispatch(fetchProfileRecipesFail('user', error));
+        dispatch(fetchProfileRecipesSuccess('user', data));
     }
 }
 
 export const fetchProfileRecipesBookmarks = (username) => {
-    return function(dispatch, getState) {
+    return async function(dispatch, getState) {
         dispatch(fetchProfileRecipesStart('bookmarks'));
-        fetch(`http://localhost:5000/api/recipes/bookmarks/${username}`)
-            .then(res => res.json())
-            .then(recipes => dispatch(fetchProfileRecipesSuccess('bookmarks', recipes)))
-            .catch(err => dispatch(fetchProfileRecipesFail('bookmarks', err.message)))
+        const { data, error } = await ajax.get(`/recipes/bookmarks/${username}`);
+        if (error) return dispatch(fetchProfileRecipesFail('bookmarks', error));
+        dispatch(fetchProfileRecipesSuccess('bookmarks', data));
     }
 }

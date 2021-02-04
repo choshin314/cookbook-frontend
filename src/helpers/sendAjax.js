@@ -2,7 +2,7 @@ import {getLocalStorage} from './index'
 
 const baseURL = process.env.REACT_APP_API_BASE;
 
-export async function sendMulti(apiPath, values, fileKeysArray, token) {
+export async function sendMulti(apiPath, values, fileKeysArray, token=null) {
     const authHeader = token ? { authorization: `Bearer ${token}` } : null;
     const formData = new FormData();
     const stringified = {};
@@ -17,15 +17,13 @@ export async function sendMulti(apiPath, values, fileKeysArray, token) {
             body: formData,
             headers: { ...authHeader }
         });
-        const data = await res.json();
-        if (res.status < 200 || res.status > 299) throw new Error(data.message);
-        return { data: data }
+        return await res.json();
     } catch(err) {
         return { error: err.message }
     }
 }
 
-export async function sendJSON(apiPath, values, token) {
+export async function sendJSON(apiPath, values, token=null) {
     const authHeader = token ? { authorization: `Bearer ${token}` } : null;
     try {
         const res = await fetch(baseURL + apiPath, { 
@@ -36,9 +34,7 @@ export async function sendJSON(apiPath, values, token) {
                 ...authHeader
             } 
         });
-        const data = await res.json();
-        if (res.status < 200 || res.status > 299) throw new Error(data.message);
-        return { data: data }
+        return await res.json();
     } catch(err) {
         return { error: err.message }
     }
@@ -52,10 +48,30 @@ export async function getAjax(apiPath, token=null) {
                 ...authHeader
             } 
         });
-        const data = await res.json();
-        if (res.status < 200 || res.status > 299) throw new Error(data.message);
-        return { data: data }
+        return await res.json();
     } catch(err) {
         return { error: err.message }
     }
+}
+
+export async function deleteAjax(apiPath, token=null) {
+    const authHeader = token ? { authorization: `Bearer ${token}` } : null;
+    try {
+        const res = await fetch(baseURL + apiPath, { 
+            method: 'DELETE',
+            headers: { 
+                ...authHeader
+            } 
+        });
+        return await res.json();
+    } catch(err) {
+        return { error: err.message }
+    }
+}
+
+export const ajax = {
+    get: getAjax,
+    post: sendJSON,
+    postMulti: sendMulti,
+    delete: deleteAjax 
 }
