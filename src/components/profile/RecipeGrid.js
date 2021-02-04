@@ -17,11 +17,11 @@ function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
     const { username } = useParams();
 
     useEffect(() => {
-        if (!recipes.recipes[0]) getRecipes(username);
+        getRecipes(username);
     }, [])
 
     useEffect(() => {
-        if(recipeView !== BOOKMARKS || bookmarks.recipes[0]) return;
+        if(recipeView !== BOOKMARKS) return;
         getBookmarks(username);
     }, [recipeView])
     

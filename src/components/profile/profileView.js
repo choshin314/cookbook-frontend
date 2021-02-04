@@ -1,19 +1,14 @@
-import {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import {useParams, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Main, GridContainer, PageTitle, Wrapper} from '../commonStyles'
 import RecipeGrid from './RecipeGrid'
 import AvatarLink from '../shared/AvatarLink'
 
-
-
-function ProfileView({profile}) {
-    const { username } = useParams();
-    const { user, stats } = profile;
+function ProfileView({user, stats}) {
     return (
         <Main>
-            {profile && (<Container>
+            <Container>
                 <HeadSection cols="4">
                     <StyledDiv>
                         <AvatarLink user={user} imgSize="50px"/>
@@ -25,14 +20,12 @@ function ProfileView({profile}) {
                     <UserStatLink>{stats.followingCount}<br />Following</UserStatLink>
                 </HeadSection>
                 <RecipeGrid />
-            </Container>)}
+            </Container>
         </Main>
     )
 }
 
-const mapStateToProps = (global) => ({ profile: global.profile })
-
-export default connect(mapStateToProps)(ProfileView);
+export default ProfileView;
 
 
 const Container = styled.div`
