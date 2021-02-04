@@ -11,7 +11,7 @@ import publicFeedReducer from './reducers/publicFeedReducer'
 import privateFeedReducer from './reducers/privateFeedReducer'
 import socialReducer from './reducers/socialReducer'
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     auth: authReducer,
     profile: profileReducer,
     profileRecipes: profileRecipesReducer,
@@ -21,6 +21,13 @@ const rootReducer = combineReducers({
     privateFeed: privateFeedReducer,
     social: socialReducer
 })
+
+const rootReducer = (state, action) => {
+    if (action.type === "LOGOUT") {
+        state = undefined
+    }
+    return appReducer(state, action)
+}
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

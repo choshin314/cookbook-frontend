@@ -28,6 +28,7 @@ export default function profileReducer(profileState=initProfileState, action) {
             }
         case SET_PROFILE_STATS:
             return { ...profileState, stats: action.payload }
+
         default: 
             return profileState
     }

@@ -1,7 +1,7 @@
 import {
     FETCH_PROFILE_RECIPES_START,
     FETCH_PROFILE_RECIPES_SUCCESS,
-    FETCH_PROFILE_RECIPES_FAIL
+    FETCH_PROFILE_RECIPES_FAIL 
 } from '../actions/types'
 
 const initProfileRecipes = {
@@ -40,6 +40,7 @@ export default function profileRecipesReducer(profileRecipes=initProfileRecipes,
                     error: payload.error
                 }
             }
+
         default: 
             return profileRecipes;
     }

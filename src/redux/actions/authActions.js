@@ -31,8 +31,8 @@ export function registerUser(values) {
 export function logoutUser() {
     return dispatch => {
         localStorage.clear();
-        dispatch(setRedirect('/account/login'));
         dispatch({ type: LOGOUT });
+        dispatch(setRedirect('/account/login'));
     }
 }
 

@@ -6,7 +6,8 @@ import {
     FETCH_SOCIAL_SUCCESS,
     DELETE_SOCIAL_SUCCESS,
     ADD_SOCIAL_SUCCESS,
-    TOGGLE_SOCIAL
+    TOGGLE_SOCIAL,
+    LOGOUT
 } from '../actions/types'
 
 const initSocial = {
@@ -123,6 +124,9 @@ export default function reducer(social=initSocial, action) {
                 }
             }
         }
+
+        
+
         default:
             return social
     }
