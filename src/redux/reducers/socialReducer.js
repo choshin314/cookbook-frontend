@@ -12,22 +12,22 @@ import {
 const initSocial = {
     following: {
         loading: false,
-        userIds: [],
+        userIds: {},
         error: null
     },
     followers: {
         loading: false,
-        userIds: [],
+        userIds: {},
         error: null
     },
     bookmarks: {
         loading: false,
-        recipeIds: [],
+        recipeIds: {},
         error: null
     },
     likes: {
         loading: false,
-        recipeIds: [],
+        recipeIds: {},
         error: null
     }
 }
@@ -82,14 +82,16 @@ export default function reducer(social=initSocial, action) {
 
         case FETCH_SOCIAL_SUCCESS: {
             let { category, dataName, data } = action.payload;
+            const dataObj = {};
+            data.forEach(el => dataObj[el.id] = true) //convert id array to obj with ids as keys
             return {
                 ...social,
                 [category]: {
                     ...social[category],
-                    [dataName]: [
+                    [dataName]: {
                         ...social[category][dataName],
-                        ...data
-                    ],
+                        ...dataObj
+                    },
                     loading: false
                 }
             }
@@ -101,7 +103,10 @@ export default function reducer(social=initSocial, action) {
                 ...social,
                 [category]: {
                     ...social[category],
-                    [dataName]: [ ...social[category][dataName], data ],
+                    [dataName]: { 
+                        ...social[category][dataName], 
+                        [data.id]: true 
+                    },
                     loading: false
                 }
             }
@@ -117,7 +122,10 @@ export default function reducer(social=initSocial, action) {
                 [category]: {
                     ...social[category],
                     loading: false,
-                    [dataName]: filtered
+                    [dataName]: { 
+                        ...social[category][dataName], 
+                        [data.id]: false 
+                    }
                 }
             }
         }
