@@ -23,7 +23,7 @@ export default function RecipeCard({recipe}) {
                             user={recipe.user}
                             showCreatedBy
                         />
-                        <BookmarkBtn recipeId={recipe.id} />
+                        <BookmarkBtn recipe={recipe} />
                     </Header>
                     <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                         <img src={recipe.coverImg} />

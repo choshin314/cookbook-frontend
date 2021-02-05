@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Main, GridContainer, PageTitle, Wrapper} from '../commonStyles'
 import RecipeGrid from './RecipeGrid'
 import AvatarLink from '../shared/AvatarLink'
+import FollowBtn from './FollowBtn'
 
 function ProfileView({user, stats}) {
     return (
@@ -13,8 +14,8 @@ function ProfileView({user, stats}) {
                     <StyledDiv>
                         <AvatarLink user={user} imgSize="50px"/>
                         <StyledH1>{user.firstName} {user.lastName} (@{user.username})</StyledH1>
+                        <FollowBtn profileUser={user} />
                     </StyledDiv>
-                    
                     <UserStatLink to="#recipe-grid">{stats.recipeCount}<br />Recipes</UserStatLink>
                     <UserStatLink>{stats.followerCount}<br />Followers</UserStatLink>
                     <UserStatLink>{stats.followingCount}<br />Following</UserStatLink>
@@ -33,7 +34,7 @@ const Container = styled.div`
 `
 const HeadSection = styled(GridContainer)`
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     padding: 0 1rem;
     font-size: 1rem;
     text-align: center;

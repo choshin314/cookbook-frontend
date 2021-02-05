@@ -5,7 +5,7 @@ import {faInfoCircle} from '@fortawesome/free-solid-svg-icons'
 import RecipeSection from './RecipeSection'
 import QuickFacts from './QuickFacts'
 
-function IntroSection({coverImg, prepTime, cookTime, servings}) {
+function IntroSection({coverImg, prepTime, cookTime, servings, intro}) {
     return (
         <RecipeSection>
             <CoverImg>
@@ -13,6 +13,7 @@ function IntroSection({coverImg, prepTime, cookTime, servings}) {
                 <img src={coverImg.src} alt={coverImg.alt} />
                 </div>
             </CoverImg>
+            <IntroText>{intro}</IntroText>
             <QuickFacts prepTime={prepTime} cookTime={cookTime} servings={servings} />
         </RecipeSection>
     )
@@ -38,4 +39,7 @@ const CoverImg = styled.div`
             width: 100%;
         }
     }
+`
+const IntroText = styled.div`
+    margin-bottom: 1rem;
 `

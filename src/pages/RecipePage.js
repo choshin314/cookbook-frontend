@@ -8,6 +8,8 @@ import IntroSection from '../components/recipe/IntroSection'
 import IngredientsSection from '../components/recipe/IngredientsSection'
 import InstructionsSection from '../components/recipe/InstructionsSection'
 import { getAjax } from '../helpers/sendAjax'
+import FollowBtn from '../components/profile/FollowBtn'
+import BookmarkBtn from '../components/recipe/BookmarkBtn'
 
 function RecipePage({match}) {
     const [recipe, setRecipe] = useState(null);
@@ -24,17 +26,26 @@ function RecipePage({match}) {
             })
     }, [])
 
+    console.log(recipe)
+
     return (
         <Main>
             {recipe && (<Container>
                 <Wrapper as="div">
-                    <PageTitle align="left">{recipe.title}</PageTitle>
+                    <TitleDiv>
+                        <PageTitle align="left">{recipe.title}</PageTitle>
+                        <BookmarkBtn recipe={recipe} />
+                    </TitleDiv>
+                    
                     <div className="margin-btm-1">
                         <Ratings rating={recipe.avgRating} reviewCount={recipe.reviewCount} />
                     </div>
-                    <div className="margin-btm-1">
-                        <AvatarLink userName="asdf"/>
-                    </div>
+                    <StyledDiv className="margin-btm-1">
+                        <AvatarLink user={recipe.user} showCreatedBy/>
+                    </StyledDiv>
+                    <StyledDiv>
+                        <FollowBtn profileUser={recipe.user}/>
+                    </StyledDiv>
                 </Wrapper>
                 <IntroSection 
                     coverImg={{ 
@@ -44,6 +55,7 @@ function RecipePage({match}) {
                     servings={recipe.servings}
                     prepTime={recipe.prepTime}
                     cookTime={recipe.cookTime}
+                    intro={recipe.intro}
                 />
                 <IngredientsSection 
                     ingredients={recipe.ingredients}
@@ -61,8 +73,13 @@ export default RecipePage
 const Container = styled.div`
     padding: 2rem 0;
 `
-
+const TitleDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
 const Headline = styled.div`
 `
 
-
+const StyledDiv = styled.div`
+    margin-bottom: 1rem;
+`

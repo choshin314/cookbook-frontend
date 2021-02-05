@@ -4,12 +4,12 @@ import {Link} from 'react-router-dom'
 function AvatarLink({user, imgSize, showCreatedBy}) {
     return user ? (
         <AuthorDiv>
-            <Link to={`/profiles/${user.username}`}>
+            <Link to={`/profile/view/${user.username}`}>
                 <ImgDiv size={imgSize || '50px'}>
                     <img src={user.profilePic}/>
                 </ImgDiv>
             </Link>
-            {showCreatedBy && <NameLink to={`/profiles/${user.username}`}>Created by {user.firstName} {user.lastName}</NameLink>}
+            {showCreatedBy && <NameLink to={`/profile/view/${user.username}`}>by {user.firstName} {user.lastName}</NameLink>}
         </AuthorDiv>
     ) : <div></div>
 }

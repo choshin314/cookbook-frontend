@@ -19,15 +19,15 @@ export const Main = styled.main`
 `
 
 export const PageTitle = styled.h1`
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin-bottom: .5rem;
     text-align: ${props => props.align ? props.align : 'center'};
     @media(min-width: ${media.medium}) {
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin-bottom: 1rem;
     }
     @media(min-width: ${media.full}) {
-        font-size: 2.5rem;
+        font-size: 1.75rem;
         margin-bottom: 1rem;
     }
 `
@@ -42,17 +42,17 @@ export const Wrapper = styled.section`
 
 export const GridContainer = styled.section`
     display: grid;
-    grid-template-columns: repeat(${props => props.cols ? props.cols : '1'}, 1fr);
+    grid-template-columns: repeat(${props => props.cols ? props.cols : '1'}, minmax(10px,1fr));
     gap: ${props => props.gap ? props.gap : '1rem'};
     @media(min-width: ${media.medium}) {
         ${props => props.colsMd ? css`
-            grid-template-columns: repeat(${props => props.colsMd}, 1fr);
+            grid-template-columns: repeat(${props => props.colsMd}, minmax(10px,1fr));
             ` : ''
         }
     }
     @media(min-width: ${media.full}) {
         ${props => props.colsLg ? css`
-            grid-template-columns: repeat(${props => props.colsLg}, 1fr);
+            grid-template-columns: repeat(${props => props.colsLg}, minmax(10px, 1fr));
             ` : ''
         }
     }
