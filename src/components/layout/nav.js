@@ -6,8 +6,10 @@ import { faHome, faUsers, faUserCircle, faPlus, faSignInAlt, faSignOutAlt } from
 
 import {logoutUser} from '../../redux/actions/authActions'
 import {media} from '../commonStyles'
-
+import Modal from '../shared/Modal'
+import {useState} from 'react'
 function Nav({logout, user}) {
+    const [modalOpen, setModalOpen] = useState(false);
     return (
         <Navbar>
             <ul>
@@ -21,6 +23,7 @@ function Nav({logout, user}) {
                     label="Community"
                     icon={faUsers}
                 />
+                <button type="button" onClick={() => setModalOpen(prev => !prev)}>modal</button>
                 <NavItem
                     to="/recipes/create"
                     label="Create Recipe"
@@ -40,6 +43,7 @@ function Nav({logout, user}) {
                     <FontAwesomeIcon icon={faSignOutAlt} title="Sign Out" />
                 </AuthBtn>)}
             </ul>
+            <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}><div>hello</div></Modal>
         </Navbar>
     )
 }
