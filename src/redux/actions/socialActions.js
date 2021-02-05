@@ -95,3 +95,18 @@ export function removeSocial(category, dataName, id) {
         //or userId(following) in format { id: id }
     }
 }
+
+export function toggleSocial(category, dataName, id) {
+    return async (dispatch, getState) => {
+        const social = getState().social;
+        if (social[category].loading) return;
+        if (!getState().auth.user) {
+            return dispatch(setFlash('info', 'Login required for social features'))
+        }
+        if (social[category][dataName][id]) {
+            dispatch(removeSocial(category, dataName, id))
+        } else {
+            dispatch(addSocial(category, dataName, id))
+        }
+    }
+}
