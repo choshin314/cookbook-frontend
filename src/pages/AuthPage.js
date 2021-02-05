@@ -8,7 +8,7 @@ import LoginForm from '../components/auth/LoginForm'
 
 function AuthPage({redirect}) {
     const { pathname } = useLocation()
-    console.log(redirect.to);
+    
     if (pathname === "/account") return <Redirect to="/" />
     return (
         <Main>

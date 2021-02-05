@@ -9,6 +9,7 @@ import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'
 import {connect} from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
+import Flash from '../shared/Flash'
 
 const initVals = {
     email: '', firstName: '', lastName: '', username: '', password: '', password_confirmation: ''
@@ -74,6 +75,7 @@ function RegisterForm({ register, user, error, submitting }) {
 
     return (
         <Card>
+            <Flash />
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
             <Form onChange={handleChange} onSubmit={async (e) => {
                 e.preventDefault();

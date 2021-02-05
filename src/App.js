@@ -42,7 +42,9 @@ function App({user, redirect}) {
           <ProtectedRoute path="/profile/viewprotected/:username">
             <ProfilePage />
           </ProtectedRoute>
-          <Route path="/recipes/view/:id-:slug" component={RecipePage} />
+          <Route path="/recipes/view/:id-:slug" >
+            <RecipePage />
+          </Route>
           <Route path="/recipes/create">
             <RecipeCreatePage />
           </Route>

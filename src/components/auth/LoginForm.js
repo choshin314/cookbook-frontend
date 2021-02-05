@@ -8,6 +8,7 @@ import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'
 import {connect} from 'react-redux'
 import { loginUser } from '../../redux/actions/authActions'
+import Flash from '../shared/Flash'
 
 const initVals = { emailUsername: null, password: null };
 
@@ -24,6 +25,7 @@ function LoginForm({login, user, error, submitting }) {
 
     return (
         <Card>
+            <Flash />
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
             {submitting && <h2>Submitting</h2>}
             <Form onChange={handleChange} onSubmit={handleSubmit} noValidate={true}>

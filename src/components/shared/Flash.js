@@ -1,4 +1,4 @@
-
+import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled, {css} from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,32 +10,73 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import { clearFlash } from '../../redux/actions/flashActions'
+import { CSSTransition } from 'react-transition-group'
 
-function Flash({ type, message, clear }) {
+const transitionStyles = {
+    entering: { opacity: 0 },
+    entered: { opacity: 1 },
+    exiting: { opacity: 1 },
+    exited: { opacity: 0 }
+}
+function Flash({ flash, clear }) {
+
+    useEffect(() => {
+        const autoClear = setTimeout(() => clear(), 10000)
+        return () => clearTimeout(autoClear);
+    }, [flash])
+
+    if(!flash) return null;
+
+    const { type, message } = flash;
+
     return (
-        <StyledFigure type={type}>
-            <IconWrapper type={type}>
-                <FontAwesomeIcon icon={success}/>
-            </IconWrapper>
-            <FlashHeader>{type}</FlashHeader>
-            <FlashContent>
-               {message}
-            </FlashContent>
-            <CloseBtn aria-role="button" title="close message" onClick={clear}>
-                <FontAwesomeIcon icon={close} />
-            </CloseBtn>
-        </StyledFigure>
+        <CSSTransition 
+            in={!!flash} 
+            timeout={{enter: 500, exit: 1000}}
+            appear={true}
+            unmountOnExit
+            classNames="flash"
+        >
+            <StyledFigure type={type}>
+                <IconWrapper type={type}>
+                    <FontAwesomeIcon icon={success}/>
+                </IconWrapper>
+                <FlashHeader>{type}</FlashHeader>
+                <FlashMessage>
+                    {typeof message === "string" && message}
+                    {Array.isArray(message) && (
+                        <FlashMessageList type={type}>
+                            {message.map((m, i) => <li key={i}>{m}</li>)}
+                        </FlashMessageList>
+                    )}
+                </FlashMessage>
+                <CloseBtn aria-role="button" title="close message" onClick={clear}>
+                    <FontAwesomeIcon icon={close} />
+                </CloseBtn>
+            </StyledFigure>
+        </CSSTransition>
     )
 }
 
-export default connect(null, { clear: clearFlash })(Flash);
+const mapState = state => ({ flash: state.flash })
+export default connect(mapState, { clear: clearFlash })(Flash);
 
 const accent = css`
     ${p => {
         switch(p.type) {
             case "success": return 'var(--accent)';
             case "info": return 'var(--teal)';
-            case "warning": return 'red';
+            case "error": return 'var(--error)';
+        }
+    }
+}`
+
+const listStyle = css`
+    ${p => {
+        switch(p.type) {
+            case "success": return '👍';
+            case "info": return 'ℹ️';
+            case "error": return '🙁';
         }
     }
 }`
@@ -52,20 +93,51 @@ const StyledFigure = styled.figure`
     grid-template-rows: repeat(2, minmax(10px, 1fr));
     gap: 5px;
     padding: 1rem;
-    border-radius: 2px;
+    border-radius: 5px;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 100;
     border-left: 3px solid ${accent};
+    
+    &.flash-enter, &.flash-appear {
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
+    &.flash-enter-active, &.flash-appear-active {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transition: opacity .250s ease-out .250s, transform .5s ease-out;
+    }
+    &.flash-exit {
+        opacity: 1;
+    }
+    &.flash-exit-active {
+        opacity: 0;
+        transition: opacity .5 ease-out;
+    }
 
 `
 const FlashHeader = styled.h3`
     font-size: 1rem;
     text-transform: capitalize;
 `
-const FlashContent = styled.div`
+const FlashMessage = styled.div`
     font-size: .75rem;
 `
+
+const FlashMessageList = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+        line-height: 1.25;
+    }
+    li::before {
+        content: '${listStyle}';
+        margin-right: .5rem;
+    }
+`
+
 const IconWrapper = styled.div`
     grid-column: 1 /span 1;
     grid-row: 1 /span 2;

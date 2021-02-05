@@ -7,11 +7,13 @@ import recipes from '../dummyrecipes.json'
 import FeedList from '../components/feed/FeedList'
 import { fetchAllSocial } from '../redux/actions/socialActions'
 import { connect } from 'react-redux'
+import Flash from '../components/shared/Flash'
 
 function Home({fetchSocial}) {
     useEffect(() => fetchSocial(), [])
     return (
         <Main >
+            <Flash />
             <PageTitle>Popular Recipes</PageTitle>
             {/* <GridContainer colsMd="1" colsLg="1">
                 {loading && <div>...loading</div>}

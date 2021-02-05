@@ -13,6 +13,7 @@ export const Main = styled.main`
     width: 100%;
     max-width: 768px;
     margin: .5rem 0;
+    position: relative;
     @media(min-width: ${media.medium}) {
         margin: 1rem 0;
     }

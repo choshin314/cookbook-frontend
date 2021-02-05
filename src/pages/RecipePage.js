@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {Main, PageTitle, Wrapper} from '../components/commonStyles'
@@ -7,18 +8,20 @@ import AvatarLink from '../components/shared/AvatarLink'
 import IntroSection from '../components/recipe/IntroSection'
 import IngredientsSection from '../components/recipe/IngredientsSection'
 import InstructionsSection from '../components/recipe/InstructionsSection'
-import { getAjax } from '../helpers/sendAjax'
+import { ajax } from '../helpers/sendAjax'
 import FollowBtn from '../components/profile/FollowBtn'
 import BookmarkBtn from '../components/recipe/BookmarkBtn'
+import Flash from '../components/shared/Flash'
 
-function RecipePage({match}) {
+function RecipePage() {
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const params = useParams();
 
     useEffect(() => {
         setLoading(true);
-        getAjax(`/recipes/${match.params.id}`)
+        ajax.get(`/recipes/${params.id}`)
             .then(result => {
                 if(result.error) setError(result.error);
                 if(result.data) setRecipe(result.data);
@@ -30,6 +33,7 @@ function RecipePage({match}) {
 
     return (
         <Main>
+            <Flash />
             {recipe && (<Container>
                 <Wrapper as="div">
                     <TitleDiv>

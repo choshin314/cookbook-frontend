@@ -5,7 +5,7 @@ import { toggleSocial } from '../../redux/actions/socialActions';
 function FollowBtn({following, toggleFollow, auth, profileUser}) {
     const isFollowing = following.userIds[profileUser.id];
     
-    if (auth.user.id === profileUser.id) return null;
+    if (auth.user && auth.user.id === profileUser.id) return null;
     return (
         <Wrapper>
             <StyledBtn type="button" onClick={() => toggleFollow('following', 'userIds', profileUser.id)}>
