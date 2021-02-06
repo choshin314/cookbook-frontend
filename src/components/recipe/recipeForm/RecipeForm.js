@@ -1,77 +1,30 @@
-import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {DragDropContext} from 'react-beautiful-dnd'
 
-import {useForm} from '../../../hooks/form'
 import { CardWrapper, Button, media } from '../../commonStyles'
 import RecipeFormIntro from './RecipeFormIntro'
 import RecipeFormDetails from './RecipeFormDetails'
+import Flash from '../../shared/Flash'
 
-export const RecipeFormContext = React.createContext();
-const constraints = {
-    title: {
-        required: true,
-        minChars: 5,
-        maxChars: 50
-    },
-    introText: {
-        required: true,
-        minChars: 50,
-        maxChars: 400
-    },
-    servings: {
-        required: true
-    },
-    prepTime: {
-        required: true
-    },
-    cookTime: {
-        required: true
-    },
-    coverImg: {
-        required: true,
-        size: 5120000,
-        type: ["image/jpeg", "image/jpg", "image/png"]
-    },
-    instructions: {
-        required: true,
-        minItems: 4,
-        maxItems: 30
-    },
-    ingredients: {
-        required: true,
-        minItems: 3,
-        maxItems: 30
-    },
-    tags: null,
-    tagDraft: null,
-    instructionDraft: null,
-    ingredientDraft_qty: null,
-    ingredientDraft_unit: null,
-    ingredientDraft_content: null
-
-}
-
-function RecipeForm({ initValues, handleSubmit }) {
-    const [step, setStep] = useState(1);
-    const {
-        inputValues, 
-        inputErrors, 
-        handleChange, 
+function RecipeForm(props) {
+    const { 
+        step,
+        addToList,
+        changeStep,
+        inputValues,
+        inputErrors,
+        handleChange,
         handleDragEnd,
-        addToList, 
-        removeFromList, 
-        validateAndSubmit
-    } = useForm(initValues, constraints, handleSubmit, 'recipeForm', 'coverImg' );
-
-    useEffect(() => window.scrollTo(0,0), [step])
-    console.log(inputValues)
-
+        removeFromList,
+        validateAndSubmit,
+        isSubmitting
+    } = props;
     return (
         <Card>
             <Form onChange={handleChange} onSubmit={validateAndSubmit}>
+                <Flash />
                 {step === 1 && (
                     <>
                     <RecipeFormIntro 
@@ -81,10 +34,10 @@ function RecipeForm({ initValues, handleSubmit }) {
                         addToList={addToList}
                         removeFromList={removeFromList}
                     />
-                    <FormBtn type="button"className="align-right" 
+                    <FormBtn type="button" className="align-right" 
                         onClick={(e) => {
                             e.preventDefault();
-                            setStep(2);
+                            changeStep();
                         }} 
                     >
                         <span>Add Instructions</span>
@@ -104,7 +57,7 @@ function RecipeForm({ initValues, handleSubmit }) {
                     <FormBtn type="button"
                         onClick={(e) => {
                             e.preventDefault();
-                            setStep(1);
+                            changeStep();
                         }} 
                     >
                         <FontAwesomeIcon icon={faChevronLeft}/>

@@ -12,14 +12,8 @@ import {
 import { clearFlash } from '../../redux/actions/flashActions'
 import { CSSTransition } from 'react-transition-group'
 
-const transitionStyles = {
-    entering: { opacity: 0 },
-    entered: { opacity: 1 },
-    exiting: { opacity: 1 },
-    exited: { opacity: 0 }
-}
-function Flash({ flash, clear }) {
 
+function Flash({ flash, clear }) {
     useEffect(() => {
         const autoClear = setTimeout(() => clear(), 10000)
         return () => clearTimeout(autoClear);

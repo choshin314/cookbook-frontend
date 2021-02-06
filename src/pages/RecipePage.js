@@ -1,22 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 
-import {Main, PageTitle, Wrapper} from '../components/commonStyles'
-import Ratings from '../components/recipe/Ratings'
-import AvatarLink from '../components/shared/AvatarLink'
-import IntroSection from '../components/recipe/IntroSection'
-import IngredientsSection from '../components/recipe/IngredientsSection'
-import InstructionsSection from '../components/recipe/InstructionsSection'
 import { ajax } from '../helpers/sendAjax'
-import FollowBtn from '../components/profile/FollowBtn'
-import BookmarkBtn from '../components/recipe/BookmarkBtn'
-import Flash from '../components/shared/Flash'
+import RecipeView from '../components/recipe/RecipeView'
 
 function RecipePage() {
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const params = useParams();
 
     useEffect(() => {
@@ -31,59 +22,9 @@ function RecipePage() {
 
     console.log(recipe)
 
-    return (
-        <Main>
-            <Flash />
-            {recipe && (<Container>
-                <Wrapper as="div">
-                    <TitleDiv>
-                        <PageTitle align="left">{recipe.title}</PageTitle>
-                        <BookmarkBtn recipe={recipe} />
-                    </TitleDiv>
-                    
-                    <div className="margin-btm-1">
-                        <Ratings rating={recipe.avgRating} reviewCount={recipe.reviewCount} />
-                    </div>
-                    <StyledDiv className="margin-btm-1">
-                        <AvatarLink user={recipe.user} showCreatedBy/>
-                    </StyledDiv>
-                    <StyledDiv>
-                        <FollowBtn profileUser={recipe.user}/>
-                    </StyledDiv>
-                </Wrapper>
-                <IntroSection 
-                    coverImg={{ 
-                        src: recipe.coverImg, 
-                        alt: `${recipe.title} cover image` 
-                    }}
-                    servings={recipe.servings}
-                    prepTime={recipe.prepTime}
-                    cookTime={recipe.cookTime}
-                    intro={recipe.intro}
-                />
-                <IngredientsSection 
-                    ingredients={recipe.ingredients}
-                />
-                <InstructionsSection
-                    instructions={recipe.instructions}
-                />
-            </Container>)}
-        </Main>
-    )
+    if (loading) return <div>Loading</div>
+    return <RecipeView recipe={recipe} />
 }
 
 export default RecipePage
 
-const Container = styled.div`
-    padding: 2rem 0;
-`
-const TitleDiv = styled.div`
-    display: flex;
-    justify-content: space-between;
-`
-const Headline = styled.div`
-`
-
-const StyledDiv = styled.div`
-    margin-bottom: 1rem;
-`

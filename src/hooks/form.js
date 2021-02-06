@@ -9,7 +9,6 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
     const [ inputErrors, setInputErrors ] = useState({}); 
     const [ isSubmitting, setIsSubmitting ] = useState(false);
     const [ formErrors, setFormErrors ] = useState([]); //server error msg
-    const [ success, setSuccess ] = useState(null);
 
     useEffect(() => {
         setLocalStorage(formName, { ...inputValues, [imgName]: '' });
@@ -22,11 +21,6 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
     function clearErrors() {
         setInputErrors({});
         setFormErrors([]);
-    }
-
-    function clearInputs() {
-        setInputValues(initValues);
-        localStorage.removeItem(formName);
     }
 
     function handleChange(e) {
@@ -106,11 +100,7 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
         const validationErrors = validateForm(inputValues, constraints); 
         if (validationErrors) return; 
         setIsSubmitting(prev => true);
-        const { error, data, msg, redirect } = await handleSubmit(inputValues);
-        setIsSubmitting(prev => !prev);
-        if (error) return setFormErrors([error]);
-        clearInputs();
-        return setSuccess({ msg, redirect, data });
+        handleSubmit(inputValues, setFormErrors, setIsSubmitting);
     }
 
     function addToList(listKey, draftKeys) {
@@ -165,7 +155,6 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
         addToList,
         removeFromList,
         isSubmitting, 
-        success, 
         validateForm,
         validateAndSubmit 
     };

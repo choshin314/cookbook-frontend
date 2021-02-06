@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Main} from '../components/commonStyles'
 import RecipeForm from '../components/recipe/recipeForm/RecipeForm.js'
 import { sendMulti } from '../helpers/sendAjax'
+import RecipeCreateForm from '../components/recipe/recipeForm/RecipeCreateForm'
 
 const initValues = {
     title: '',
@@ -22,21 +23,9 @@ const initValues = {
 }
 
 function RecipeCreatePage({auth}) {
-    async function handleSubmit(values) {
-        const result = await sendMulti('/recipes', values, ['coverImg'], auth.accessToken)
-        if (result.error) return { error: result.error }
-        return { 
-            data: result.data, 
-            msg: 'Yum! Recipe created!', 
-            redirect: `/recipes/view/${result.data.id}-${result.data.slug}`
-        }
-    }
     return (
         <Main>
-            <RecipeForm 
-                initValues={initValues}
-                handleSubmit={handleSubmit}
-            />
+            <RecipeCreateForm />
         </Main>
     )
 }
