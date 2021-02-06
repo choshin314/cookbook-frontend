@@ -1,14 +1,16 @@
 import {useState, useEffect} from 'react'
-import {useParams, Link} from 'react-router-dom'
+import {useParams, useRouteMatch, Link, Route} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import { Main } from '../components/commonStyles'
 import ProfileView from '../components/profile/ProfileView'
 import { fetchProfile } from '../redux/actions/profileActions'
+import FollowsList from '../components/follows/FollowsList'
 
 function ProfilePage({ profile, fetchProfile }) {
     const { username } = useParams();
     const { user, stats, loading, error } = profile;
+    const match = useRouteMatch()
 
     useEffect(() => {
         fetchProfile(username);
@@ -16,7 +18,8 @@ function ProfilePage({ profile, fetchProfile }) {
 
     return (
         <Main>
-            {!loading && user && stats && <ProfileView user={user} stats={stats} />}
+            {!loading && user && stats && <ProfileView user={user} stats={stats} profileUrl={match.url}/>}
+            <Route path={`${match.url}/subs`} ><FollowsList prevURL={match.url} /></Route>
         </Main>
     )
 }
