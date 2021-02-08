@@ -9,7 +9,7 @@ function FollowBtn({following, toggleFollow, auth, profileUser}) {
     return (
         <Wrapper>
             <StyledBtn type="button" onClick={() => toggleFollow('following', 'userIds', profileUser.id)}>
-                {isFollowing ? 'Unfollow' : 'Follow'}
+                {isFollowing ? 'Following' : 'Follow'}
             </StyledBtn>
         </Wrapper>
     )
