@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import { Main } from '../components/commonStyles'
 import ProfileView from '../components/profile/ProfileView'
 import { fetchProfile } from '../redux/actions/profileActions'
-import FollowsList from '../components/follows/FollowsList'
+import FollowsModal from '../components/follows/FollowsModal'
 
 function ProfilePage({ profile, fetchProfile }) {
     const { username } = useParams();
@@ -19,7 +19,7 @@ function ProfilePage({ profile, fetchProfile }) {
     return (
         <Main>
             {!loading && user && stats && <ProfileView user={user} stats={stats} profileUrl={match.url}/>}
-            <Route path={`${match.url}/subs`} ><FollowsList prevURL={match.url} /></Route>
+            <Route path={`${match.url}/subs`} ><FollowsModal username={username} prevURL={match.url} /></Route>
         </Main>
     )
 }
