@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUsers, faUserCircle, faPlus, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons'
 
 import {logoutUser} from '../../redux/actions/authActions'
 import {media} from '../commonStyles'
-import Modal from '../shared/Modal'
 import {useState} from 'react'
+
 function Nav({logout, user}) {
     const [modalOpen, setModalOpen] = useState(false);
     return (
@@ -19,15 +20,9 @@ function Nav({logout, user}) {
                     icon={faHome}
                 />
                 <NavItem
-                    to="/community"
-                    label="Community"
-                    icon={faUsers}
-                />
-                <button type="button" onClick={() => setModalOpen(prev => !prev)}>modal</button>
-                <NavItem
                     to="/recipes/create"
                     label="Create Recipe"
-                    icon={faPlus}
+                    icon={faPlusSquare}
                 />
                 <NavItem
                     to="/profile/me"
@@ -43,7 +38,6 @@ function Nav({logout, user}) {
                     <FontAwesomeIcon icon={faSignOutAlt} title="Sign Out" />
                 </AuthBtn>)}
             </ul>
-            <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}><div>hello</div></Modal>
         </Navbar>
     )
 }

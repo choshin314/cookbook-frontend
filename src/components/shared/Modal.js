@@ -1,24 +1,27 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import ReactDOM from 'react-dom'
 import styled from 'styled-components'
-import Portal from './Portal'
 import {CSSTransition} from 'react-transition-group'
 
-function Modal({children, modalOpen, setModalOpen}) {
-    return (
-        <Portal>
-            <CSSTransition
-                in={modalOpen}
-                appear={true}
-                timeout={200}
-                classNames="fadeExpand"
-                unmountOnExit
-            >
-                <Backdrop onClick={() => setModalOpen(false)}>
-                    {children}
-                </Backdrop>
-            </CSSTransition>
-        </Portal>
-    )
+function Modal({children, backdrop, modalOpen, toggleModal}) {
+    const modalRoot = document.getElementById('portal');
+    const backdropRef = useRef(null);
+    return ReactDOM.createPortal((
+        <CSSTransition
+            in={modalOpen}
+            appear={true}
+            timeout={200}
+            classNames="fadeExpand"
+            unmountOnExit
+        >
+            <Backdrop ref={backdropRef} backdrop={backdrop} onClick={(e) => {
+                if(e.target === backdropRef.current) toggleModal();
+                return;
+            }}>
+                {children}
+            </Backdrop>
+        </CSSTransition>
+    ), modalRoot)
 }
 
 export default Modal
@@ -30,7 +33,7 @@ const Backdrop = styled.div`
 
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,.1);
+    background-color: ${p => p.backdrop ? 'rgba(0,0,0,.1)' : 'transparent'};
     &.fadeExpand-enter, &.fadeExpand-appear {
         opacity: 0;
     }

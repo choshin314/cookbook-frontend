@@ -6,7 +6,7 @@ import RecipeGrid from './RecipeGrid'
 import AvatarLink from '../shared/AvatarLink'
 import FollowBtn from './FollowBtn'
 
-function ProfileView({user, stats}) {
+function ProfileView({user, stats, profileUrl}) {
     return (
         <Main>
             <Container>
@@ -17,8 +17,8 @@ function ProfileView({user, stats}) {
                         <FollowBtn profileUser={user} />
                     </StyledDiv>
                     <UserStatLink to="#recipe-grid">{stats.recipeCount}<br />Recipes</UserStatLink>
-                    <UserStatLink>{stats.followerCount}<br />Followers</UserStatLink>
-                    <UserStatLink>{stats.followingCount}<br />Following</UserStatLink>
+                    <UserStatLink to={`${profileUrl}/subs/followers`}>{stats.followerCount}<br />Followers</UserStatLink>
+                    <UserStatLink to={`${profileUrl}/subs/following`}>{stats.followingCount}<br />Following</UserStatLink>
                 </HeadSection>
                 <RecipeGrid />
             </Container>

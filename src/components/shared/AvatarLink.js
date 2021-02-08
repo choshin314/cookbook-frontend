@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
-function AvatarLink({user, imgSize, showCreatedBy}) {
+function AvatarLink({user, imgSize, showCreatedBy, showNames}) {
     return user ? (
         <AuthorDiv>
             <Link to={`/profile/view/${user.username}`}>
@@ -10,6 +10,10 @@ function AvatarLink({user, imgSize, showCreatedBy}) {
                 </ImgDiv>
             </Link>
             {showCreatedBy && <NameLink to={`/profile/view/${user.username}`}>by {user.firstName} {user.lastName}</NameLink>}
+            {showNames && <NameLink to={`/profile/view/${user.username}`}>
+                <UsernameSpan>{user.username}</UsernameSpan>
+                <NameSpan>{user.firstName} {user.lastName}</NameSpan>
+            </NameLink>}
         </AuthorDiv>
     ) : <div></div>
 }
@@ -35,4 +39,14 @@ const ImgDiv = styled.div`
 
 const NameLink = styled(Link)`
     margin-left: .5rem;
+    display: flex;
+    flex-direction: column;
+`
+
+const UsernameSpan = styled.span`
+    font-weight: 500;
+`
+const NameSpan = styled.span`
+    font-weight: 400;
+    color: var(--med-grey);
 `
