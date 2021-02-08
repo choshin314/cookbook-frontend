@@ -2,16 +2,18 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import {connect} from 'react-redux'
 
+
 import {Main} from '../../commonStyles'
 import RecipeForm from './RecipeForm.js'
 import { ajax } from '../../../helpers/sendAjax'
 import { setRedirect } from '../../../redux/actions/redirectActions'
 import { setFlash } from '../../../redux/actions/flashActions'
 import {useForm} from '../../../hooks/form'
+import { RECIPE_CONSTRAINTS } from '../../../constants/recipeConstraints'
 
 const initValues = {
     title: '',
-    introText: '',
+    intro: '',
     prepTime: '',
     cookTime: '',
     servings: '',
@@ -37,7 +39,7 @@ function RecipeCreateForm({ auth, setRedirect, setFlash }) {
         removeFromList, 
         validateAndSubmit,
         isSubmitting
-    } = useForm(initValues, constraints(), handleSubmit, 'recipeForm', 'coverImg' );
+    } = useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, 'recipeForm', 'coverImg' );
 
     async function handleSubmit(values, setFormErrors, setSubmitting) {
         const result = await ajax.postMulti('/recipes', values, ['coverImg'], auth.accessToken)
@@ -75,48 +77,3 @@ const mapStateToProps = (global) => ({ auth: global.auth });
 const mapDispatchToProps = { setRedirect: setRedirect, setFlash: setFlash }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeCreateForm)
-
-function constraints() { 
-    return {
-        title: {
-            required: true,
-            minChars: 5,
-            maxChars: 50
-        },
-        introText: {
-            required: true,
-            minChars: 50,
-            maxChars: 400
-        },
-        servings: {
-            required: true
-        },
-        prepTime: {
-            required: true
-        },
-        cookTime: {
-            required: true
-        },
-        coverImg: {
-            required: true,
-            size: 5120000,
-            type: ["image/jpeg", "image/jpg", "image/png"]
-        },
-        instructions: {
-            required: true,
-            minItems: 4,
-            maxItems: 30
-        },
-        ingredients: {
-            required: true,
-            minItems: 3,
-            maxItems: 30
-        },
-        tags: null,
-        tagDraft: null,
-        instructionDraft: null,
-        ingredientDraft_qty: null,
-        ingredientDraft_unit: null,
-        ingredientDraft_content: null
-    }
-}

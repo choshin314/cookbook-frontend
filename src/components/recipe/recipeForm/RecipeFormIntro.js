@@ -41,8 +41,8 @@ function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
                         />
                         <Input 
                             name="introText"
-                            value={values.introText}
-                            errorMsg={errors.introText}
+                            value={values.intro}
+                            errorMsg={errors.intro}
                             type="textarea"
                             placeholder="Give a short and sweet intro about your recipe"
                             label={{ text: "Introduction", hide: false }}
