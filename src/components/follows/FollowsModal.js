@@ -6,6 +6,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Modal from "../shared/Modal";
 import useToggle from '../../hooks/toggle'
 import FollowsListContainer from './FollowsListContainer';
+import CloseBtn from '../shared/CloseBtn'
 import { CSSTransition } from 'react-transition-group';
 
 
@@ -28,13 +29,7 @@ function FollowsModal({username, prevURL}) {
                 unmountOnExit={true}
             >
                 <ContentWrapper>
-                    <CloseBtn 
-                        onClick={closeAndGoBack}
-                        aria-label="close"
-                        aria-role="button"
-                    >
-                        <FontAwesomeIcon icon={faTimes} />
-                    </CloseBtn>
+                    <CloseBtn onClick={closeAndGoBack} />
                     <NavLinks>
                         <NavLinkBtn to={`${match.url}/followers`} activeClassName="active-nav">
                             Followers
@@ -90,13 +85,6 @@ const ContentWrapper = styled.article`
         opacity: 0;
         transition: transform .2s ease-in, opacity .2s ease-in;
     }
-`
-
-const CloseBtn = styled.div`
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
 `
 
 const NavLinks = styled.nav`
