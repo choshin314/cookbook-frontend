@@ -100,7 +100,7 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
         const validationErrors = validateForm(inputValues, constraints); 
         if (validationErrors) return; 
         setIsSubmitting(prev => true);
-        handleSubmit(inputValues, setFormErrors, setIsSubmitting);
+        await handleSubmit(inputValues, setFormErrors, setIsSubmitting);
     }
 
     function addToList(listKey, draftKeys) {
