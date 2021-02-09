@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import {CSSTransition} from 'react-transition-group'
 
-function Modal({children, backdrop, modalOpen, toggleModal}) {
+function Modal({children, backdrop=true, modalOpen, toggleModal}) {
     const modalRoot = document.getElementById('portal');
     const backdropRef = useRef(null);
     return ReactDOM.createPortal((
+        <>
         <CSSTransition
             in={modalOpen}
             appear={true}
@@ -18,9 +19,10 @@ function Modal({children, backdrop, modalOpen, toggleModal}) {
                 if(e.target === backdropRef.current) toggleModal();
                 return;
             }}>
-                {children}
             </Backdrop>
         </CSSTransition>
+        {children}
+        </>
     ), modalRoot)
 }
 

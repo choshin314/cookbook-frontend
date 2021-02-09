@@ -6,6 +6,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Modal from "../shared/Modal";
 import useToggle from '../../hooks/toggle'
 import FollowsListContainer from './FollowsListContainer';
+import { CSSTransition } from 'react-transition-group';
 
 
 function FollowsModal({username, prevURL}) {
@@ -19,29 +20,37 @@ function FollowsModal({username, prevURL}) {
 
     return (
         <Modal backdrop modalOpen={modalOpen} toggleModal={closeAndGoBack} >
-            <ContentWrapper>
-                <CloseBtn 
-                    onClick={closeAndGoBack}
-                    aria-label="close"
-                    aria-role="button"
-                >
-                    <FontAwesomeIcon icon={faTimes} />
-                </CloseBtn>
-                <NavLinks>
-                    <NavLinkBtn to={`${match.url}/followers`} activeClassName="active-nav">
-                        Followers
-                    </NavLinkBtn>
-                    <NavLinkBtn to={`${match.url}/following`} activeClassName="active-nav">
-                        Following
-                    </NavLinkBtn>
-                </NavLinks>
-                <Route path={`${match.url}/followers`}>
-                    <FollowsListContainer username={username} userType="followers"/> 
-                </Route>
-                <Route path={`${match.url}/following`}>
-                    <FollowsListContainer username={username} userType="following"/> 
-                </Route>
-            </ContentWrapper>
+            <CSSTransition
+                in={modalOpen}
+                classNames="pop-in"
+                appear={true}
+                timeout={200}
+                unmountOnExit={true}
+            >
+                <ContentWrapper>
+                    <CloseBtn 
+                        onClick={closeAndGoBack}
+                        aria-label="close"
+                        aria-role="button"
+                    >
+                        <FontAwesomeIcon icon={faTimes} />
+                    </CloseBtn>
+                    <NavLinks>
+                        <NavLinkBtn to={`${match.url}/followers`} activeClassName="active-nav">
+                            Followers
+                        </NavLinkBtn>
+                        <NavLinkBtn to={`${match.url}/following`} activeClassName="active-nav">
+                            Following
+                        </NavLinkBtn>
+                    </NavLinks>
+                    <Route path={`${match.url}/followers`}>
+                        <FollowsListContainer username={username} userType="followers"/> 
+                    </Route>
+                    <Route path={`${match.url}/following`}>
+                        <FollowsListContainer username={username} userType="following"/> 
+                    </Route>
+                </ContentWrapper>
+            </CSSTransition>
         </Modal>
     )
 }
@@ -60,6 +69,27 @@ const ContentWrapper = styled.article`
     padding: 1rem;
     background-color: white;
     border-radius: 5px;
+    &.pop-in-enter, &.pop-in-appear {
+        transform: scale(1.15) translate(-50%, -50%);
+        transform-origin: 0 0;
+        opacity: 0;
+    }
+    &.pop-in-enter-active, &.pop-in-appear-active {
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: 0 0;
+        opacity: 1;
+        transition: transform .2s ease-in, opacity .2s ease-in;
+    }
+    &.pop-in-exit {
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: 0 0;
+    }
+    &.pop-in-exit-active {
+        transform: scale(1.15) translate(-50%, -50%);
+        opacity: 0;
+        transition: transform .2s ease-in, opacity .2s ease-in;
+    }
 `
 
 const CloseBtn = styled.div`
