@@ -1,8 +1,21 @@
 import {getLocalStorage} from './index'
 
+export const ajax = {
+    get: getAjax,
+    post: sendJSON,
+    postMulti: sendMulti,
+    patch: async (apiPath, values, token=null) => (
+        await sendJSON(apiPath, values, token, 'PATCH')
+    ),
+    patchMulti: async (apiPath, values, fileKeysArray, token=null) => (
+        await sendMulti(apiPath, values, fileKeysArray, token, 'PATCH')
+    ),
+    delete: deleteAjax 
+}
+
 const baseURL = process.env.REACT_APP_API_BASE;
 
-export async function sendMulti(apiPath, values, fileKeysArray, token=null) {
+export async function sendMulti(apiPath, values, fileKeysArray, token=null, method='POST') {
     const authHeader = token ? { authorization: `Bearer ${token}` } : null;
     const formData = new FormData();
     const stringified = {};
@@ -13,7 +26,7 @@ export async function sendMulti(apiPath, values, fileKeysArray, token=null) {
     formData.append('formJSON', JSON.stringify(stringified));
     try {
         const res = await fetch(baseURL + apiPath, { 
-            method: 'POST', 
+            method: method, 
             body: formData,
             headers: { ...authHeader }
         });
@@ -23,18 +36,19 @@ export async function sendMulti(apiPath, values, fileKeysArray, token=null) {
     }
 }
 
-export async function sendJSON(apiPath, values, token=null) {
+export async function sendJSON(apiPath, values, token=null, method='POST') {
     const authHeader = token ? { authorization: `Bearer ${token}` } : null;
     try {
         const res = await fetch(baseURL + apiPath, { 
-            method: 'POST', 
+            method: method, 
             body: JSON.stringify(values),
             headers: { 
                 'Content-Type': 'application/json', 
                 ...authHeader
             } 
         });
-        return await res.json();
+        const result = await res.json();
+        return result;
     } catch(err) {
         return { error: err.message }
     }
@@ -69,9 +83,3 @@ export async function deleteAjax(apiPath, token=null) {
     }
 }
 
-export const ajax = {
-    get: getAjax,
-    post: sendJSON,
-    postMulti: sendMulti,
-    delete: deleteAjax 
-}
