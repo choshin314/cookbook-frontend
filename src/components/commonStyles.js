@@ -128,3 +128,47 @@ export const Button = styled.button`
         background-color: var(--dark-teal);
     }
 `
+
+export const CancelButton = styled(Button)`
+    background-color: var(--med-grey);
+    &:hover {
+        background-color: var(--med-lite-grey);
+    }
+`
+export const SubmitButton = styled(Button)`
+    background-color: var(--accent);
+    &:hover {
+        background-color: var(--accent-darkened);
+    }
+`
+
+export const Form = styled.form`
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 1rem;
+    flex-direction: column;
+`
+
+export const PopInStyles = css`
+    &.pop-in-enter, &.pop-in-appear {
+        transform: scale(1.15) translate(-50%, -50%);
+        transform-origin: 0 0;
+        opacity: 0;
+    }
+    &.pop-in-enter-active, &.pop-in-appear-active {
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: 0 0;
+        opacity: 1;
+        transition: transform .2s ease-in, opacity .2s ease-in;
+    }
+    &.pop-in-exit {
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: 0 0;
+    }
+    &.pop-in-exit-active {
+        transform: scale(1.15) translate(-50%, -50%);
+        opacity: 0;
+        transition: transform .2s ease-in, opacity .2s ease-in;
+    }
+`
