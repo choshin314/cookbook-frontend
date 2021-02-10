@@ -23,7 +23,8 @@ const Section = styled(Wrapper)`
         content: '';
         position: absolute;
         top: 0;
-        width: 100%;
+        margin: 0 auto;
+        width: calc(100% - 2rem);
         height: 2px;
         background-color: var(--lite-grey);
         border-radius: 5px;
