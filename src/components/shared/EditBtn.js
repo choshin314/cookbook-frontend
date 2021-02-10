@@ -7,7 +7,7 @@ function EditBtn({onClick}) {
     return (
         <StyledBtnWrapper 
             onClick={onClick} 
-            aria-role="button" 
+            role="button" 
             aria-label="edit"
             title="Edit"
         >

@@ -7,7 +7,7 @@ export default function CloseBtn({onClick, size="1rem"}) {
         <StyledBtn 
             onClick={onClick}
             aria-label="close"
-            aria-role="button"
+            role="button"
             size={size}
         >
             <FontAwesomeIcon icon={faTimes} />
