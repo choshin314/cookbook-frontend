@@ -22,7 +22,7 @@ function Input(props) {
         errorMsg
     } = props;
 
-    const [charCount, setCharCount] = useState(0);
+    const [charCount, setCharCount] = useState(value.length);
 
     return (
         <Container>

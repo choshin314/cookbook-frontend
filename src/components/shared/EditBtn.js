@@ -19,8 +19,7 @@ function EditBtn({onClick}) {
 export default EditBtn
 
 const StyledBtnWrapper = styled.span`
-    font-size: .75rem;
-    color: var(--med-lite-grey);
+    font-size: 1rem;
     background-color: transparent;
     cursor: pointer;
     @media(min-width: ${media.medium}) {

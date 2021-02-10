@@ -132,7 +132,7 @@ export const Button = styled.button`
 export const CancelButton = styled(Button)`
     background-color: var(--med-grey);
     &:hover {
-        background-color: var(--med-lite-grey);
+        background-color: var(--med-dark-grey);
     }
 `
 export const SubmitButton = styled(Button)`

@@ -9,14 +9,14 @@ function ImgInput({name, label, file, errorMsg, imgSize="1MB", previewSize="400p
         <Container>
             <InputWrapper previewSize={previewSize}>
                 <PreviewDiv circle={circle}>
-                    {!file && (<UploadInstructions>
+                    {!file || !file.size && (<UploadInstructions>
                         <h2>Select {label.text}</h2>
                         <div><FontAwesomeIcon icon={faImage} /></div>
                         <span>Drag and drop photo or click to upload</span>
                         <span>*Accepts .jpg/.jpeg/.png, max size {imgSize}</span>
                     </UploadInstructions>)}
                     
-                    {file && <PreviewImg src={URL.createObjectURL(file)} />}
+                    {file && file.size && <PreviewImg src={URL.createObjectURL(file)} />}
                 </PreviewDiv>
                 <Input 
                     id={name} 
