@@ -11,11 +11,14 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
     const [ formErrors, setFormErrors ] = useState([]); //server error msg
 
     useEffect(() => {
+        if (!formName) return;
         setLocalStorage(formName, { ...inputValues, [imgName]: '' });
     }, [inputValues])
 
     useEffect(() => {
-        return () => setLocalStorage(formName, initValues)
+        return () => {
+            if(formName) setLocalStorage(formName, initValues)
+        }
     }, [])
 
     function clearErrors() {
