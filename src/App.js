@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage';
 import AuthPage from './pages/AuthPage';
 import ProtectedRoute from './components/shared/ProtectedRoute'
+import { RecipeViewProvider } from './context/recipeViewContext';
 
 function App({user, redirect}) {
   return (
@@ -43,7 +44,7 @@ function App({user, redirect}) {
             <ProfilePage />
           </ProtectedRoute>
           <Route path="/recipes/view/:id-:slug" >
-            <RecipePage />
+            <RecipeViewProvider><RecipePage /></RecipeViewProvider>
           </Route>
           <Route path="/recipes/create">
             <RecipeCreatePage />

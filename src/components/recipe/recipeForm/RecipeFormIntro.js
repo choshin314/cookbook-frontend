@@ -40,7 +40,7 @@ function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
                             placeholder="What are we making?" 
                         />
                         <Input 
-                            name="introText"
+                            name="intro"
                             value={values.intro}
                             errorMsg={errors.intro}
                             type="textarea"

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import RecipeSection from './RecipeSection'
 import Checkbox from '../shared/Checkbox'
 
-function IngredientsSection({ingredients}) {
+function IngredientsSection({isOwnedByUser, ingredients}) {
     return (
         <RecipeSection sectionTitle="Ingredients">
             <IngredientList>

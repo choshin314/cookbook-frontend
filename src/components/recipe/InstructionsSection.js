@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import RecipeSection from './RecipeSection'
 
-function InstructionsSection({instructions}) {
+function InstructionsSection({isOwnedByUser, instructions}) {
     return (
         <RecipeSection sectionTitle="Instructions">
             <Instructions>

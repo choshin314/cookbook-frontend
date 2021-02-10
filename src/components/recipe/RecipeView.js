@@ -9,8 +9,11 @@ import BookmarkBtn from './BookmarkBtn'
 import FollowBtn from '../profile/FollowBtn'
 import Flash from '../shared/Flash'
 import AvatarLink from '../shared/AvatarLink'
+import EditTitle from './recipeEdit/EditTitle'
+import useRecipeViewContext from '../../hooks/recipeViewContextHook'
 
-function RecipeView({recipe}) {
+function RecipeView() {
+    const { recipe, isOwnedByUser } = useRecipeViewContext();
     return (
         <Main>
             <Flash />
@@ -19,6 +22,7 @@ function RecipeView({recipe}) {
                     <TitleDiv>
                         <PageTitle align="left">{recipe.title}</PageTitle>
                         <BookmarkBtn recipe={recipe} />
+                        {isOwnedByUser && <EditTitle recipe={recipe} />}
                     </TitleDiv>
                     
                     <div className="margin-btm-1">
@@ -31,20 +35,13 @@ function RecipeView({recipe}) {
                         <FollowBtn profileUser={recipe.user}/>
                     </StyledDiv>
                 </Wrapper>
-                <IntroSection 
-                    coverImg={{ 
-                        src: recipe.coverImg, 
-                        alt: `${recipe.title} cover image` 
-                    }}
-                    servings={recipe.servings}
-                    prepTime={recipe.prepTime}
-                    cookTime={recipe.cookTime}
-                    intro={recipe.intro}
-                />
+                <IntroSection />
                 <IngredientsSection 
+                    isOwnedByUser={isOwnedByUser}
                     ingredients={recipe.ingredients}
                 />
                 <InstructionsSection
+                    isOwnedByUser={isOwnedByUser}
                     instructions={recipe.instructions}
                 />
             </Container>
