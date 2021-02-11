@@ -1,19 +1,11 @@
-import {useState, useRef} from 'react'
 import styled from 'styled-components'
 import {Draggable, Droppable} from 'react-beautiful-dnd'
-import {faTrash} from '@fortawesome/free-solid-svg-icons'
-import {faGripHorizontal as faGrip} from '@fortawesome/free-solid-svg-icons'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-import {Button, media} from '../commonStyles'
-import ListInputWrapper from './ListInputWrapper'
-import IngredientFieldset from '../recipe/recipeForm/IngredientFieldset'
+import {media} from '../commonStyles'
 import ListItemDraggable from './ListItemDraggable'
 import FormFeedback from './FormFeedback'
 
 function ListDraggable(props) {
-    const fieldsetRef = useRef(null);
-    const [draftError, setDraftError] = useState();
     const { 
         direction,
         handleDelete, 
