@@ -37,10 +37,12 @@ function RecipeView() {
                 </Wrapper>
                 <IntroSection />
                 <IngredientsSection 
+                    recipe={recipe}
                     isOwnedByUser={isOwnedByUser}
                     ingredients={recipe.ingredients}
                 />
                 <InstructionsSection
+                    recipe={recipe}
                     isOwnedByUser={isOwnedByUser}
                     instructions={recipe.instructions}
                 />

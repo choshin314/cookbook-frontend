@@ -1,12 +1,12 @@
 import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 import useToggle from '../../hooks/toggle';
 import { Form, CancelButton, SubmitButton, PopInStyles } from "../commonStyles";
 import Modal from "./Modal";
 
 function ModalForm(props) {
-    const { open, toggleOpen, onChange, onSubmit } = props;
+    const { open, toggleOpen, onChange, onSubmit, height, maxWidth } = props;
     const [isIn, toggleIsIn] = useToggle(true);
     const delayToggleModal = () => {
         toggleIsIn();
@@ -21,7 +21,7 @@ function ModalForm(props) {
                 appear={true}
                 unmountOnExit={true}
             >
-                <StyledForm onChange={onChange} onSubmit={onSubmit}>
+                <StyledForm onChange={onChange} onSubmit={onSubmit} height={height} maxWidth={maxWidth}>
                     {props.children}
                     <Buttons>
                         <CancelButton onClick={delayToggleModal} type="button">Cancel</CancelButton>
@@ -42,6 +42,13 @@ const StyledForm = styled(Form)`
     transform: translate(-50%, -50%);
     width: 100%;
     max-width: 400px;
+    max-height: 90%;
+    ${p => p.height ? css`
+        height: ${p.height}; 
+    ` : ''}
+    ${p => p.maxWidth ? css`
+        max-width: ${p.maxWidth}; 
+    ` : ''}
     ${PopInStyles}
 `
 

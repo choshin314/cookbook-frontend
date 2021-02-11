@@ -9,7 +9,7 @@ import FormFeedback from './FormFeedback'
 function Input(props) {
     const {
         name, 
-        value,
+        value='',
         placeholder, 
         charLimit,
         min,

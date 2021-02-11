@@ -1,8 +1,10 @@
 import styled from 'styled-components'
+import { EditBtnWrapper } from './recipeEdit/EditBtnWrapper';
+import EditInstructions from './recipeEdit/EditInstructions';
 
 import RecipeSection from './RecipeSection'
 
-function InstructionsSection({isOwnedByUser, instructions}) {
+function InstructionsSection({isOwnedByUser, instructions, recipe}) {
     return (
         <RecipeSection sectionTitle="Instructions">
             <Instructions>
@@ -13,6 +15,9 @@ function InstructionsSection({isOwnedByUser, instructions}) {
                     </li>
                 ))}
             </Instructions>
+            {isOwnedByUser && <EditBtnWrapper>
+                <EditInstructions recipe={recipe} />    
+            </EditBtnWrapper>}
         </RecipeSection>
     )
 }

@@ -1,8 +1,11 @@
 import styled from 'styled-components'
+import useRecipeViewContext from '../../hooks/recipeViewContextHook'
 
 import {media} from '../commonStyles'
+import EditQuickFacts from './recipeEdit/EditQuickFacts';
 
 function QuickFacts(props) {
+    const { recipe, isOwnedByUser } = useRecipeViewContext();
     return (
         <Container>
         <Table>
@@ -24,6 +27,7 @@ function QuickFacts(props) {
                 </tr>
             </tbody>
         </Table>
+        {isOwnedByUser && <EditWrapper><EditQuickFacts recipe={recipe} /></EditWrapper>}
         </Container>
     )
 }
@@ -34,6 +38,7 @@ const Container = styled.div`
     background-color: var(--lite-grey);
     padding: 1rem .5rem;
     border-radius: 5px;
+    position: relative;
 `
 
 const Table = styled.table`
@@ -66,4 +71,13 @@ const Table = styled.table`
     @media(min-width: ${media.medium}) {
         font-size: 1rem;
     }
+`
+
+const EditWrapper = styled.span`
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    display: flex;
+    align-items: start;
+    color: ${p => p.light ? 'white' : 'var(--med-grey)'};
 `

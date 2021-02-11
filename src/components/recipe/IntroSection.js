@@ -4,6 +4,7 @@ import {faInfoCircle} from '@fortawesome/free-solid-svg-icons'
 
 import RecipeSection from './RecipeSection'
 import QuickFacts from './QuickFacts'
+import {EditBtnWrapper} from './recipeEdit/EditBtnWrapper'
 import EditCoverImg from './recipeEdit/EditCoverImg'
 import EditIntro from './recipeEdit/EditIntro'
 import useRecipeViewContext from '../../hooks/recipeViewContextHook'
@@ -17,15 +18,15 @@ function IntroSection() {
                 <div>
                 <img src={coverImg} alt={`Cover photo for ${title}`} />
                 </div>
-                {isOwnedByUser && (<EditWrapper light>
+                {isOwnedByUser && (<EditBtnWrapper light>
                     <EditCoverImg recipe={recipe} />
-                </EditWrapper>)}
+                </EditBtnWrapper>)}
             </CoverImg>
             <IntroText>
                 <p>{intro}</p>
-                <EditWrapper>
+                <EditBtnWrapper>
                     <EditIntro recipe={recipe} />
-                </EditWrapper>
+                </EditBtnWrapper>
             </IntroText>
             <QuickFacts prepTime={prepTime} cookTime={cookTime} servings={servings} />
         </RecipeSection>
@@ -57,13 +58,4 @@ const IntroText = styled.div`
     margin-bottom: 1rem;
     position: relative;
     padding: .5rem 0;
-`
-
-const EditWrapper = styled.span`
-    position: absolute;
-    top: .5rem;
-    right: .5rem;
-    display: flex;
-    align-items: start;
-    color: ${p => p.light ? 'white' : 'var(--med-grey)'};
 `

@@ -8,9 +8,11 @@
   --med-dark-grey: #8b8680;
   --black: #0e1e25;
   --teal: #146396;
+  --teal-darkened: #104E78;
   --dark-teal: #15847d;
   --lite-teal: #D7F3FF;
   --accent: #E29E21;
+  --accent-darkened: #CB8E1D;
   --error: #cc0000;
   --font-default: 'Raleway', sans-serif;
 }
