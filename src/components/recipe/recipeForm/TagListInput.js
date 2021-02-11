@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 
-import ListInputWrapper from '../../shared/ListInputWrapper'
 import Input from '../../shared/Input'
-
-const KEYS = [",", "Enter"];
+import ListDraggable from '../../shared/ListDraggable';
+import Tag from '../../shared/Tag'
 
 function TagListInput(props) {
     const [ draftError, setDraftError ] = useState();
@@ -16,19 +14,22 @@ function TagListInput(props) {
         const trimmed = values.tagDraft.trim();
         const tagLength = trimmed.length;
         const tagExists = values.tags.findIndex(el => el.content === trimmed) > -1 ? true : false;
-        if (tagLength < 3 || tagLength > 20) {
-            return setDraftError('Tags must be between 3 and 20 characters')
-        } 
-        if (!/^[a-zA-Z]+$/.test(trimmed)) return setDraftError('Tags must contain letters only')
-        if (tagExists) {
-            return setDraftError('That tag has already been added');
-        }
-        addToList('tags', ['tagDraft'])
+        if (tagLength < 3 || tagLength > 20) return setDraftError('Tags must be 3 to 20 characters');
+        if (!/^[a-zA-Z0-9-]+$/.test(trimmed)) return setDraftError('Tags can have letters, numbers, or hyphens');
+        if (tagExists) return setDraftError('That tag has already been added');
+        addToList('tags', ['tagDraft']);
     }
 
+    const list = values.tags && values.tags.map((tag, i) => (
+        <Tag key={tag.id} deletable={true} deleteTag={e => removeFromList('tags', tag.id)}>
+            {tag.content}
+        </Tag>
+    ))
+
     return (
-        <ListInputWrapper
+        <ListDraggable
             direction="row"
+            listNoDrag={list}
             listErrorMsg={errors.tags}
         >
             <Input
@@ -43,40 +44,8 @@ function TagListInput(props) {
                 }} 
                 onClick={e => validateAndSubmitTag(e)}
             />
-
-            {values.tags && values.tags.length > 0 && values.tags.map((tag, i) => (
-                <Tag 
-                    key={tag.id}
-                >
-                    <button
-                        type="button" 
-                        onClick={(e) => {
-                            e.preventDefault();
-                            removeFromList('tags', tag.id)
-                        }}
-                    >X</button>
-                    {tag.content}
-                </Tag>
-            ))}
-        </ListInputWrapper>
+        </ListDraggable>
     )
 }
 
 export default TagListInput;
-
-const Tag = styled.li`
-    background-color: var(--lite-med-grey);
-    padding: 5px 20px 5px 5px;
-    margin-right: 10px;
-    margin-bottom: 5px;
-    clip-path: polygon(calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0% 100%, 0 0);
-    button {
-        background-color: transparent;
-        border: none;
-        padding: 0 5px;
-        margin-right: 5px;
-        border-right: 1px solid var(--lite-med-grey);
-        font-family: inherit;
-        cursor: pointer;
-    }
-`
