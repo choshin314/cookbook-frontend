@@ -20,7 +20,11 @@ function RecipePage({user}) {
                 if(result.error) setError(result.error);
                 if(result.data) {
                     updateRecipe(result.data);
-                    if (user && user.id === result.data.user.id) setIsOwnedByUser(true);
+                    if (user && user.id === result.data.user.id) {
+                        setIsOwnedByUser(true)
+                    } else {
+                        setIsOwnedByUser(false)
+                    };
                 };
                 setLoading(prev => !prev);
             })

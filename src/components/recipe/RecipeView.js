@@ -11,6 +11,7 @@ import Flash from '../shared/Flash'
 import AvatarLink from '../shared/AvatarLink'
 import EditTitle from './recipeEdit/EditTitle'
 import useRecipeViewContext from '../../hooks/recipeViewContextHook'
+import TagsSection from './TagsSection'
 
 function RecipeView() {
     const { recipe, isOwnedByUser } = useRecipeViewContext();
@@ -46,6 +47,11 @@ function RecipeView() {
                     isOwnedByUser={isOwnedByUser}
                     instructions={recipe.instructions}
                 />
+                {recipe.tags && <TagsSection
+                    recipe={recipe}
+                    isOwnedByUser={isOwnedByUser}
+                    tags={recipe.tags}
+                />}
             </Container>
         </Main>
     )

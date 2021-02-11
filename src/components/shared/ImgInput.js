@@ -4,12 +4,11 @@ import {faImage} from '@fortawesome/free-regular-svg-icons'
 import FormFeedback from './FormFeedback'
 
 function ImgInput({name, label, file, errorMsg, imgSize="1MB", previewSize="400px", circle }) {
-
     return (
         <Container>
             <InputWrapper previewSize={previewSize}>
                 <PreviewDiv circle={circle}>
-                    {!file || !file.size && (<UploadInstructions>
+                    {(!file || !file.size) && (<UploadInstructions>
                         <h2>Select {label.text}</h2>
                         <div><FontAwesomeIcon icon={faImage} /></div>
                         <span>Drag and drop photo or click to upload</span>

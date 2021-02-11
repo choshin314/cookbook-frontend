@@ -24,9 +24,9 @@ function IntroSection() {
             </CoverImg>
             <IntroText>
                 <p>{intro}</p>
-                <EditBtnWrapper>
+                {isOwnedByUser && (<EditBtnWrapper>
                     <EditIntro recipe={recipe} />
-                </EditBtnWrapper>
+                </EditBtnWrapper>)}
             </IntroText>
             <QuickFacts prepTime={prepTime} cookTime={cookTime} servings={servings} />
         </RecipeSection>

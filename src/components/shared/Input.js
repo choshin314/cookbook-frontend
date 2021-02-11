@@ -9,7 +9,7 @@ import FormFeedback from './FormFeedback'
 function Input(props) {
     const {
         name, 
-        value='',
+        value,
         placeholder, 
         charLimit,
         min,
@@ -22,7 +22,7 @@ function Input(props) {
         errorMsg
     } = props;
 
-    const [charCount, setCharCount] = useState(value.length);
+    const [charCount, setCharCount] = useState(value && value.length || 0);
 
     return (
         <Container>
@@ -49,7 +49,7 @@ function Input(props) {
                     autoFocus={autoFocus}
                     placeholder={placeholder}
                     onChange={(e) => {
-                        setCharCount(e.target.value.length);
+                        if(type === "text") setCharCount(e.target.value.length);
                     }}
                     onKeyDown={onKeyDown}
                     min={min}

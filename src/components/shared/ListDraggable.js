@@ -38,7 +38,7 @@ function ListDraggable(props) {
                     <ListContainer ref={provided.innerRef} {...provided.droppableProps}>
                         <List>
                             {list && list.length > 0 && list.map((item, i) => (
-                                <Draggable draggableId={item.id} index={i} key={item.id} >
+                                <Draggable draggableId={'' + item.id} index={i} key={item.id} >
                                     {(provided) => (
                                         <ListItemDraggable
                                             provided={provided}
