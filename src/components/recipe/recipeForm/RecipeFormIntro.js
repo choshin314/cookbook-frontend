@@ -7,7 +7,6 @@ import { GridContainer, GridColumn, media } from '../../commonStyles'
 import ImgInput from '../../shared/ImgInput'
 import Input from '../../shared/Input'
 import TagListInput from './TagListInput'
-import ListInputWrapper from '../../shared/ListInputWrapper'
 
 function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
 

@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import Flash from '../components/shared/Flash'
 
 function Home({fetchSocial}) {
-    useEffect(() => fetchSocial(), [])
+    
     return (
         <Main >
             <Flash />

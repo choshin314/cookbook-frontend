@@ -2,6 +2,7 @@ import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, LOGOUT, BACK_TO_REFE
 import {setFlash} from './flashActions'
 import { setRedirect, redirectWithReferrer, backToReferrer } from './redirectActions'
 import { ajax } from '../../helpers/sendAjax'
+import { fetchAllSocial } from './socialActions'
 
 //ajax return is always either error msg (string) or { accessToken, user }
 export const userAuthStart = () => ({ type: USER_AUTH_START })
@@ -14,7 +15,7 @@ export function loginUser(values) {
         const { data, error } = await ajax.post('/auth/login', values);
         if (error) return dispatch(userAuthFail(error));
         dispatch(userAuthSuccess(data))
-        dispatch(setFlash('success', `Welcome back ${data.user.firstName}`))
+        await dispatch(fetchAllSocial())
         dispatch(backToReferrer()) 
     }
 }
@@ -29,8 +30,7 @@ export function registerUser(values) {
 }
 
 export function logoutUser() {
-    return dispatch => {
-        localStorage.clear();
+    return async (dispatch) => {
         dispatch({ type: LOGOUT });
         dispatch(setRedirect('/account/login'));
     }

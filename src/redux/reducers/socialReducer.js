@@ -10,7 +10,7 @@ import {
     LOGOUT
 } from '../actions/types'
 
-const initSocial = {
+let initSocial = getLocalStorage('social') || {
     following: {
         loading: false,
         userIds: {},
@@ -35,6 +35,30 @@ const initSocial = {
 
 export default function reducer(social=initSocial, action) {
     switch(action.type) {
+        case LOGOUT:
+            console.log('test')
+            return {
+                following: {
+                    loading: false,
+                    userIds: {},
+                    error: null
+                },
+                followers: {
+                    loading: false,
+                    userIds: {},
+                    error: null
+                },
+                bookmarks: {
+                    loading: false,
+                    recipeIds: {},
+                    error: null
+                },
+                likes: {
+                    loading: false,
+                    recipeIds: {},
+                    error: null
+                }
+            }
         case FETCH_ALL_SOCIAL_START:
             return {
                 following: {

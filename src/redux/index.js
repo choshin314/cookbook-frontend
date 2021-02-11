@@ -25,6 +25,7 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
     if (action.type === "LOGOUT") {
         state = undefined
+        localStorage.clear();
     }
     return appReducer(state, action)
 }
@@ -35,6 +36,7 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 const unsubscribe = store.subscribe(() => {
     setLocalStorage('auth', store.getState().auth);
+    setLocalStorage('social', store.getState().social);
 });
 
 export { store };
