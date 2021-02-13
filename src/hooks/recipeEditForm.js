@@ -7,7 +7,7 @@ import { setFlash } from '../redux/actions/flashActions'
 import { getLocalStorage } from '../helpers/index'
 import useRecipeViewContext from './recipeViewContextHook'
 
-export function useRecipeEditForm(fields, imgFieldName) {
+export function useRecipeEditForm(fields, imgFieldName, endpath) {
     const dispatch = useDispatch();
     const { recipe, updateRecipe } = useRecipeViewContext();
     const initValues = {};
@@ -18,9 +18,9 @@ export function useRecipeEditForm(fields, imgFieldName) {
         if(!token) return dispatch(setFlash('error','Login required'));
         let result;
         if (imgFieldName) {
-            result = await ajax.patchMulti(`/recipes/${recipe.id}`, inputValues, [imgFieldName], token)
+            result = await ajax.patchMulti(`/recipes/${recipe.id}/${endpath}`, inputValues, [imgFieldName], token)
         } else {
-            result = await ajax.patch(`/recipes/${recipe.id}`, inputValues, token)
+            result = await ajax.patch(`/recipes/${recipe.id}/${endpath}`, inputValues, token)
         }
         if (result.error) return dispatch(setFlash('error', result.error));
         if (result.data) console.log(result.data);             

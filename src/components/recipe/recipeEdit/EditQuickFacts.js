@@ -7,7 +7,7 @@ import Input from "../../shared/Input";
 function EditQuickFacts({recipe}) {
     const { 
         handleChange, validateAndSubmit, inputValues, inputErrors 
-    } = useRecipeEditForm(['prepTime', 'cookTime', 'servings'])
+    } = useRecipeEditForm(['prepTime', 'cookTime', 'servings'], null,'general')
     return (
         <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit} >
             <Flex>

@@ -10,7 +10,7 @@ function EditTags({recipe}) {
         inputErrors,
         addToList,
         removeFromList
-    } = useRecipeEditForm(['ingredients'])
+    } = useRecipeEditForm(['ingredients'],null,'tags')
 
     return (
         <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit}>

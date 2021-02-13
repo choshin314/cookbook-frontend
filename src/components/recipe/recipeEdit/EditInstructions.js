@@ -12,7 +12,7 @@ function EditInstructions({recipe}) {
         addToList,
         removeFromList,
         handleDragEnd 
-    } = useRecipeEditForm(['instructions'])
+    } = useRecipeEditForm(['instructions'],null,'instructions')
 
     return (
         <EditWrapper height="80%" maxWidth="800px" onChange={handleChange} onSubmit={validateAndSubmit}>
