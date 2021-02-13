@@ -19,13 +19,8 @@ const initValues = {
     servings: '',
     coverImg: '',
     instructions: [],
-    instructionDraft_qty: '',
-    instructionDraft_unit: '',
-    instructionDraft_content: '',
     ingredients: [],
-    ingredientDraft: '',
-    tags: [],
-    tagDraft: ''
+    tags: []
 }
 
 function RecipeCreateForm({ auth, setRedirect, setFlash }) {

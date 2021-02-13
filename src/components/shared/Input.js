@@ -17,6 +17,7 @@ function Input(props) {
         autoFocus, 
         onKeyDown,
         onClick,
+        onChange,
         type, 
         label,
         errorMsg
@@ -36,6 +37,10 @@ function Input(props) {
                     placeholder={placeholder}
                     onChange={(e) => {
                         setCharCount(e.target.value.length);
+                        if(onChange) {
+                            e.stopPropagation();
+                            onChange(e);
+                        }
                     }}
                     value={value}
                     rows={textRows}
@@ -50,6 +55,10 @@ function Input(props) {
                     placeholder={placeholder}
                     onChange={(e) => {
                         if(type === "text") setCharCount(e.target.value.length);
+                        if(onChange) {
+                            e.stopPropagation();
+                            onChange(e);
+                        }
                     }}
                     onKeyDown={onKeyDown}
                     min={min}
@@ -66,6 +75,10 @@ function Input(props) {
                         placeholder={placeholder}
                         onChange={(e) => {
                             setCharCount(e.target.value.length);
+                            if(onChange) {
+                                e.stopPropagation();
+                                onChange(e);
+                            }
                         }}
                         onKeyDown={onKeyDown}
                         min={min}

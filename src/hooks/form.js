@@ -106,30 +106,21 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
         await handleSubmit(inputValues, setFormErrors, setIsSubmitting);
     }
 
-    function addToList(listKey, draftKeys) {
-        const newItem = { id: uuid() };
-        const clearedDrafts = {};
+    function addToList(listName, draftItem) {
+        const newListItem = { id: uuid() };
         const trimIfString = (value) => typeof value === "string" ? value.trim() : value;
-        if (draftKeys.length === 1) { //for single value (e.g. instructionDraft)
-            newItem.content = trimIfString(inputValues[draftKeys[0]])
-            clearedDrafts[draftKeys[0]] = '';
-        } else { //for multipart (e.g. ingDraft_name, ingDraft_qty, ingDraft_unit)
-            draftKeys.forEach(key => {
-                let keynameTail = key.split('_')[1];
-                newItem[keynameTail] = trimIfString(inputValues[key]);
-                clearedDrafts[key] = '';
-            })
-        } 
+        for (let key in draftItem) {
+            newListItem[key] = trimIfString(draftItem[key])
+        }
         setInputValues({
             ...inputValues,
-            ...clearedDrafts,
-            [listKey]: [...inputValues[listKey], newItem ]
+            [listName]: [...inputValues[listName], newListItem ]
         })
     }
 
-    function removeFromList(listKey, listItemId) {
-        const filtered = inputValues[listKey].filter(item => item.id !== listItemId);
-        setInputValues({...inputValues, [listKey]: filtered });
+    function removeFromList(listName, listItemId) {
+        const filtered = inputValues[listName].filter(item => item.id !== listItemId);
+        setInputValues({...inputValues, [listName]: filtered });
     }
 
     function handleDragEnd(result) {

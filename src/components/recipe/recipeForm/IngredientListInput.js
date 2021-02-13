@@ -5,26 +5,28 @@ import ListDraggable from '../../shared/ListDraggable'
 
 function IngredientListInput(props) {
     const fieldsetRef = useRef(null);
+    const [ ingredientDraft, setIngredientDraft ] = useState({ qty: '', unit: '', content: '' });
     const [draftError, setDraftError] = useState();
     const { addToList, removeFromList, values, errors, listErrorMsg } = props;
-    const { 
-        ingredients, 
-        ingredientDraft_qty, 
-        ingredientDraft_unit, 
-        ingredientDraft_content 
-    } = values;
+    const { ingredients } = values;
 
     function validateAndAdd(e) {
         e.preventDefault();
         setDraftError(null);
-        if (!ingredientDraft_qty) return setDraftError('Quantity is required');
-        if (!ingredientDraft_unit) return setDraftError('Unit is required');
-        const length = ingredientDraft_content.trim().length;
+        if (!ingredientDraft.qty) return setDraftError('Quantity is required');
+        if (!ingredientDraft.unit) return setDraftError('Unit is required');
+        const length = ingredientDraft.content.trim().length;
         if (length < 3) {
-            return setDraftError('Ingredients must be at least 3 characters')
+            return setDraftError('Minimum 3 characters per ingredient')
         } 
-        addToList('ingredients', ['ingredientDraft_unit','ingredientDraft_qty','ingredientDraft_content'])
+        addToList('ingredients', ingredientDraft);
+        setIngredientDraft({ qty: '', unit: '', content: '' });
         fieldsetRef.current.querySelector('input').focus() //refocus on "qty" input
+    }
+
+    function handleDraftChange(e) {
+        const {name, value} = e.target;
+        setIngredientDraft(prev => ({ ...prev, [name]: value }));
     }
 
     return (
@@ -37,10 +39,11 @@ function IngredientListInput(props) {
         >
             <IngredientFieldset 
                 ref={fieldsetRef}
-                values={values}
+                values={ingredientDraft}
                 errors={errors}
                 addToList={validateAndAdd}
                 draftError={draftError}
+                onChange={handleDraftChange}
             />
         </ListDraggable>
     )
