@@ -26,6 +26,12 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
         setFormErrors([]);
     }
 
+    function resetForm() {
+        setInputValues(initValues);
+        setInputErrors({});
+        setFormErrors([]);
+    }
+
     function handleChange(e) {
         const {name, value, type, files } = e.target;
         switch (type) {
@@ -148,6 +154,7 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
         handleDragEnd,
         addToList,
         removeFromList,
+        resetForm,
         isSubmitting, 
         validateForm,
         validateAndSubmit 

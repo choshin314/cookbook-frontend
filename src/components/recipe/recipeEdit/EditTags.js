@@ -1,6 +1,6 @@
 import { useRecipeEditForm } from "../../../hooks/recipeEditForm";
 import EditWrapper from './EditWrapper';
-import TagListInput from "../recipeForm/IngredientListInput";
+import TagListInput from "../recipeForm/TagListInput";
 
 function EditTags({recipe}) {
     const { 
@@ -9,11 +9,14 @@ function EditTags({recipe}) {
         inputValues, 
         inputErrors,
         addToList,
-        removeFromList
-    } = useRecipeEditForm(['ingredients'],null,'tags')
+        removeFromList,
+        resetForm
+    } = useRecipeEditForm(['tags'],null,'tags')
+
+    console.log(inputValues);
 
     return (
-        <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit}>
+        <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit} resetForm={resetForm}>
             <TagListInput 
                 addToList={addToList}
                 removeFromList={removeFromList}

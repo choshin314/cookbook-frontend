@@ -16,7 +16,7 @@ function TagListInput(props) {
         const tagLength = trimmed.length;
         const existingIdx = values.tags.findIndex(el => el.content.toLowerCase() === trimmed.toLowerCase());
         if (tagLength < 3 || tagLength > 20) return setDraftError('Tags must be 3 to 20 characters');
-        if (!/^[a-zA-Z0-9-]+$/.test(trimmed)) return setDraftError('Tags can have letters, numbers, or hyphens');
+        if (!/^[a-zA-Z0-9-_]+$/.test(trimmed)) return setDraftError('Tags can have a-z, 0-9, -, or _');
         if (existingIdx > -1) return setDraftError('That tag has already been added');
         addToList('tags', tagDraft);
         setTagDraft({ content: '' });
@@ -31,6 +31,8 @@ function TagListInput(props) {
             {tag.content}
         </Tag>
     ))
+
+    console.log('list: ', list)
 
     return (
         <ListDraggable

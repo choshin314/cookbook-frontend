@@ -2,7 +2,7 @@ import useToggle from '../../../hooks/toggle'
 import ModalForm from '../../shared/ModalForm'
 import EditBtn from '../../shared/EditBtn'
 
-function EditWrapper({onChange, onSubmit, height, maxWidth, children}) {
+function EditWrapper({onChange, onSubmit, resetForm, height, maxWidth, children}) {
     const [ formOpen, toggleFormOpen ] = useToggle(false);
     
     return (
@@ -14,6 +14,7 @@ function EditWrapper({onChange, onSubmit, height, maxWidth, children}) {
                     toggleOpen={toggleFormOpen} 
                     onChange={onChange} 
                     onSubmit={onSubmit}
+                    resetForm={resetForm}
                     height={height}
                     maxWidth={maxWidth}
                 >

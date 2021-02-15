@@ -4,11 +4,11 @@ import ImgInput from "../../shared/ImgInput";
 
 function EditCoverImg({recipe}) {
     const { 
-        handleChange, validateAndSubmit, inputValues, inputErrors 
+        handleChange, validateAndSubmit, inputValues, inputErrors, resetForm
     } = useRecipeEditForm(['coverImg'], 'coverImg', 'cover-img')
 
     return (
-        <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit}>
+        <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit} resetForm={resetForm}>
             <ImgInput
                 name="coverImg" 
                 label={{ text: 'New Cover Image', hide: true }} 

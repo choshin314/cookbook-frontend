@@ -15,6 +15,7 @@ import TagsSection from './TagsSection'
 
 function RecipeView() {
     const { recipe, isOwnedByUser } = useRecipeViewContext();
+    console.log(recipe);
     return (
         <Main>
             <Flash />
@@ -47,11 +48,11 @@ function RecipeView() {
                     isOwnedByUser={isOwnedByUser}
                     instructions={recipe.instructions}
                 />
-                {recipe.tags && <TagsSection
+                <TagsSection
                     recipe={recipe}
                     isOwnedByUser={isOwnedByUser}
                     tags={recipe.tags}
-                />}
+                />
             </Container>
         </Main>
     )

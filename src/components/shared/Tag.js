@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 function Tag({ deletable, deleteTag, children }) {
     return (
-        <TagContainer>
+        <TagContainer deletable={deletable}>
             {deletable && <TagBtn type="button" onClick={deleteTag}>X</TagBtn>}
             {children}
         </TagContainer>
@@ -13,7 +13,7 @@ export default Tag
 
 const TagContainer = styled.li`
     background-color: var(--lite-med-grey);
-    padding: 5px 20px 5px 5px;
+    padding: ${({deletable}) => deletable ? '5px 20px 5px 5px' : '5px 20px'};
     margin-right: 10px;
     margin-bottom: 5px;
     clip-path: polygon(calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0% 100%, 0 0);

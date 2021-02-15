@@ -6,16 +6,20 @@ import { Form, CancelButton, SubmitButton, PopInStyles } from "../commonStyles";
 import Modal from "./Modal";
 
 function ModalForm(props) {
-    const { open, toggleOpen, onChange, onSubmit, height, maxWidth } = props;
+    const { open, toggleOpen, resetForm, onChange, onSubmit, height, maxWidth } = props;
     const [isIn, toggleIsIn] = useToggle(true);
     const delayToggleModal = () => {
         toggleIsIn();
-        setTimeout(toggleOpen, 200)
+        setTimeout(() => {
+            if (resetForm) resetForm();
+            toggleOpen();
+        }, 200)
     }
     const submitAndClose = async (e) => {
         await onSubmit(e);
         delayToggleModal();
     }
+    
     return (
         <Modal modalOpen={open} toggleModal={delayToggleModal}>
             <CSSTransition 
@@ -28,7 +32,9 @@ function ModalForm(props) {
                 <StyledForm onChange={onChange} onSubmit={submitAndClose} height={height} maxWidth={maxWidth}>
                     {props.children}
                     <Buttons>
-                        <CancelButton onClick={delayToggleModal} type="button">Cancel</CancelButton>
+                        <CancelButton type="button" onClick={delayToggleModal} >
+                            Cancel
+                        </CancelButton>
                         <SubmitButton type="submit">Save Changes</SubmitButton>
                     </Buttons>
                 </StyledForm>

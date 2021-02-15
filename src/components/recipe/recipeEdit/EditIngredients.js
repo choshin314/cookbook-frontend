@@ -11,11 +11,18 @@ function EditIngredients({recipe}) {
         inputErrors,
         addToList,
         removeFromList,
-        handleDragEnd 
+        handleDragEnd,
+        resetForm 
     } = useRecipeEditForm(['ingredients'],null,'ingredients')
 
     return (
-        <EditWrapper height="80%" maxWidth="800px" onChange={handleChange} onSubmit={validateAndSubmit}>
+        <EditWrapper 
+            height="80%" 
+            maxWidth="800px" 
+            onChange={handleChange} 
+            onSubmit={validateAndSubmit}
+            resetForm={resetForm}
+        >
             <DragDropContext onDragEnd={handleDragEnd} >
                 <IngredientListInput 
                     addToList={addToList}

@@ -16,7 +16,7 @@ function ListDraggable(props) {
         displayContent, 
         children 
     } = props;
-
+    console.log('listNoDrag: ', listNoDrag)
     if (list) return (
         <Container>
             <InputWrapper>{children}</InputWrapper>

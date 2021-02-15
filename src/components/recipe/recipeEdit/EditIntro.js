@@ -4,11 +4,11 @@ import Input from "../../shared/Input";
 
 function EditIntro({recipe}) {
     const { 
-        handleChange, validateAndSubmit, inputValues, inputErrors 
+        handleChange, validateAndSubmit, inputValues, inputErrors, resetForm 
     } = useRecipeEditForm(['intro'],null,'general')
 
     return (
-        <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit}>
+        <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit} resetForm={resetForm}>
             <Input 
                 name="intro"
                 value={inputValues.intro}
