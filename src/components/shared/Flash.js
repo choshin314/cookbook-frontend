@@ -76,8 +76,8 @@ const listStyle = css`
 }`
 
 const StyledFigure = styled.figure`
-    position: absolute;
-    top: 1rem;
+    position: fixed;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;

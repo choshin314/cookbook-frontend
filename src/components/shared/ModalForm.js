@@ -12,6 +12,10 @@ function ModalForm(props) {
         toggleIsIn();
         setTimeout(toggleOpen, 200)
     }
+    const submitAndClose = async (e) => {
+        await onSubmit(e);
+        delayToggleModal();
+    }
     return (
         <Modal modalOpen={open} toggleModal={delayToggleModal}>
             <CSSTransition 
@@ -21,7 +25,7 @@ function ModalForm(props) {
                 appear={true}
                 unmountOnExit={true}
             >
-                <StyledForm onChange={onChange} onSubmit={onSubmit} height={height} maxWidth={maxWidth}>
+                <StyledForm onChange={onChange} onSubmit={submitAndClose} height={height} maxWidth={maxWidth}>
                     {props.children}
                     <Buttons>
                         <CancelButton onClick={delayToggleModal} type="button">Cancel</CancelButton>

@@ -23,7 +23,9 @@ export function useRecipeEditForm(fields, imgFieldName, endpath) {
             result = await ajax.patch(`/recipes/${recipe.id}/${endpath}`, inputValues, token)
         }
         if (result.error) return dispatch(setFlash('error', result.error));
-        if (result.data) console.log(result.data);             
+        updateRecipe(result.data);
+        setIsSubmitting(prev => false);
+        dispatch(setFlash('success', 'Recipe was updated'));             
     }
 
     return useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, null, imgFieldName)
