@@ -12,6 +12,7 @@ import AvatarLink from '../shared/AvatarLink'
 import EditTitle from './recipeEdit/EditTitle'
 import useRecipeViewContext from '../../hooks/recipeViewContextHook'
 import TagsSection from './TagsSection'
+import ReviewsSection from './ReviewsSection'
 
 function RecipeView() {
     const { recipe, isOwnedByUser } = useRecipeViewContext();
@@ -52,6 +53,11 @@ function RecipeView() {
                     recipe={recipe}
                     isOwnedByUser={isOwnedByUser}
                     tags={recipe.tags}
+                />
+                <ReviewsSection
+                    recipe={recipe}
+                    isOwnedByUser={isOwnedByUser}
+                    reviews={recipe.reviews}
                 />
             </Container>
         </Main>

@@ -107,7 +107,7 @@ export function useForm(initValues, constraints, handleSubmit, formName=null, im
     async function validateAndSubmit(e) {
         e.preventDefault();
         const validationErrors = validateForm(inputValues, constraints); 
-        if (validationErrors) return; 
+        if (validationErrors) return { inputErrors: true }; 
         setIsSubmitting(prev => true);
         await handleSubmit(inputValues, setFormErrors, setIsSubmitting);
     }

@@ -2,8 +2,10 @@ import styled, {css} from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faImage} from '@fortawesome/free-regular-svg-icons'
 import FormFeedback from './FormFeedback'
+import useToggle from '../../hooks/toggle'
 
 function ImgInput({name, label, file, errorMsg, imgSize="1MB", previewSize="400px", circle }) {
+    const [isFocused, toggleFocused] = useToggle();
     return (
         <Container>
             <InputWrapper previewSize={previewSize}>
@@ -22,8 +24,10 @@ function ImgInput({name, label, file, errorMsg, imgSize="1MB", previewSize="400p
                     type="file" 
                     name={name} 
                     accept="image/png, image/jpeg, image/jpg"
+                    onFocus={toggleFocused}
+                    onBlur={toggleFocused}
                 />
-                <Label htmlFor={name} hidden={label.hide}>
+                <Label htmlFor={name} hidden={label.hide} focused={isFocused}>
                     Select {label.text}
                 </Label>
             </InputWrapper>
@@ -128,6 +132,7 @@ const Label = styled.label`
     text-transform: capitalize;
     cursor: pointer;
     position: relative;
+    outline: ${p => p.focused ? '1px dashed var(--dark-teal)' : 'none'};
     :hover {
         background-color: var(--dark-teal);
     }

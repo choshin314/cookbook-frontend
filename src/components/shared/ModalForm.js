@@ -16,7 +16,8 @@ function ModalForm(props) {
         }, 200)
     }
     const submitAndClose = async (e) => {
-        await onSubmit(e);
+        const submissionResult = await onSubmit(e);
+        if (submissionResult && submissionResult.inputErrors) return;
         delayToggleModal();
     }
     
@@ -35,7 +36,7 @@ function ModalForm(props) {
                         <CancelButton type="button" onClick={delayToggleModal} >
                             Cancel
                         </CancelButton>
-                        <SubmitButton type="submit">Save Changes</SubmitButton>
+                        <SubmitButton type="submit">Submit</SubmitButton>
                     </Buttons>
                 </StyledForm>
             </CSSTransition>
@@ -53,6 +54,7 @@ const StyledForm = styled(Form)`
     width: 100%;
     max-width: 400px;
     max-height: 90%;
+    overflow-y: auto;
     ${p => p.height ? css`
         height: ${p.height}; 
     ` : ''}
