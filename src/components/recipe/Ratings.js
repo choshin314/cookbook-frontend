@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faStar as starFull, faStarHalfAlt as starHalf} from '@fortawesome/free-solid-svg-icons'
 import {faStar as starEmpty} from '@fortawesome/free-regular-svg-icons'
 
-function Ratings({rating=3, reviewCount}) {
+function Ratings({rating, reviewCount}) {
     function determineStarFilling(starNum, rating) {
         if (!rating) return starEmpty;
         let halfStarMin = starNum - 0.75;
@@ -17,13 +17,13 @@ function Ratings({rating=3, reviewCount}) {
         }
     }
     return (
-        <Container title={rating ? `${rating.toFixed(1)} Stars` : 'No reviews yet'}>
+        <Container title={rating ? `${parseFloat(rating).toFixed(1)} Stars` : 'No reviews yet'}>
             <FontAwesomeIcon icon={determineStarFilling(1, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(2, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(3, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(4, rating)} />
             <FontAwesomeIcon icon={determineStarFilling(5, rating)} />
-            <span>({reviewCount})</span>
+            {reviewCount && <span>({reviewCount})</span>}
         </Container>
     )
 }
