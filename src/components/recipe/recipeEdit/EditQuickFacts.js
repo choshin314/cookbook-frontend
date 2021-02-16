@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { useRecipeEditForm } from "../../../hooks/recipeEditForm";
-import EditWrapper from './EditWrapper';
+import EditWrapper from '../../shared/EditWrapper';
 import Input from "../../shared/Input";
 
 function EditQuickFacts({recipe}) {

@@ -1,5 +1,5 @@
 import { useRecipeEditForm } from "../../../hooks/recipeEditForm";
-import EditWrapper from './EditWrapper';
+import EditWrapper from '../../shared/EditWrapper';
 import IngredientListInput from "../recipeForm/IngredientListInput";
 import { DragDropContext } from "react-beautiful-dnd";
 

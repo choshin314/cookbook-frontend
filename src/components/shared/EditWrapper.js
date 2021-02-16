@@ -1,6 +1,6 @@
-import useToggle from '../../../hooks/toggle'
-import ModalForm from '../../shared/ModalForm'
-import EditBtn from '../../shared/EditBtn'
+import useToggle from '../../hooks/toggle'
+import ModalForm from './ModalForm'
+import EditBtn from './EditBtn'
 
 function EditWrapper({onChange, onSubmit, resetForm, height, maxWidth, children}) {
     const [ formOpen, toggleFormOpen ] = useToggle(false);
