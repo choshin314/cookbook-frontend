@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
 import logo from '../../assets/recipeshare-logo.png'
-import {useForm} from '../../hooks/form'
+import useForm from '../../hooks/form'
 import { CardWrapper, Button, media } from '../commonStyles'
 import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'

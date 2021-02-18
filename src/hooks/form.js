@@ -3,7 +3,7 @@ import {uuid} from 'uuidv4'
 
 import { getLocalStorage, setLocalStorage } from '../helpers'
 
-export function useForm(initValues, constraints, handleSubmit, formName=null, imgName=null) {
+export default function useForm(initValues, constraints, handleSubmit, formName=null, imgName=null) {
     const localValues = getLocalStorage(formName);
     const [ inputValues, setInputValues ] = useState(localValues || initValues);
     const [ inputErrors, setInputErrors ] = useState({}); 

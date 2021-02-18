@@ -1,8 +1,8 @@
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 
-import { REVIEW_CONSTRAINTS } from "../../constants/reviewConstraints"
-import { useForm } from "../../hooks/form"
+import { REVIEW_CONSTRAINTS } from "../../constants"
+import useForm from "../../hooks/form"
 import { Button } from '../commonStyles'
 import ReviewForm from "./ReviewForm"
 import useToggle from '../../hooks/toggle'

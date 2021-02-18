@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
+import genericAvatar from '../../assets/generic-avatar.png'
+
 function AvatarLink({user, imgSize, showCreatedBy, showNames}) {
     return user ? (
         <AuthorDiv>
             <Link to={`/profile/view/${user.username}`}>
                 <ImgDiv size={imgSize || '50px'}>
-                    <img src={user.profilePic}/>
+                    <img src={user.profilePic || genericAvatar}/>
                 </ImgDiv>
             </Link>
             {showCreatedBy && <NameLink to={`/profile/view/${user.username}`}>by {user.firstName} {user.lastName}</NameLink>}

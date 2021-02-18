@@ -8,8 +8,8 @@ import RecipeForm from './RecipeForm.js'
 import { ajax } from '../../../helpers/sendAjax'
 import { setRedirect } from '../../../redux/actions/redirectActions'
 import { setFlash } from '../../../redux/actions/flashActions'
-import {useForm} from '../../../hooks/form'
-import { RECIPE_CONSTRAINTS } from '../../../constants/recipeConstraints'
+import useForm from '../../../hooks/form'
+import { RECIPE_CONSTRAINTS } from '../../../constants'
 
 const initValues = {
     title: '',

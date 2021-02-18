@@ -7,24 +7,25 @@ import ProfileView from '../components/profile/ProfileView'
 import { fetchProfile } from '../redux/actions/profileActions'
 import FollowsModal from '../components/follows/FollowsModal'
 
-function ProfilePage({ profile, fetchProfile }) {
+function ProfilePage({ profile, authedUser, fetchProfile }) {
     const { username } = useParams();
-    const { user, stats, loading, error } = profile;
+    const { user : profileUser, stats, loading, error } = profile;
     const match = useRouteMatch()
 
     useEffect(() => {
         fetchProfile(username);
     }, [username])
-
+    
     return (
         <Main>
-            {!loading && user && stats && <ProfileView user={user} stats={stats} profileUrl={match.url}/>}
+            {authedUser && authedUser.id === profileUser.id && <button>edit profile</button>}
+            {!loading && profileUser && stats && <ProfileView user={profileUser} stats={stats} profileUrl={match.url}/>}
             <Route path={`${match.url}/subs`} ><FollowsModal username={username} prevURL={match.url} /></Route>
         </Main>
     )
 }
 
-const mapStateToProps = (global) => ({ profile: global.profile });
+const mapStateToProps = (state) => ({ profile: state.profile, authedUser: state.auth.user });
 const mapDispatchToProps = { fetchProfile: fetchProfile }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

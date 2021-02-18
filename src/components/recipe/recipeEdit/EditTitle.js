@@ -1,4 +1,4 @@
-import { useRecipeEditForm } from "../../../hooks/recipeEditForm";
+import useRecipeEditForm from "../../../hooks/recipeEditForm";
 import EditWrapper from '../../shared/EditWrapper';
 import Input from "../../shared/Input";
 

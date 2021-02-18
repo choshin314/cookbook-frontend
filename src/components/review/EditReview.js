@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import useAjax from '../../hooks/ajax'
-import { useForm } from '../../hooks/form'
+import useForm from '../../hooks/form'
 import { REVIEW_CONSTRAINTS } from '../../constants/reviewConstraints';
 import { setFlash } from '../../redux/actions/flashActions';
 import useRecipeViewContext from '../../hooks/recipeViewContextHook';
