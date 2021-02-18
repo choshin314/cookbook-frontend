@@ -18,15 +18,11 @@ function IntroSection() {
                 <div>
                 <img src={coverImg} alt={`Cover photo for ${title}`} />
                 </div>
-                {isOwnedByUser && (<EditBtnWrapper light>
-                    <EditCoverImg recipe={recipe} />
-                </EditBtnWrapper>)}
+                {isOwnedByUser && <EditCoverImg recipe={recipe} /> }
             </CoverImg>
             <IntroText>
                 <p>{intro}</p>
-                {isOwnedByUser && (<EditBtnWrapper>
-                    <EditIntro recipe={recipe} />
-                </EditBtnWrapper>)}
+                {isOwnedByUser && <EditIntro recipe={recipe} /> }
             </IntroText>
             <QuickFacts prepTime={prepTime} cookTime={cookTime} servings={servings} />
         </RecipeSection>

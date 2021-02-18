@@ -27,7 +27,7 @@ function QuickFacts(props) {
                 </tr>
             </tbody>
         </Table>
-        {isOwnedByUser && <EditWrapper><EditQuickFacts recipe={recipe} /></EditWrapper>}
+        {isOwnedByUser && <EditQuickFacts recipe={recipe} />}
         </Container>
     )
 }

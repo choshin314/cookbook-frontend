@@ -1,12 +1,13 @@
 import useToggle from '../../hooks/toggle'
 import ModalForm from './ModalForm'
 import EditBtn from './EditBtn'
+import { EditBtnWrapper } from '../recipe/recipeEdit/EditBtnWrapper';
 
 function EditWrapper({onChange, onSubmit, resetForm, height, maxWidth, children}) {
     const [ formOpen, toggleFormOpen ] = useToggle(false);
     
     return (
-        <>
+        <EditBtnWrapper>
             <EditBtn onClick={toggleFormOpen} />
             {formOpen && (
                 <ModalForm 
@@ -21,7 +22,7 @@ function EditWrapper({onChange, onSubmit, resetForm, height, maxWidth, children}
                     {children}
                 </ModalForm>
             )}
-        </>
+        </EditBtnWrapper>
     )
 }
 

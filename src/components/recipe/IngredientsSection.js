@@ -17,9 +17,7 @@ function IngredientsSection({isOwnedByUser, ingredients, recipe}) {
                     </li>
                 ))}
             </IngredientList>
-            {isOwnedByUser && <EditBtnWrapper>
-                <EditIngredients recipe={recipe} />    
-            </EditBtnWrapper>}
+            {isOwnedByUser && <EditIngredients recipe={recipe} />}
         </RecipeSection>
     )
 }

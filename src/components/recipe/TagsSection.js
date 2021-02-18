@@ -10,9 +10,7 @@ function TagsSection({tags, isOwnedByUser, recipe}) {
             <StyledHorizontalList>
                 {tags && tags.map(tag => <Tag key={tag.id}>{tag.content}</Tag>)}
             </StyledHorizontalList>
-            {isOwnedByUser && <EditBtnWrapper>
-                <EditTags recipe={recipe} /> 
-            </EditBtnWrapper>}
+            {isOwnedByUser && <EditTags recipe={recipe} /> }
         </RecipeSection>
     )
 }
