@@ -81,7 +81,7 @@ export default function useAjax(apiPath) {
         patchMulti: async (values, fileKeysArray) => (
             await sendMulti(values, fileKeysArray, 'PATCH')
         ),
-        delete: deleteAjax 
+        deleteAjax: deleteAjax 
     }
 }
 
