@@ -3,6 +3,7 @@ import Ratings from '../recipe/Ratings';
 import { EditBtnWrapper } from '../recipe/recipeEdit/EditBtnWrapper';
 
 import AvatarLink from "../shared/AvatarLink";
+import DeleteReview from './DeleteReview';
 import EditReview from './EditReview';
 
 function Review({review}) {
@@ -14,6 +15,7 @@ function Review({review}) {
     return (
         <Container>
             <EditReview review={review} />
+            <DeleteBtnWrapper><DeleteReview review={review} /></DeleteBtnWrapper>
             <StyledHeader>
                 <Flex>
                     <AvatarLink user={review.user} imgSize="30px" showNames />
@@ -39,6 +41,12 @@ const Container = styled.div`
     padding: 1rem .5rem;
     background-color: var(--lite-grey);
     position: relative;
+`
+
+const DeleteBtnWrapper = styled.span`
+    position: absolute;
+    top: .5rem;
+    right: 2rem;
 `
 
 const StyledHeader = styled.div`
