@@ -22,7 +22,10 @@ export function useRecipeEditForm(fields, imgFieldName, endpath) {
         } else {
             result = await ajax.patch(`/recipes/${recipe.id}/${endpath}`, inputValues, token)
         }
-        if (result.error) return dispatch(setFlash('error', result.error));
+        if (result.error) {
+            setIsSubmitting(prev => false);
+            return dispatch(setFlash('error', result.error))
+        }
         updateRecipe(result.data);
         setIsSubmitting(prev => false);
         dispatch(setFlash('success', 'Recipe was updated'));             

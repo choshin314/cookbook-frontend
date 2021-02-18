@@ -1,16 +1,19 @@
 import styled from 'styled-components'
 import Ratings from '../recipe/Ratings';
+import { EditBtnWrapper } from '../recipe/recipeEdit/EditBtnWrapper';
 
 import AvatarLink from "../shared/AvatarLink";
+import EditReview from './EditReview';
 
 function Review({review}) {
     console.log(review);
     const formattedDate = () => {
-        let date = new Date(review.created_at).toDateString();
+        let date = new Date(review.updated_at).toDateString();
         return date.split(' ').slice(1).join(' ')
     };
     return (
         <Container>
+            <EditReview review={review} />
             <StyledHeader>
                 <Flex>
                     <AvatarLink user={review.user} imgSize="30px" showNames />
@@ -35,6 +38,7 @@ const Container = styled.div`
     font-size: .8rem;
     padding: 1rem .5rem;
     background-color: var(--lite-grey);
+    position: relative;
 `
 
 const StyledHeader = styled.div`

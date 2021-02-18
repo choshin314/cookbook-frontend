@@ -7,7 +7,7 @@ export function RecipeViewProvider({children}) {
     const [ isOwnedByUser, setIsOwnedByUser ] = useState();
     const updateRecipe = (newItems) => setRecipe(prev => ({ ...prev, ...newItems }));
     return (
-        <RecipeViewContext.Provider value={{ recipe, updateRecipe, isOwnedByUser, setIsOwnedByUser }}>
+        <RecipeViewContext.Provider value={{ recipe, setRecipe, updateRecipe, isOwnedByUser, setIsOwnedByUser }}>
             {children}
         </RecipeViewContext.Provider>
     )
