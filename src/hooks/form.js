@@ -12,7 +12,17 @@ export default function useForm(initValues, constraints, handleSubmit, formName=
 
     useEffect(() => {
         if (!formName) return;
-        setLocalStorage(formName, { ...inputValues, [imgName]: '' });
+        let persist = {};
+        for (let key in inputValues) {
+            if (key === imgName) {
+                persist[key] = ''
+            } else if (['password','passwordConfirmation','oldPassword'].includes(key)) {
+                persist[key] = ''
+            } else {
+                persist[key] = inputValues[key]
+            }
+        }
+        setLocalStorage(formName, { ...persist });
     }, [inputValues])
 
     useEffect(() => {
@@ -63,8 +73,8 @@ export default function useForm(initValues, constraints, handleSubmit, formName=
                 formErrors.push(`${key.toUpperCase()}: ${pattern.failMsg}`)
             }
             if (match && values[key] !== values[match]) {
-                inputErrors[key] = `${key} must match ${match} field`;
-                formErrors.push(`${key} must match ${match} field`);
+                inputErrors[key] = `Password confirmation must match password`;
+                formErrors.push(`Password confirmation must match password`);
             }
             if (size && values[key].size > size) {
                 let sizeDisplay = size < 1024000 ? `${size/1000}kb` : `${Math.round(size/1024000)}mb`
@@ -159,15 +169,5 @@ export default function useForm(initValues, constraints, handleSubmit, formName=
         validateForm,
         validateAndSubmit 
     };
-}
-
-function getInitValuesConstraints(fields) {
-    let initValues = {};
-    let constraints = {};
-    for (let key in fields) {
-        initValues[key] = fields[key].value;
-        constraints[key] = fields[key].constraints;
-    }
-    return {initValues, constraints};
 }
 
