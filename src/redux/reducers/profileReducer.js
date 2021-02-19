@@ -23,8 +23,8 @@ export default function profileReducer(profileState=initProfileState, action) {
             return { 
                 ...profileState, 
                 loading: false, 
-                user: action.payload[0],
-                stats: action.payload[1]
+                user: action.payload.user,
+                stats: action.payload.stats
             }
         case SET_PROFILE_STATS:
             return { ...profileState, stats: action.payload }

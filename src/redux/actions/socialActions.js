@@ -10,6 +10,7 @@ import {
     ADD_SOCIAL_SUCCESS,
     TOGGLE_SOCIAL
 } from './types'
+import { fetchProfileStats } from "./profileActions";
 
 
 export const fetchAllSocialStart = () => ({ type: FETCH_ALL_SOCIAL_START })
@@ -51,6 +52,16 @@ export function addSocial(category, dataName, id) {
         if (data) dispatch(addSocialSuccess(category, dataName, data ));
         //if successful, backend will send back the newly added recipeId(bookmarks / likes) 
         //or userId(following) in format { id: id }
+        const profileUser = getState().profile.user;
+        const currentUser = getState().auth.user;
+        if (profileUser && category === "following") {
+            if (profileUser.id === data.id || (currentUser && currentUser.id === profileUser.id)) {
+                dispatch(fetchProfileStats(profileUser.username))
+            }
+        } 
+        //if the profile of the person being followed/unfollowed is currently being viewed, OR
+        //if the current user is viewing their own profile when adding/removing a follow,
+        //fetch fresh 'profile stats' data
     }
 }
 
@@ -66,6 +77,13 @@ export function removeSocial(category, dataName, id) {
         if (data) dispatch(deleteSuccess(category, dataName, data));
         //if successful, backend will send back the newly deleted recipeId(bookmarks / likes) 
         //or userId(following) in format { id: id }
+        const profileUser = getState().profile.user;
+        const currentUser = getState().auth.user;
+        if (profileUser && category === "following") {
+            if (profileUser.id === data.id || (currentUser && currentUser.id === profileUser.id)) {
+                dispatch(fetchProfileStats(profileUser.username))
+            }
+        } 
     }
 }
 

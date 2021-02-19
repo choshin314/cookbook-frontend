@@ -18,9 +18,9 @@ export const fetchProfileStart = () => ({
     type: FETCH_PROFILE_START
 })
 
-export const fetchProfileSuccess = (userData) => ({
+export const fetchProfileSuccess = (data) => ({
     type: FETCH_PROFILE_SUCCESS,
-    payload: userData
+    payload: data
 })
 
 export const fetchProfileFail = (errorMsg) => ({
@@ -34,6 +34,14 @@ export const fetchProfile = (username) => {
         const { data:userData, error:userErr } = await ajax.get(`/users/${username}`);
         const { data:statsData, error:statsErr } = await ajax.get(`/users/${username}/stats`);
         if (userErr || statsErr) return dispatch(fetchProfileFail('Could not retrieve profile info'));
-        dispatch(fetchProfileSuccess([userData, statsData]))
+        dispatch(fetchProfileSuccess({ user: userData, stats: statsData }))
+    }
+}
+
+export const fetchProfileStats = (username) => {
+    return async (dispatch, getState) => {
+        const { data, error } = await ajax.get(`/users/${username}/stats`);
+        if (error) return dispatch(fetchProfileFail('Could not update user stats'));
+        dispatch(setProfileStats(data))
     }
 }
