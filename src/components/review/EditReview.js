@@ -25,18 +25,19 @@ function EditReview({ review, user, dispatchSetFlash }) {
         const result = await patchMulti(inputValues, ['reviewImg']);
         const successfulEdits = result.data;
         if (result.error) {
-            setIsSubmitting(false);
-            return dispatchSetFlash('error', result.error);
+            dispatchSetFlash('error', result.error);
+        } else {
+            setRecipe(recipe => ({
+                ...recipe,
+                reviews: recipe.reviews.map(rev => {
+                    if (rev.id === review.id) return { ...rev, ...successfulEdits };
+                    return rev;
+                })
+            }))
+            dispatchSetFlash('success', 'Your review has been updated!')
         }
-        setRecipe(recipe => ({
-            ...recipe,
-            reviews: recipe.reviews.map(rev => {
-                if (rev.id === review.id) return { ...rev, ...successfulEdits };
-                return rev;
-            })
-        }))
         setIsSubmitting(false);
-        dispatchSetFlash('success', 'Your review has been updated!')
+        return result;
     }
 
     if (!user || user.id !== review.userId) return null;

@@ -17,7 +17,7 @@ function ModalForm(props) {
     }
     const submitAndClose = async (e) => {
         const submissionResult = await onSubmit(e);
-        if (submissionResult && submissionResult.inputErrors) return;
+        if (submissionResult.inputErrors || submissionResult.error) return;
         delayToggleModal();
     }
     

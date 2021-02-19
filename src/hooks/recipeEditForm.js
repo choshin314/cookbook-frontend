@@ -23,12 +23,12 @@ export default function useRecipeEditForm(fields, imgFieldName, endpath) {
             result = await ajax.patch(`/recipes/${recipe.id}/${endpath}`, inputValues, token)
         }
         if (result.error) {
-            setIsSubmitting(prev => false);
-            return dispatch(setFlash('error', result.error))
+            dispatch(setFlash('error', result.error))
+        } else {
+            dispatch(setFlash('success', 'Recipe was updated'));
+            updateRecipe(result.data);
         }
-        updateRecipe(result.data);
-        setIsSubmitting(prev => false);
-        dispatch(setFlash('success', 'Recipe was updated'));             
+        return result;           
     }
 
     return useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, null, imgFieldName)
