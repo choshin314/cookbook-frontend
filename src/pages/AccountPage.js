@@ -5,29 +5,36 @@ import styled from 'styled-components'
 import {Main} from '../components/commonStyles'
 import RegisterForm from '../components/auth/RegisterForm'
 import LoginForm from '../components/auth/LoginForm'
+import AccountContainer from '../components/account/AccountContainer'
+import Flash from '../components/shared/Flash'
 
-function AuthPage({redirect}) {
+function AccountPage({redirect, auth}) {
     const { pathname } = useLocation()
+    console.log(pathname);
     
-    if (pathname === "/account") return <Redirect to="/" />
     return (
         <Main>
             <StyledDiv>
+                <Flash />
                 <Switch>
-                    <Route path="/account/login" >
+                    <Route path={`/account/login`} >
                         <LoginForm />
                     </Route> 
-                    <Route exact path="/account/register" >
+                    <Route path={`/account/register`} >
                         <RegisterForm />
                     </Route> 
+                    <Route exact path="/account">
+                        {!auth.user && <Redirect to="/account/login" />}
+                        <AccountContainer />
+                    </Route>
                 </Switch>
             </StyledDiv>
         </Main>
     )
 }
 
-const mapStateToProps = global => ({ redirect: global.redirect })
-export default connect(mapStateToProps)(AuthPage)
+const mapStateToProps = state => ({ auth: state.auth, redirect: state.redirect })
+export default connect(mapStateToProps)(AccountPage)
 
 const StyledDiv = styled.div`
     max-width: 400px;
