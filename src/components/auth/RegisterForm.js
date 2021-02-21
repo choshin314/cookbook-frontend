@@ -9,59 +9,24 @@ import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'
 import {connect} from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
+import { ACCOUNT_CONSTRAINTS } from '../../constants'
 
 const initVals = {
-    email: '', firstName: '', lastName: '', username: '', password: '', password_confirmation: ''
-}
-
-const constraints = {
-    email: {
-        required: true,
-        pattern: { 
-            regex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            failMsg: "Valid email address required"
-        }
-    },
-    firstName: {
-        required: true,
-        maxChars: 30
-    },
-    lastName: {
-        required: true,
-        maxChars: 30
-    },
-    username: {
-        required: true,
-        pattern: {
-            regex: /^[a-zA-Z0-9]+$/,
-            failMsg: "Username accepts letters and numbers only"
-        },
-        minChars: 2,
-        maxChars: 30
-    },
-    password: {
-        required: true,
-        minChars: 8,
-        maxChars: 16,
-        pattern: {
-            regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-            failMsg: "Password needs one of each: lowercase, uppercase, number"
-        }
-    },
-    password_confirmation: {
-        required: true,
-        match: 'password'
-    }
+    email: '', firstName: '', lastName: '', username: '', password: '', passwordConfirmation: ''
 }
 
 function RegisterForm({ register, user, error, submitting }) {
+    const handleSubmit = async (values) => {
+        return await register(values, ['profilePic'])
+    }
     const {
         inputValues, 
         inputErrors,
         formErrors,
         validateForm, 
-        handleChange
-    } = useForm(initVals, constraints, null, 'registerForm' );
+        handleChange,
+        validateAndSubmit
+    } = useForm(initVals, ACCOUNT_CONSTRAINTS, handleSubmit, 'registerForm' );
 
     const { 
         email, 
@@ -69,18 +34,13 @@ function RegisterForm({ register, user, error, submitting }) {
         lastName, 
         username, 
         password,
-        password_confirmation
+        passwordConfirmation
     } = inputValues;
 
     return (
         <Card>
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
-            <Form onChange={handleChange} onSubmit={async (e) => {
-                e.preventDefault();
-                const validationErrors = validateForm(inputValues, constraints);
-                if (validationErrors) return;
-                await register(inputValues, ['profilePic']);
-            }} noValidate={true}>
+            <Form onChange={handleChange} onSubmit={validateAndSubmit} noValidate={true}>
                 <StyledDiv>
                     <Input 
                         label={{ text: 'First Name'}} 
@@ -126,8 +86,8 @@ function RegisterForm({ register, user, error, submitting }) {
                         label={{ text: 'Confirm Password'}} 
                         type="password" 
                         name="password_confirmation" 
-                        value={password_confirmation} 
-                        errorMsg={inputErrors.password_confirmation}
+                        value={passwordConfirmation} 
+                        errorMsg={inputErrors.passwordConfirmation}
                     />
                 </StyledDiv>
                 <SubmitBtn type="submit">Get Cookin'</SubmitBtn>

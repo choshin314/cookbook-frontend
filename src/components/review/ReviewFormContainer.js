@@ -7,26 +7,28 @@ import { Button } from '../commonStyles'
 import ReviewForm from "./ReviewForm"
 import useToggle from '../../hooks/toggle'
 import ModalForm from '../shared/ModalForm'
-import { ajax } from "../../helpers/sendAjax"
 import { setFlash } from "../../redux/actions/flashActions"
 import useRecipeViewContext from "../../hooks/recipeViewContextHook"
+import useAjax from "../../hooks/ajax"
 
 function ReviewFormContainer({auth, dispatchSetFlash}) {
     const { id: recipeId } = useParams();
     const [ formOpen, toggleFormOpen ] = useToggle(false);
     const { recipe, updateRecipe } = useRecipeViewContext();
+    const { postMulti } = useAjax('/reviews');
 
-    const handleSubmit = async (values, setFormErrors, setIsSubmitting) => {
+    const handleSubmit = async (values) => {
         const valuesAndID = { ...values, recipeId: parseInt(recipeId) };
-        const result = await ajax.postMulti('/reviews', valuesAndID, ['reviewImg'], auth.accessToken);
+        const result = await postMulti(valuesAndID, ['reviewImg']);
         if (result.error) {
-            return result.error === "Not authorized" ? 
+            result.error === "Not authorized" ? 
                 dispatchSetFlash('error', 'Login required to write review') :
                 dispatchSetFlash('error', result.error);
+        } else if (result.data) {
+            updateRecipe(result.data); //receives updated list of reviews for recipe
+            dispatchSetFlash('success', 'Thanks for your review!')
         }
-        updateRecipe(result.data); //receives updated list of reviews for recipe
-        setIsSubmitting(prev => false);
-        dispatchSetFlash('success', 'Thanks for your review!')
+        return result;
     }
 
     const {

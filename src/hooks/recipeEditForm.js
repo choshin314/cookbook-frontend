@@ -1,26 +1,27 @@
 import { useDispatch } from 'react-redux'
 
 import useForm from './form'
-import { ajax } from '../helpers/sendAjax'
+import useAjax from './ajax'
 import { RECIPE_CONSTRAINTS } from '../constants/recipeConstraints'
 import { setFlash } from '../redux/actions/flashActions'
 import { getLocalStorage } from '../helpers/index'
 import useRecipeViewContext from './recipeViewContextHook'
 
-export default function useRecipeEditForm(fields, imgFieldName, endpath) {
+export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
     const dispatch = useDispatch();
     const { recipe, updateRecipe } = useRecipeViewContext();
+    const { patch, patchMulti } = useAjax(`/recipes/${recipe.id}/${endpath}`)
     const initValues = {};
     fields.forEach(field => initValues[field] = recipe[field]);
     const token = getLocalStorage('auth').accessToken;
 
-    const handleSubmit = async (inputValues, setFormErrors, setIsSubmitting) => {
+    const handleSubmit = async (inputValues) => {
         if(!token) return dispatch(setFlash('error','Login required'));
         let result;
         if (imgFieldName) {
-            result = await ajax.patchMulti(`/recipes/${recipe.id}/${endpath}`, inputValues, [imgFieldName], token)
+            result = await patchMulti(inputValues, [imgFieldName])
         } else {
-            result = await ajax.patch(`/recipes/${recipe.id}/${endpath}`, inputValues, token)
+            result = await patch(inputValues)
         }
         if (result.error) {
             dispatch(setFlash('error', result.error))

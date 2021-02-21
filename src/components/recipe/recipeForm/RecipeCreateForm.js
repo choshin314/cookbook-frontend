@@ -5,11 +5,11 @@ import {connect} from 'react-redux'
 
 import {Main} from '../../commonStyles'
 import RecipeForm from './RecipeForm.js'
-import { ajax } from '../../../helpers/sendAjax'
 import { setRedirect } from '../../../redux/actions/redirectActions'
 import { setFlash } from '../../../redux/actions/flashActions'
 import useForm from '../../../hooks/form'
 import { RECIPE_CONSTRAINTS } from '../../../constants'
+import useAjax from '../../../hooks/ajax'
 
 const initValues = {
     title: '',
@@ -23,8 +23,9 @@ const initValues = {
     tags: []
 }
 
-function RecipeCreateForm({ auth, setRedirect, setFlash }) {
+function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
     const [step, setStep] = useState(1);
+    const { postMulti } = useAjax('/recipes');
     const {
         addToList,
         inputValues, 
@@ -36,17 +37,15 @@ function RecipeCreateForm({ auth, setRedirect, setFlash }) {
         isSubmitting
     } = useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, 'recipeForm', 'coverImg' );
 
-    async function handleSubmit(values, setFormErrors, setSubmitting) {
-        const result = await ajax.postMulti('/recipes', values, ['coverImg'], auth.accessToken)
+    async function handleSubmit(values) {
+        const result = await postMulti(values, ['coverImg'])
         if (result.error) {
-            setSubmitting(prev => !prev)
-            return setFlash('error', result.error);
+            dispatchSetFlash('error', result.error);
+        } else if (result.data) {
+            dispatchSetRedirect(`/recipes/view/${result.data.id}-${result.data.slug}`);
+            dispatchSetFlash('success', 'Recipe created, yay!');
         }
-        if (result.data) {
-            setSubmitting(prev => !prev)
-            setRedirect(`/recipes/view/${result.data.id}-${result.data.slug}`);
-            setFlash('success', 'Recipe created, yay!');
-        }
+        return result;
     }
 
     useEffect(() => window.scrollTo(0,0), [step])
@@ -69,6 +68,6 @@ function RecipeCreateForm({ auth, setRedirect, setFlash }) {
     )
 }
 const mapStateToProps = (global) => ({ auth: global.auth });
-const mapDispatchToProps = { setRedirect: setRedirect, setFlash: setFlash }
+const mapDispatchToProps = { dispatchSetRedirect: setRedirect, dispatchSetFlash: setFlash }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeCreateForm)

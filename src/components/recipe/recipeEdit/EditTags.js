@@ -11,7 +11,7 @@ function EditTags({recipe}) {
         addToList,
         removeFromList,
         resetForm
-    } = useRecipeEditForm(['tags'],null,'tags')
+    } = useRecipeEditForm(['tags'],'tags')
 
     console.log(inputValues);
 

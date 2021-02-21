@@ -119,7 +119,9 @@ export default function useForm(initValues, constraints, handleSubmit, formName=
         const validationErrors = validateForm(inputValues, constraints); 
         if (validationErrors) return { inputErrors: true }; 
         setIsSubmitting(prev => true);
-        return await handleSubmit(inputValues, setFormErrors, setIsSubmitting);
+        const submissionResult = await handleSubmit(inputValues);
+        setIsSubmitting(prev => false);
+        return submissionResult;
     }
 
     function addToList(listName, draftItem) {

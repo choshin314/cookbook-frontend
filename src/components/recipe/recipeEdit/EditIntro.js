@@ -5,7 +5,7 @@ import Input from "../../shared/Input";
 function EditIntro({recipe}) {
     const { 
         handleChange, validateAndSubmit, inputValues, inputErrors, resetForm 
-    } = useRecipeEditForm(['intro'],null,'general')
+    } = useRecipeEditForm(['intro'],'general')
 
     return (
         <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit} resetForm={resetForm}>

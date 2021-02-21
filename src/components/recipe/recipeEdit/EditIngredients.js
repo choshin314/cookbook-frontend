@@ -13,7 +13,7 @@ function EditIngredients({recipe}) {
         removeFromList,
         handleDragEnd,
         resetForm 
-    } = useRecipeEditForm(['ingredients'],null,'ingredients')
+    } = useRecipeEditForm(['ingredients'],'ingredients')
 
     return (
         <EditWrapper 

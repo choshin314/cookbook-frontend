@@ -21,7 +21,7 @@ function EditReview({ review, user, dispatchSetFlash }) {
         handleChange, validateAndSubmit, inputValues, inputErrors, resetForm 
     } = useForm(initVals, REVIEW_CONSTRAINTS, handleSubmit, 'reviewEdit', 'reviewImg')
 
-    async function handleSubmit(inputValues, setFormErrors, setIsSubmitting) {
+    async function handleSubmit(inputValues) {
         const result = await patchMulti(inputValues, ['reviewImg']);
         const successfulEdits = result.data;
         if (result.error) {
@@ -36,7 +36,6 @@ function EditReview({ review, user, dispatchSetFlash }) {
             }))
             dispatchSetFlash('success', 'Your review has been updated!')
         }
-        setIsSubmitting(false);
         return result;
     }
 
