@@ -19,8 +19,8 @@ function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
             unmountOnExit
         >
             <section>
-                <Grid as="div" colsLg="6" gap="0">
-                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
+                <Grid as="div" colsMd="6" gap="0">
+                    <GridColumn colsMd="3" margin="1rem 0" marginMd="0 .5rem 0 0">
                         <ImgInput 
                             name="coverImg" 
                             label={{ text: 'Cover Image' }} 
@@ -29,7 +29,7 @@ function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
                             errorMsg={errors.coverImg}
                         />
                     </GridColumn>
-                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
+                    <GridColumn colsMd="3" margin="1rem 0" marginMd="0 0 0 .5rem">
                         <Input 
                             name="title"
                             value={values.title}
@@ -50,8 +50,8 @@ function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
                         />
                     </GridColumn>
                 </Grid>
-                <Grid as="div" colsLg="6" gap="0">
-                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 .5rem 0 0">
+                <Grid as="div" colsMd="6" gap="0">
+                    <GridColumn colsMd="3" margin="1rem 0" marginMd="0 .5rem 0 0">
                         <TagListInput 
                             addToList={addToList} 
                             removeFromList={removeFromList} 
@@ -59,7 +59,7 @@ function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
                             errors={errors}
                         />
                     </GridColumn>
-                    <GridColumn colsLg="3" margin="1rem 0" marginLg="0 0 0 .5rem">
+                    <GridColumn colsMd="3" margin="1rem 0" marginMd="0 0 0 .5rem">
                         <Flex>
                             <Input 
                                 name="prepTime"

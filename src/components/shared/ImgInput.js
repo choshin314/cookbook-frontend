@@ -8,7 +8,7 @@ function ImgInput({name, label, file, errorMsg, imgSize="1MB", previewSize="400p
     const [isFocused, toggleFocused] = useToggle();
     return (
         <Container>
-            <InputWrapper previewSize={previewSize}>
+            <InputWrapper >
                 <PreviewDiv circle={circle}>
                     {(!file || !file.size) && (<UploadInstructions>
                         <h2>Select {label.text}</h2>
@@ -51,7 +51,7 @@ const Container = styled.div`
 
 const InputWrapper = styled.div`
     width: 100%;
-    max-width: ${p => p.previewSize};
+    max-width: 400px;
     height: 100%;
     position: relative;
     flex: auto;
@@ -70,6 +70,7 @@ const PreviewDiv = styled.div`
     border-radius: var(--radius);
     overflow: hidden;
 `
+
 const UploadInstructions = styled.div`
     position: absolute;
     width: calc(100% - 40px);
