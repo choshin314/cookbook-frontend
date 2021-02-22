@@ -29,6 +29,7 @@ const StyledWrapper = styled.div`
     color: var(--accent);
     display: flex;
     align-items: center;
+    cursor: pointer;
     @media(min-width: ${media.medium}) {
         font-size: 1.5rem;
     }
