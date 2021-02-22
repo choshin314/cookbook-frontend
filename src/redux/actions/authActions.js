@@ -1,4 +1,4 @@
-import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, LOGOUT, BACK_TO_REFERRER } from './types'
+import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, UPDATE_USER_DETAILS, LOGOUT, BACK_TO_REFERRER } from './types'
 import {setFlash} from './flashActions'
 import { setRedirect, redirectWithReferrer, backToReferrer } from './redirectActions'
 import { ajax } from '../../helpers/sendAjax'
@@ -8,6 +8,7 @@ import { fetchAllSocial } from './socialActions'
 export const userAuthStart = () => ({ type: USER_AUTH_START })
 export const userAuthFail = (error) => ({ type: USER_AUTH_FAIL, payload: error }) 
 export const userAuthSuccess = (data) => ({ type: USER_AUTH_SUCCESS, payload: data })
+export const updateUserDetails = (data) => ({ type: UPDATE_USER_DETAILS, payload: data })
 
 export function loginUser(values) {
     return async (dispatch) => {
@@ -24,8 +25,15 @@ export function registerUser(values) {
     return async (dispatch) =>  {
         dispatch(userAuthStart());
         const result = await ajax.post('/auth/register', values);
-        if (result.data) dispatch(userAuthSuccess(result.data));
-        if (result.error) dispatch(userAuthFail(result.error));
+        if (result.data) {
+            dispatch(userAuthSuccess(result.data))
+            dispatch(setFlash('success', "Success! Let's get cookin!"))
+            dispatch(backToReferrer())
+        }
+        if (result.error) {
+            dispatch(userAuthFail(result.error))
+            dispatch(setFlash('error', result.error))
+        }
     }
 }
 

@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import {Main} from '../components/commonStyles'
 import RegisterForm from '../components/auth/RegisterForm'
 import LoginForm from '../components/auth/LoginForm'
-import AccountContainer from '../components/account/AccountContainer'
 import Flash from '../components/shared/Flash'
+import AccountView from '../components/account/AccountView'
 
 function AccountPage({redirect, auth}) {
     const { pathname } = useLocation()
@@ -25,7 +25,7 @@ function AccountPage({redirect, auth}) {
                     </Route> 
                     <Route exact path="/account">
                         {!auth.user && <Redirect to="/account/login" />}
-                        <AccountContainer />
+                        <AccountView />
                     </Route>
                 </Switch>
             </StyledDiv>

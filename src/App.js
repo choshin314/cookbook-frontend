@@ -7,10 +7,9 @@ import Home from './pages/Home'
 import ProfilePage from './pages/ProfilePage'
 import RecipePage from './pages/RecipePage'
 import RecipeCreatePage from './pages/RecipeCreatePage'
-import RecipeUpdatePage from './pages/RecipeUpdatePage'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage';
-import AuthPage from './pages/AuthPage';
+import AccountPage from './pages/AccountPage';
 import ProtectedRoute from './components/shared/ProtectedRoute'
 import { RecipeViewProvider } from './context/recipeViewContext';
 
@@ -31,7 +30,7 @@ function App({user, redirect}) {
             <LoginPage />
           </Route> */}
           <Route path="/account">
-            <AuthPage />
+            <AccountPage />
           </Route>
           <Route path="/profile/me">
             {user && <Redirect to={`/profile/view/${user.username}`} />}
@@ -48,9 +47,6 @@ function App({user, redirect}) {
           </Route>
           <Route path="/recipes/create">
             <RecipeCreatePage />
-          </Route>
-          <Route path="/recipes/update/:id">
-            <RecipeUpdatePage />
           </Route>
         </Switch>
       </Layout>

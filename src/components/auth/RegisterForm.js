@@ -85,7 +85,7 @@ function RegisterForm({ register, user, error, submitting }) {
                     <Input 
                         label={{ text: 'Confirm Password'}} 
                         type="password" 
-                        name="password_confirmation" 
+                        name="passwordConfirmation" 
                         value={passwordConfirmation} 
                         errorMsg={inputErrors.passwordConfirmation}
                     />

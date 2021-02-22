@@ -1,28 +1,30 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Main, GridContainer, PageTitle, Wrapper} from '../commonStyles'
+import {GridContainer, PageTitle, Wrapper} from '../commonStyles'
 import RecipeGrid from './RecipeGrid'
 import AvatarLink from '../shared/AvatarLink'
 import FollowBtn from './FollowBtn'
 
-function ProfileView({user, stats, profileUrl}) {
+function ProfileView({profile, profileUrl, isOwnedByUser}) {
+    const { user, stats } = profile;
     return (
-        <Main>
-            <Container>
-                <HeadSection cols="4">
-                    <StyledDiv>
-                        <AvatarLink user={user} imgSize="50px"/>
-                        <StyledH1>{user.firstName} {user.lastName} (@{user.username})</StyledH1>
-                        <FollowBtn profileUser={user} />
-                    </StyledDiv>
-                    <UserStatLink to="#recipe-grid">{stats.recipeCount}<br />Recipes</UserStatLink>
-                    <UserStatLink to={`${profileUrl}/subs/followers`}>{stats.followerCount}<br />Followers</UserStatLink>
-                    <UserStatLink to={`${profileUrl}/subs/following`}>{stats.followingCount}<br />Following</UserStatLink>
-                </HeadSection>
-                <RecipeGrid />
-            </Container>
-        </Main>
+        <Container>
+            {isOwnedByUser && <EditAccountBtn >
+                <Link to="/account">Edit Account / Profile Details</Link>
+            </EditAccountBtn>}
+            <HeadSection cols="4">
+                <StyledDiv>
+                    <AvatarLink user={user} imgSize="50px"/>
+                    <StyledH1>{user.firstName} {user.lastName} (@{user.username})</StyledH1>
+                    <FollowBtn profileUser={user} />
+                </StyledDiv>
+                <UserStatLink to="#recipe-grid">{stats.recipeCount}<br />Recipes</UserStatLink>
+                <UserStatLink to={`${profileUrl}/subs/followers`}>{stats.followerCount}<br />Followers</UserStatLink>
+                <UserStatLink to={`${profileUrl}/subs/following`}>{stats.followingCount}<br />Following</UserStatLink>
+            </HeadSection>
+            <RecipeGrid />
+        </Container>
     )
 }
 
@@ -53,4 +55,16 @@ const StyledH1 = styled.h1`
 
 const UserStatLink = styled(Link)`
     font-size: .75rem;
+`
+
+const EditAccountBtn = styled.div`
+    font-size: .75rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    & > a {
+        padding: .5rem 1rem;
+        border-radius: 5px;
+        color: white;
+        background-color: var(--teal);
+    }
 `
