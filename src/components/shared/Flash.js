@@ -44,7 +44,7 @@ function Flash({ flash, clear }) {
                         </FlashMessageList>
                     )}
                 </FlashMessage>
-                <CloseBtn aria-role="button" title="close message" onClick={clear}>
+                <CloseBtn tabindex="0" title="close message" onClick={clear}>
                     <FontAwesomeIcon icon={close} />
                 </CloseBtn>
             </StyledFigure>
@@ -140,11 +140,13 @@ const IconWrapper = styled.div`
     color: ${accent};
 `
 
-const CloseBtn = styled.div`
+const CloseBtn = styled.button`
     grid-column: 3 /span 1;
     grid-row: 1 /span 2;
     justify-self: end;
     align-self: center;
     color: var(--med-lite-grey);
     cursor: pointer;
+    background-color: transparent;
+    border: none;                                                               
 `
