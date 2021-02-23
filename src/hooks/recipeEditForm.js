@@ -10,7 +10,7 @@ import useRecipeViewContext from './recipeViewContextHook'
 export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
     const dispatch = useDispatch();
     const { recipe, updateRecipe } = useRecipeViewContext();
-    const { patch, patchMulti } = useAjax(`/recipes/${recipe.id}/${endpath}`)
+    const { patch, patchMulti } = useAjax()
     const initValues = {};
     fields.forEach(field => initValues[field] = recipe[field]);
     const token = getLocalStorage('auth').accessToken;
@@ -19,9 +19,9 @@ export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
         if(!token) return dispatch(setFlash('error','Login required'));
         let result;
         if (imgFieldName) {
-            result = await patchMulti(inputValues, [imgFieldName])
+            result = await patchMulti(`/recipes/${recipe.id}/${endpath}`, inputValues, [imgFieldName])
         } else {
-            result = await patch(inputValues)
+            result = await patch(`/recipes/${recipe.id}/${endpath}`, inputValues)
         }
         if (result.error) {
             dispatch(setFlash('error', result.error))

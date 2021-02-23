@@ -10,7 +10,7 @@ import ReviewForm from './ReviewForm';
 
 function EditReview({ review, user, dispatchSetFlash }) {
     const { setRecipe } = useRecipeViewContext(); 
-    const { patchMulti } = useAjax(`/reviews/${review.id}`);
+    const { patchMulti } = useAjax();
     const initVals = {
         reviewImg: null,
         headline: review.headline, 
@@ -22,7 +22,7 @@ function EditReview({ review, user, dispatchSetFlash }) {
     } = useForm(initVals, REVIEW_CONSTRAINTS, handleSubmit, 'reviewEdit', 'reviewImg')
 
     async function handleSubmit(inputValues) {
-        const result = await patchMulti(inputValues, ['reviewImg']);
+        const result = await patchMulti(`/reviews/${review.id}`, inputValues, ['reviewImg']);
         const successfulEdits = result.data;
         if (result.error) {
             dispatchSetFlash('error', result.error);

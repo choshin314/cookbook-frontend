@@ -25,7 +25,7 @@ const initValues = {
 
 function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
     const [step, setStep] = useState(1);
-    const { postMulti } = useAjax('/recipes');
+    const { postMulti } = useAjax();
     const {
         addToList,
         inputValues, 
@@ -38,7 +38,7 @@ function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
     } = useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, 'recipeForm', 'coverImg' );
 
     async function handleSubmit(values) {
-        const result = await postMulti(values, ['coverImg'])
+        const result = await postMulti('/recipes', values, ['coverImg'])
         if (result.error) {
             dispatchSetFlash('error', result.error);
         } else if (result.data) {

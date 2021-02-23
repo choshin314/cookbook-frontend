@@ -7,10 +7,10 @@ import DeleteBtn from '../shared/DeleteBtn';
 
 function DeleteReview({ review, user, dispatchSetFlash }) {
     const { setRecipe } = useRecipeViewContext(); 
-    const { deleteAjax } = useAjax(`/reviews/${review.id}`);
+    const { deleteAjax } = useAjax();
 
     async function handleDelete() {
-        const result = await deleteAjax()
+        const result = await deleteAjax(`/reviews/${review.id}`)
         if (result.error) return dispatchSetFlash('error', result.error);
         setRecipe(recipe => ({
             ...recipe,

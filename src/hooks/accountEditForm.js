@@ -11,14 +11,14 @@ import { updateUserDetails } from '../redux/actions/authActions'
 export default function useAccountEditForm(initValues, endpath) {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
-    const { patch, patchMulti } = useAjax(`/users/account/${endpath}`)
+    const { patch, patchMulti } = useAjax()
 
     const handleSubmit = async (inputValues) => {
         let result;
         if (endpath === "profile-pic") {
-            result = await patchMulti(inputValues, ['profilePic'])
+            result = await patchMulti(`/users/account/${endpath}`, inputValues, ['profilePic'])
         } else {
-            result = await patch(inputValues)
+            result = await patch(`/users/account/${endpath}`, inputValues)
         }
         if (result.error) {
             dispatch(setFlash('error', result.error))

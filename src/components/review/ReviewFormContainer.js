@@ -15,11 +15,11 @@ function ReviewFormContainer({auth, dispatchSetFlash}) {
     const { id: recipeId } = useParams();
     const [ formOpen, toggleFormOpen ] = useToggle(false);
     const { recipe, updateRecipe } = useRecipeViewContext();
-    const { postMulti } = useAjax('/reviews');
+    const { postMulti } = useAjax();
 
     const handleSubmit = async (values) => {
         const valuesAndID = { ...values, recipeId: parseInt(recipeId) };
-        const result = await postMulti(valuesAndID, ['reviewImg']);
+        const result = await postMulti('/reviews', valuesAndID, ['reviewImg']);
         if (result.error) {
             result.error === "Not authorized" ? 
                 dispatchSetFlash('error', 'Login required to write review') :

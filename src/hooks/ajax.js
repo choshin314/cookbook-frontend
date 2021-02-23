@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { API_BASE } from "../constants";
 
-export default function useAjax(apiPath) {
+export default function useAjax() {
     const auth = useSelector(state => state.auth);
     const authHeader = auth.accessToken ? { authorization: `Bearer ${auth.accessToken}` } : null;
 
-    async function sendJSON(values, method='POST') {
+    async function sendJSON(apiPath, values, method='POST') {
         try {
             const res = await fetch(API_BASE + apiPath, { 
                 method: method, 
@@ -22,7 +22,7 @@ export default function useAjax(apiPath) {
         }
     }
     
-    async function sendMulti(values, fileKeysArray, method='POST') {
+    async function sendMulti(apiPath, values, fileKeysArray, method='POST') {
         const formData = new FormData();
         const stringified = {};
         fileKeysArray.forEach(fileKey => formData.append(fileKey, values[fileKey]));
@@ -44,7 +44,7 @@ export default function useAjax(apiPath) {
     
     
     
-    async function getJSON() {
+    async function getJSON(apiPath) {
         try {
             const res = await fetch(API_BASE + apiPath, { 
                 headers: { 
@@ -57,7 +57,7 @@ export default function useAjax(apiPath) {
         }
     }
     
-    async function deleteAjax() {
+    async function deleteAjax(apiPath) {
         try {
             const res = await fetch(API_BASE + apiPath, { 
                 method: 'DELETE',
@@ -75,11 +75,11 @@ export default function useAjax(apiPath) {
         get: getJSON,
         post: sendJSON,
         postMulti: sendMulti,
-        patch: async (values) => (
-            await sendJSON(values, 'PATCH')
+        patch: async (apiPath, values) => (
+            await sendJSON(apiPath, values, 'PATCH')
         ),
-        patchMulti: async (values, fileKeysArray) => (
-            await sendMulti(values, fileKeysArray, 'PATCH')
+        patchMulti: async (apiPath, values, fileKeysArray) => (
+            await sendMulti(apiPath, values, fileKeysArray, 'PATCH')
         ),
         deleteAjax: deleteAjax 
     }
