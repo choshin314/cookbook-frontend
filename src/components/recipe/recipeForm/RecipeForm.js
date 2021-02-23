@@ -7,6 +7,7 @@ import { CardWrapper, Button, media } from '../../commonStyles'
 import RecipeFormIntro from './RecipeFormIntro'
 import RecipeFormDetails from './RecipeFormDetails'
 import Flash from '../../shared/Flash'
+import Spinner from '../../shared/Spinner'
 
 function RecipeForm(props) {
     const { 
@@ -23,6 +24,7 @@ function RecipeForm(props) {
     } = props;
     return (
         <Card>
+            {isSubmitting && <Spinner />}
             <Form onChange={handleChange} onSubmit={validateAndSubmit}>
                 <Flash />
                 {step === 1 && (

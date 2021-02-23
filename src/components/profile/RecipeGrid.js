@@ -8,6 +8,7 @@ import { faBookmark, faFolder } from '@fortawesome/free-regular-svg-icons'
 import {fetchProfileRecipesBookmarks, fetchProfileRecipesOwn} from '../../redux/actions/profileRecipesActions'
 import RecipeCard from '../recipe/RecipeCard'
 import {GridContainer, media} from '../commonStyles'
+import Spinner from '../shared/Spinner'
 
 const USER = 'user'
 const BOOKMARKS = 'bookmarks'
@@ -45,14 +46,23 @@ function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
                 </ul>
             </GridNav>
             <BorderedDiv>
-                {recipeView === USER && (<GridContainer cols="2" colsLg="3" gap="5px">
-                    {!recipes || recipes.loading && <div>loading recipes</div>}
-                    {recipes.recipes && recipes.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
-                </GridContainer>)}
-                {recipeView === BOOKMARKS && (<GridContainer cols="2" colsLg="3" gap="5px">
-                    {bookmarks.loading && <div>loading bookmarks</div>}
-                    {bookmarks.recipes && bookmarks.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
-                </GridContainer>)}
+                {(recipes.loading || bookmarks.loading) && <Spinner />}
+                {recipeView === USER && (
+                    <>
+                        <GridContainer cols="2" colsLg="3" gap="5px">
+                            {recipes.recipes && recipes.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
+                        </GridContainer>
+                        {recipes.recipes && recipes.recipes.length === 0 && <EmptyDiv>No recipes yet</EmptyDiv>}
+                    </>
+                )}
+                {recipeView === BOOKMARKS && (
+                    <>
+                        <GridContainer cols="2" colsLg="3" gap="5px">
+                            {bookmarks.recipes && bookmarks.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
+                        </GridContainer>
+                        {bookmarks.recipes && bookmarks.recipes.length === 0 && <EmptyDiv>No bookmarks yet</EmptyDiv>}
+                    </>
+                )}
             </BorderedDiv>
         </section>
     )
@@ -115,4 +125,19 @@ const BorderedDiv = styled.div`
     border-top: 2px solid var(--lite-med-grey);
     border-bottom: 2px solid var(--lite-med-grey);
     padding: 1rem 0;
+    min-height: 600px;
+    position: relative;
+`
+
+const EmptyDiv = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 300px;
+    font-size: .75rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--med-lite-grey);
 `

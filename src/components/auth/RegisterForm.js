@@ -2,11 +2,12 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
-import logo from '../../assets/recipeshare-logo.png'
 import useForm from '../../hooks/form'
+import logo from '../../assets/recipeshare-logo.png'
 import { CardWrapper, Button, media } from '../commonStyles'
 import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'
+import Spinner from '../shared/Spinner'
 import {connect} from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
 import { ACCOUNT_CONSTRAINTS } from '../../constants'
@@ -39,6 +40,7 @@ function RegisterForm({ register, user, error, submitting }) {
 
     return (
         <Card>
+            {submitting && <Spinner />}
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
             <Form onChange={handleChange} onSubmit={validateAndSubmit} noValidate={true}>
                 <StyledDiv>

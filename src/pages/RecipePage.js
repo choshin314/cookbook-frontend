@@ -1,13 +1,15 @@
 import { useEffect, useState, createContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { Redirect, useParams } from 'react-router-dom'
 
 import { RecipeViewProvider } from '../context/recipeViewContext'
 import useRecipeViewContext from '../hooks/recipeViewContextHook'
 import { ajax } from '../helpers/sendAjax'
 import RecipeView from '../components/recipe/RecipeView'
 import { connect } from 'react-redux';
+import { setFlash } from '../redux/actions/flashActions'
+import Spinner from '../components/shared/Spinner'
 
-function RecipePage({user}) {
+function RecipePage({user, dispatchSetFlash}) {
     const { recipe, updateRecipe, setIsOwnedByUser } = useRecipeViewContext();
     const [ error, setError ] = useState(null);
     const [ loading, setLoading ] = useState(true);
@@ -17,7 +19,10 @@ function RecipePage({user}) {
         setLoading(true);
         ajax.get(`/recipes/${params.id}`)
             .then(result => {
-                if(result.error) setError(result.error);
+                if(result.error) {
+                    setError(result.error);
+                    dispatchSetFlash("Could not find that recipe :(");
+                };
                 if(result.data) {
                     updateRecipe(result.data);
                     if (user && user.id === result.data.user.id) {
@@ -30,11 +35,12 @@ function RecipePage({user}) {
             })
     }, [])
 
-    if (loading) return <div>Loading</div>
+    if (loading) return <Spinner />
+    if (error) return <Redirect to="/" />
     return <RecipeView />
 }
 
 const mapState = state => ({ user: state.auth.user })
-
-export default connect(mapState)(RecipePage)
+const mapDispatch = { dispatchSetFlash: setFlash }
+export default connect(mapState, mapDispatch)(RecipePage)
 

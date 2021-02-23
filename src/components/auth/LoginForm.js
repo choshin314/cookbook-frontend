@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import logo from '../../assets/recipeshare-logo.png'
 import useForm from '../../hooks/form'
+import logo from '../../assets/recipeshare-logo.png'
 import { StyledHeader, Center, Card, Form, SubmitBtn, StyledLink } from './RegisterForm'
 import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'
+import Spinner from '../shared/Spinner'
 import {connect} from 'react-redux'
 import { loginUser } from '../../redux/actions/authActions'
 
@@ -24,8 +25,8 @@ function LoginForm({login, user, error, submitting }) {
 
     return (
         <Card>
+            {submitting && <Spinner />}
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
-            {submitting && <h2>Submitting</h2>}
             <Form onChange={handleChange} onSubmit={handleSubmit} noValidate={true}>
                 <StyledDiv>
                     <Input 

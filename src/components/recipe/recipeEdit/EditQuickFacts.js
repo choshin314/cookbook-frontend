@@ -3,14 +3,16 @@ import styled from 'styled-components'
 import useRecipeEditForm from "../../../hooks/recipeEditForm";
 import EditWrapper from '../../shared/EditWrapper';
 import Input from "../../shared/Input";
+import Spinner from '../../shared/Spinner';
 
 function EditQuickFacts({recipe}) {
     const { 
-        handleChange, validateAndSubmit, inputValues, inputErrors, resetForm 
+        handleChange, validateAndSubmit, inputValues, inputErrors, resetForm, isSubmitting 
     } = useRecipeEditForm(['prepTime', 'cookTime', 'servings'], 'general')
     return (
         <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit} resetForm={resetForm}>
             <Flex>
+                {isSubmitting && <Spinner />} 
                 <Input 
                     name="prepTime"
                     value={inputValues.prepTime}
