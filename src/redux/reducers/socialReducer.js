@@ -108,7 +108,7 @@ export default function reducer(social=initSocial, action) {
         case FETCH_SOCIAL_SUCCESS: {
             let { category, dataName, data } = action.payload;
             const dataObj = {};
-            data.forEach(el => dataObj[el.id] = true) //convert id array to obj with ids as keys
+            data.forEach(socialId => dataObj[socialId] = true) //convert id array to obj with ids as keys
             return {
                 ...social,
                 [category]: {
