@@ -2,13 +2,15 @@ import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
 import genericAvatar from '../../assets/generic-avatar.png'
+import { transformImg } from '../../helpers';
 
-function AvatarLink({user, imgSize, showCreatedBy, showNames}) {
+function AvatarLink({user, imgSize="50px", showCreatedBy, showNames}) {
+    const parsedSize = parseInt(imgSize) + 10;
     return user ? (
         <AuthorDiv>
             <Link to={`/profile/view/${user.username}`}>
                 <ImgDiv size={imgSize || '50px'}>
-                    <img src={user.profilePic || genericAvatar}/>
+                    <img src={transformImg(user.profilePic, `c_fit,h_${parsedSize},w_${parsedSize}`) || genericAvatar}/>
                 </ImgDiv>
             </Link>
             {showCreatedBy && <NameLink to={`/profile/view/${user.username}`}>by {user.firstName} {user.lastName}</NameLink>}

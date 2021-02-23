@@ -17,3 +17,10 @@ export function setLocalStorage(key, value) {
 export function convertToSlug(str) {
     return str.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +|_/g,'-');
 }
+
+export const transformImg = (originalURL, transformation) => {
+    if (!originalURL || !transformation) return null;
+    const split = originalURL.split('/');
+    split[6] = transformation;
+    return split.join('/')
+}
