@@ -1,32 +1,23 @@
 import styled from 'styled-components'
-import { media } from '../commonStyles';
+import { media, StyledOL } from '../commonStyles';
 import FollowBtn from '../profile/FollowBtn'
 import AvatarLink from './AvatarLink'
 
 function UserList({users}) {
     return (
-        <StyledList>
+        <StyledOL>
             {users && users.map(u => (
                 <UserCard key={u.id}>
                     <AvatarLink user={u} showNames/>
                     <FollowBtn profileUser={u} />
                 </UserCard>
             ))}
-        </StyledList>
+        </StyledOL>
     )
 }
 
 export default UserList;
 
-const StyledList = styled.ol`
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    border-top: 2px solid rgba(0,0,0,.3);
-    background-color: white;
-    height: 90%;
-    overflow: auto;
-`
 
 const UserCard = styled.li`
     display: flex;

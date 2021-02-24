@@ -12,8 +12,8 @@ export const media = {
 export const Main = styled.main`
     width: 100%;
     max-width: 768px;
-    margin: .5rem 0;
     position: relative;
+    padding: 1rem 0;
     @media(min-width: ${media.medium}) {
         margin: 1rem 0;
     }
@@ -148,6 +148,13 @@ export const Form = styled.form`
     border-radius: 5px;
     padding: 1rem;
     flex-direction: column;
+`
+export const StyledOL = styled.ol`
+    list-style: none;
+    border-top: 2px solid rgba(0,0,0,.3);
+    background-color: white;
+    height: 85%;
+    overflow: auto;
 `
 
 export const PopInStyles = css`

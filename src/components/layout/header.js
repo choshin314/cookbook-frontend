@@ -7,13 +7,12 @@ import Nav from './Nav'
 import logo from '../../assets/recipeshare-logo.png'
 import logoSm from '../../assets/recipeshare-logo-abbrev.png'
 import {media, Wrapper} from '../commonStyles'
+import Searchbar from '../search/Searchbar'
 
 export default function Header() {
     return (
         <StyledHeader>
-            <Searchbar>
-                <input type="text"/>
-            </Searchbar>
+            <Searchbar />
             <Wrapper>
                 <FlexRow>
                     <Logo to="/">
@@ -62,21 +61,4 @@ const Logo = styled(Link)`
     @media(min-width: ${media.medium}) {
         max-width: 100%;
     }
-`
-
-const Searchbar = styled.section`
-    padding: 10px 0;
-    background-color: var(--teal);
-    display: flex;
-    justify-content: center;
-    input {
-        width: 90%;
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 0 1rem;
-        border-radius: 50px;
-        line-height: 1.5;
-        font-size: 1rem;
-    }
-
 `

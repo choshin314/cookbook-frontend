@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
 import ProtectedRoute from './components/shared/ProtectedRoute'
 import { RecipeViewProvider } from './context/recipeViewContext';
+import SearchPage from './pages/SearchPage';
 
 function App({user, redirect}) {
   return (
@@ -23,12 +24,6 @@ function App({user, redirect}) {
           <Route exact path="/">
             <Home />
           </Route>
-          {/* <Route path="/account/register">
-            <RegisterPage />
-          </Route>
-          <Route path="/account/login">
-            <LoginPage />
-          </Route> */}
           <Route path="/account">
             <AccountPage />
           </Route>
@@ -47,6 +42,9 @@ function App({user, redirect}) {
           </Route>
           <Route path="/recipes/create">
             <RecipeCreatePage />
+          </Route>
+          <Route path="/search">
+            <SearchPage />
           </Route>
         </Switch>
       </Layout>

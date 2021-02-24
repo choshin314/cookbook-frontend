@@ -18,6 +18,10 @@ export function convertToSlug(str) {
     return str.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +|_/g,'-');
 }
 
+export function convertToQueryString(str) {
+    return str.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +|_/g,'+');
+}
+
 export const transformImg = (originalURL, transformation) => {
     if (!originalURL || !transformation) return null;
     const split = originalURL.split('/');
