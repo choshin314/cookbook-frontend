@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {Switch, Route, Redirect, useLocation, useParams} from 'react-router-dom'
+import {Switch, Route, Redirect, useRouteMatch} from 'react-router-dom'
 import styled from 'styled-components'
 
 import {Main} from '../components/commonStyles'
@@ -9,23 +9,21 @@ import Flash from '../components/shared/Flash'
 import AccountView from '../components/account/AccountView'
 
 function AccountPage({redirect, auth}) {
-    const { pathname } = useLocation()
-    console.log(pathname);
-    
+    const match = useRouteMatch()
     return (
         <Main>
             <StyledDiv>
                 <Flash />
                 <Switch>
-                    <Route path={`/account/login`} >
+                    <Route path={`${match.path}/login`} >
                         <LoginForm />
                     </Route> 
-                    <Route path={`/account/register`} >
+                    <Route path={`${match.path}/register`} >
                         <RegisterForm />
                     </Route> 
-                    <Route exact path="/account">
-                        {!auth.user && <Redirect to="/account/login" />}
-                        <AccountView />
+                    <Route path={match.path}>
+                        {!auth.user && <Redirect to={`${match.path}/login`} />}
+                        {auth.user && <AccountView />}
                     </Route>
                 </Switch>
             </StyledDiv>

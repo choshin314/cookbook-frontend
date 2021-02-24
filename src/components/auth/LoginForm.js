@@ -13,8 +13,11 @@ import { loginUser } from '../../redux/actions/authActions'
 const initVals = { emailUsername: null, password: null };
 
 function LoginForm({login, user, error, submitting }) {
-    
-    const { inputValues,  inputErrors,  handleChange } = useForm(initVals, {}, handleSubmit, 'loginForm' );
+    const { 
+        inputValues,  
+        inputErrors,  
+        handleChange 
+    } = useForm(initVals, {}, handleSubmit, 'loginForm' );
 
     const { emailUsername, password } = inputValues;
 
@@ -33,14 +36,14 @@ function LoginForm({login, user, error, submitting }) {
                         label={{ text: 'Username or Email'}} 
                         type="text" 
                         name="emailUsername" 
-                        value={emailUsername} 
+                        value={emailUsername || ''} 
                         errorMsg={inputErrors.emailUsername}
                     />
                     <Input 
                         label={{ text: 'Password'}} 
                         type="password" 
                         name="password" 
-                        value={password} 
+                        value={password || ''} 
                         errorMsg={inputErrors.password}
                     />
                 </StyledDiv>
