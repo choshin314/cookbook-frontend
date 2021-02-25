@@ -1,6 +1,7 @@
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 
+import { ajax } from '../../helpers/sendAjax'
 import { REVIEW_CONSTRAINTS } from "../../constants"
 import useForm from "../../hooks/form"
 import { Button } from '../commonStyles'
@@ -9,13 +10,12 @@ import useToggle from '../../hooks/toggle'
 import ModalForm from '../shared/ModalForm'
 import { setFlash } from "../../redux/actions/flashActions"
 import useRecipeViewContext from "../../hooks/recipeViewContextHook"
-import useAjax from "../../hooks/ajax"
 
 function ReviewFormContainer({auth, dispatchSetFlash}) {
     const { id: recipeId } = useParams();
     const [ formOpen, toggleFormOpen ] = useToggle(false);
     const { recipe, updateRecipe } = useRecipeViewContext();
-    const { postMulti } = useAjax();
+    const { postMulti } = ajax;
 
     const handleSubmit = async (values) => {
         const valuesAndID = { ...values, recipeId: parseInt(recipeId) };

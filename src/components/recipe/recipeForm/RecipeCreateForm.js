@@ -9,7 +9,7 @@ import { setRedirect } from '../../../redux/actions/redirectActions'
 import { setFlash } from '../../../redux/actions/flashActions'
 import useForm from '../../../hooks/form'
 import { RECIPE_CONSTRAINTS } from '../../../constants'
-import useAjax from '../../../hooks/ajax'
+import { ajax } from '../../../helpers/sendAjax'
 
 const initValues = {
     title: '',
@@ -25,7 +25,6 @@ const initValues = {
 
 function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
     const [step, setStep] = useState(1);
-    const { postMulti } = useAjax();
     const {
         addToList,
         inputValues, 
@@ -38,7 +37,7 @@ function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
     } = useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, 'recipeForm', 'coverImg' );
 
     async function handleSubmit(values) {
-        const result = await postMulti('/recipes', values, ['coverImg'])
+        const result = await ajax.postMulti('/recipes', values, ['coverImg'])
         if (result.error) {
             dispatchSetFlash('error', result.error);
         } else if (result.data) {

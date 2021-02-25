@@ -1,19 +1,18 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import useForm from './form'
-import useAjax from './ajax'
+import { ajax } from '../helpers/sendAjax'
 import { RECIPE_CONSTRAINTS } from '../constants/recipeConstraints'
 import { setFlash } from '../redux/actions/flashActions'
-import { getLocalStorage } from '../helpers/index'
 import useRecipeViewContext from './recipeViewContextHook'
 
 export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
     const dispatch = useDispatch();
+    const token = useSelector(state => state.auth.accessToken)
     const { recipe, updateRecipe } = useRecipeViewContext();
-    const { patch, patchMulti } = useAjax()
+    const { patch, patchMulti } = ajax()
     const initValues = {};
     fields.forEach(field => initValues[field] = recipe[field]);
-    const token = getLocalStorage('auth').accessToken;
 
     const handleSubmit = async (inputValues) => {
         if(!token) return dispatch(setFlash('error','Login required'));

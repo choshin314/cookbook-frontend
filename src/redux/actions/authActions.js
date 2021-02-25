@@ -47,7 +47,7 @@ export function logoutUser() {
 export function checkAuth(referrer) {
     return async (dispatch, getState) => {
         dispatch(userAuthStart());
-        const result = await ajax.get('/auth/user', getState().auth.accessToken);
+        const result = await ajax.get('/auth/user');
         if (result.error) {
             localStorage.clear();
             dispatch(userAuthFail(result.error))

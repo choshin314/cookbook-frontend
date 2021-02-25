@@ -43,7 +43,7 @@ export const deleteSuccess = (category, dataName, data) => ({
 export function addSocial(category, dataName, id) {
     return async (dispatch, getState) => {
         dispatch(fetchSocialStart(category));
-        const {data, error} = await ajax.post(`/social/${category}`, { id: id }, getState().auth.accessToken);
+        const {data, error} = await ajax.post(`/social/${category}`, { id: id });
         if (error) dispatch(fetchSocialFail(category, error));
         if (error === "Not authorized to access") {
             dispatch(setFlash('error', 'Login required'));
@@ -68,7 +68,7 @@ export function addSocial(category, dataName, id) {
 export function removeSocial(category, dataName, id) {
     return async (dispatch, getState) => {
         dispatch(fetchSocialStart(category));
-        const { data, error } = await ajax.delete(`/social/${category}/${id}`, getState().auth.accessToken);
+        const { data, error } = await ajax.delete(`/social/${category}/${id}`);
         if (error) dispatch(fetchSocialFail(category, error));
         if (error === "Not authorized to access") {
             dispatch(setFlash('error', 'Login required'));
@@ -105,10 +105,10 @@ export function toggleSocial(category, dataName, id) {
 export function fetchAllSocial() {
     return async (dispatch, getState) => {
         dispatch(fetchAllSocialStart());
-        const following = await ajax.get('/social/following', getState().auth.accessToken);
-        const followers = await ajax.get('/social/followers', getState().auth.accessToken);
-        const bookmarks = await ajax.get(`/social/bookmarks`, getState().auth.accessToken);
-        const likes = await ajax.get('/social/likes', getState().auth.accessToken)
+        const following = await ajax.get('/social/following');
+        const followers = await ajax.get('/social/followers');
+        const bookmarks = await ajax.get(`/social/bookmarks`);
+        const likes = await ajax.get('/social/likes');
 
         if(following.error) dispatch(fetchSocialFail('following', following.error))
         if(following.data) dispatch(fetchSocialSuccess('following', 'userIds', following.data))

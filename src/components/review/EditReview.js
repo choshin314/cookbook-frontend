@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import useAjax from '../../hooks/ajax'
 import useForm from '../../hooks/form'
+import { ajax } from '../../helpers/sendAjax'
 import { REVIEW_CONSTRAINTS } from '../../constants/reviewConstraints';
 import { setFlash } from '../../redux/actions/flashActions';
 import useRecipeViewContext from '../../hooks/recipeViewContextHook';
@@ -10,7 +10,7 @@ import ReviewForm from './ReviewForm';
 
 function EditReview({ review, user, dispatchSetFlash }) {
     const { setRecipe } = useRecipeViewContext(); 
-    const { patchMulti } = useAjax();
+    const { patchMulti } = ajax;
     const initVals = {
         reviewImg: null,
         headline: review.headline, 

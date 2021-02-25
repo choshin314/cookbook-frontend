@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 
-import useAjax from '../../hooks/ajax'
+import { deleteAjax } from '../../helpers/sendAjax'
 import { setFlash } from '../../redux/actions/flashActions';
 import useRecipeViewContext from '../../hooks/recipeViewContextHook';
 import DeleteBtn from '../shared/DeleteBtn';
 
 function DeleteReview({ review, user, dispatchSetFlash }) {
     const { setRecipe } = useRecipeViewContext(); 
-    const { deleteAjax } = useAjax();
 
     async function handleDelete() {
         const result = await deleteAjax(`/reviews/${review.id}`)
