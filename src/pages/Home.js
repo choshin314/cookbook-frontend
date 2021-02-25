@@ -8,23 +8,23 @@ import FeedList from '../components/feed/FeedList'
 import { fetchAllSocial } from '../redux/actions/socialActions'
 import { connect } from 'react-redux'
 import Flash from '../components/shared/Flash'
+import FeedNav from '../components/feed/FeedNav'
+import { Route, Switch } from 'react-router-dom'
 
 function Home({fetchSocial}) {
     
     return (
         <Main >
             <Flash />
-            <PageTitle>Popular Recipes</PageTitle>
-            {/* <GridContainer colsMd="1" colsLg="1">
-                {loading && <div>...loading</div>}
-                {popularRecipes && popularRecipes.map(r => (
-                    <RecipeCard
-                        key={r.id}
-                        recipe={r}
-                    />
-                ))}
-            </GridContainer> */}
-            <FeedList />
+            <FeedNav />
+            <Switch>
+                <Route path="/home-feed">
+                    <FeedList />
+                </Route>
+                <Route path="/home-feed">
+                    <FeedList />
+                </Route>
+            </Switch>
         </Main>
     )
 }
