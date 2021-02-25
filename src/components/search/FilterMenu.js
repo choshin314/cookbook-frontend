@@ -5,6 +5,8 @@ import { convertToQueryString } from '../../helpers';
 
 function FilterMenu({queries}) {
     const [activeFilter, setActiveFilter] = useState('');
+    const { pathname } = useLocation();
+    console.log(pathname)
     useEffect(() => {
         setActiveFilter(queries.filter)
     }, [queries])
@@ -14,13 +16,13 @@ function FilterMenu({queries}) {
             <h3>Filters</h3>
             <FilterDiv>
                 <Link 
-                    className={!activeFilter && 'active-filter'} 
+                    className={(pathname === '/search/all' && !activeFilter) && 'active-filter'} 
                     to={`/search/all?q=${convertToQueryString(queries.q)}`}
                 >
                     All
                 </Link>
                 <Link 
-                    className={activeFilter === 'all' && 'active-filter'} 
+                    className={(activeFilter === 'all' || (pathname === '/search/people' && !activeFilter)) && 'active-filter'} 
                     to={`/search/people?q=${convertToQueryString(queries.q)}&filter=all`}
                 >
                     People
