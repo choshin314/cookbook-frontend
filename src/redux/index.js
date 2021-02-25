@@ -10,6 +10,7 @@ import redirectReducer from './reducers/redirectReducer'
 import publicFeedReducer from './reducers/publicFeedReducer'
 import privateFeedReducer from './reducers/privateFeedReducer'
 import socialReducer from './reducers/socialReducer'
+import searchReducer from './reducers/searchReducer'
 
 const appReducer = combineReducers({
     auth: authReducer,
@@ -19,7 +20,8 @@ const appReducer = combineReducers({
     redirect: redirectReducer,
     publicFeed: publicFeedReducer,
     privateFeed: privateFeedReducer,
-    social: socialReducer
+    social: socialReducer,
+    search: searchReducer
 })
 
 const rootReducer = (state, action) => {

@@ -103,3 +103,5 @@ export const ACCOUNT_CONSTRAINTS = {
         type: ["image/jpeg", "image/jpg", "image/png"]
     }
 }
+
+export const SEARCH_LIMIT = 1

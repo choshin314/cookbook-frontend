@@ -2,36 +2,46 @@ import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import Ratings from '../recipe/Ratings'
 import UserList from '../shared/UserList'
+import Spinner from '../shared/Spinner'
 import RecipeList from './RecipeList'
+import SeeMoreBtn from './SeeMoreBtn'
 
-function SearchResults({ category, users, recipes }) {
+function SearchResults({ users, recipes, queries }) {
 
-    if (category === 'all') return (
+    if (users && recipes) return (
         <>
             <Results height="50%">
                 <h2>User Results</h2>
-                {users.length === 0 && <NoResults>Search returned no results</NoResults>}
-                {users.length > 0 && <UserList users={users} />}
+                {users.loading && <Spinner />}
+                {users.results.length === 0 && <NoResults>Search returned no results</NoResults>}
+                {users.results.length > 0 && <UserList users={users.results} />}
+                {!users.endOfList && <SeeMoreBtn category="users" query={queries.q} filter={queries.filter} />}
             </Results>
             <Results height="50%">
                 <h2>Recipe Results</h2>
-                {recipes.length === 0 && <NoResults>Search returned no results</NoResults>}
-                {recipes.length > 0 && <RecipeList recipes={recipes} />}
+                {recipes.loading && <Spinner />}
+                {recipes.results.length === 0 && <NoResults>Search returned no results</NoResults>}
+                {recipes.results.length > 0 && <RecipeList recipes={recipes.results} />}
+                {!recipes.endOfList && <SeeMoreBtn category="recipes" query={queries.q} filter={queries.filter} />}
             </Results>
         </>
     )
-    if (category === 'people') return (
+    if (users && !recipes) return (
         <Results height="100%">
             <h2>User Results</h2>
-            {users.length === 0 && <NoResults>Search returned no results</NoResults>}
-            {users.length > 0 && <UserList users={users} />}
+            {users.loading && <Spinner />}
+            {users.results.length === 0 && <NoResults>Search returned no results</NoResults>}
+            {users.results.length > 0 && <UserList users={users.results} />}
+            {!users.endOfList && <SeeMoreBtn category="users" query={queries.q} filter={queries.filter} />}
         </Results>
     )
-    if (category === 'recipes') return (
+    if (recipes && !users) return (
         <Results height="100%">
             <h2>Recipe Results</h2>
-            {recipes.length === 0 && <NoResults>Search returned no results</NoResults>}
-            {recipes.length > 0 && <RecipeList recipes={recipes} />}
+            {recipes.loading && <Spinner />}
+            {recipes.results.length === 0 && <NoResults>Search returned no results</NoResults>}
+            {recipes.results.length > 0 && <RecipeList recipes={recipes.results} />}
+            {!recipes.endOfList && <SeeMoreBtn category="recipes" query={queries.q} filter={queries.filter} />}
         </Results>
     )
     return <Redirect to="/" />
@@ -41,7 +51,7 @@ export default SearchResults
 
 const Results = styled.div`
     background-color: white;
-    border: black 1px solid;
+    border: rgba(0,0,0,.3) 2px solid;
     border-radius: 10px;
     padding: 2rem;
     margin-bottom: 1rem;
