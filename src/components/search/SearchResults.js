@@ -6,9 +6,9 @@ import Spinner from '../shared/Spinner'
 import RecipeList from './RecipeList'
 import SeeMoreBtn from './SeeMoreBtn'
 
-function SearchResults({ searchMode, users, recipes, queries }) {
+function SearchResults({ users, recipes, queries }) {
 
-    if (searchMode === 'all') return (
+    if (users && recipes) return (
         <>
             <Results height="50%">
                 <h2>User Results</h2>
@@ -26,7 +26,7 @@ function SearchResults({ searchMode, users, recipes, queries }) {
             </Results>
         </>
     )
-    if (searchMode === 'people') return (
+    if (users && !recipes) return (
         <Results height="100%">
             <h2>User Results</h2>
             {users.loading && <Spinner />}
@@ -35,7 +35,7 @@ function SearchResults({ searchMode, users, recipes, queries }) {
             {!users.endOfList && <SeeMoreBtn category="users" query={queries.q} filter={queries.filter} />}
         </Results>
     )
-    if (searchMode === 'recipes') return (
+    if (recipes && !users) return (
         <Results height="100%">
             <h2>Recipe Results</h2>
             {recipes.loading && <Spinner />}
