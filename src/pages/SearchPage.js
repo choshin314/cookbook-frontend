@@ -40,7 +40,6 @@ function SearchPage({ dispatchGetSearchResults, dispatchResetResults, searchStat
                 <Switch>
                     <Route path={`${match.path}/all`}>
                         <SearchResults 
-                            searchMode="all"
                             users={users} 
                             recipes={recipes} 
                             queries={queries}
@@ -48,16 +47,12 @@ function SearchPage({ dispatchGetSearchResults, dispatchResetResults, searchStat
                     </Route>
                     <Route path={`${match.path}/people`}>
                         <SearchResults 
-                            searchMode="people"
                             users={users} 
-                            recipes={recipes} 
                             queries={queries}
                         />
                     </Route>
                     <Route path={`${match.path}/recipes`}>
                         <SearchResults 
-                            searchMode="recipes"
-                            users={users} 
                             recipes={recipes} 
                             queries={queries}
                         />
@@ -76,5 +71,9 @@ const Container = styled.div`
     background-color: var(--lite-grey);
     padding: 1rem;
     height: 100%;
+<<<<<<< HEAD
+=======
+    min-height: 600px;
+>>>>>>> search
     border-radius: 5px;
 `
