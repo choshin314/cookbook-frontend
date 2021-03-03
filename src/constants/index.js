@@ -105,3 +105,5 @@ export const ACCOUNT_CONSTRAINTS = {
 }
 
 export const SEARCH_LIMIT = 1
+
+export const FEED_LIMIT = 3
