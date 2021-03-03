@@ -7,8 +7,7 @@ import profileReducer from './reducers/profileReducer'
 import profileRecipesReducer from './reducers/profileRecipesReducer'
 import flashReducer from './reducers/flashReducer'
 import redirectReducer from './reducers/redirectReducer'
-import publicFeedReducer from './reducers/publicFeedReducer'
-import privateFeedReducer from './reducers/privateFeedReducer'
+import feedsReducer from './reducers/feedsReducer'
 import socialReducer from './reducers/socialReducer'
 import searchReducer from './reducers/searchReducer'
 
@@ -16,10 +15,9 @@ const appReducer = combineReducers({
     auth: authReducer,
     profile: profileReducer,
     profileRecipes: profileRecipesReducer,
+    feeds: feedsReducer,
     flash: flashReducer,
     redirect: redirectReducer,
-    publicFeed: publicFeedReducer,
-    privateFeed: privateFeedReducer,
     social: socialReducer,
     search: searchReducer
 })
