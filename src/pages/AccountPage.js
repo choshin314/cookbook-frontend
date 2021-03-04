@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import {Main} from '../components/commonStyles'
 import RegisterForm from '../components/auth/RegisterForm'
 import LoginForm from '../components/auth/LoginForm'
-import Flash from '../components/shared/Flash'
 import AccountView from '../components/account/AccountView'
 
 function AccountPage({redirect, auth}) {
@@ -13,7 +12,6 @@ function AccountPage({redirect, auth}) {
     return (
         <Main>
             <StyledDiv>
-                <Flash />
                 <Switch>
                     <Route path={`${match.path}/login`} >
                         <LoginForm />

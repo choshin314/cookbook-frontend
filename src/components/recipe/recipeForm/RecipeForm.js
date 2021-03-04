@@ -6,7 +6,6 @@ import {DragDropContext} from 'react-beautiful-dnd'
 import { CardWrapper, Button, media } from '../../commonStyles'
 import RecipeFormIntro from './RecipeFormIntro'
 import RecipeFormDetails from './RecipeFormDetails'
-import Flash from '../../shared/Flash'
 import Spinner from '../../shared/Spinner'
 
 function RecipeForm(props) {
@@ -26,7 +25,6 @@ function RecipeForm(props) {
         <Card>
             {isSubmitting && <Spinner />}
             <Form onChange={handleChange} onSubmit={validateAndSubmit}>
-                <Flash />
                 {step === 1 && (
                     <>
                     <RecipeFormIntro 
@@ -56,18 +54,26 @@ function RecipeForm(props) {
                         addToList={addToList}
                         removeFromList={removeFromList}
                     />
-                    <FormBtn type="button"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            changeStep();
-                        }} 
-                    >
-                        <FontAwesomeIcon icon={faChevronLeft}/>
-                        <span>Back to Intro</span>
-                    </FormBtn>
+                    <ButtonDiv>
+                        <FormBtn type="button"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                changeStep();
+                            }} 
+                        >
+                            <FontAwesomeIcon icon={faChevronLeft}/>
+                            <span>Back to Intro</span>
+                        </FormBtn>
+                        <SubmitBtn 
+                            className="align-right" 
+                            type="submit" 
+                        >
+                            Create Recipe
+                        </SubmitBtn>
+                    </ButtonDiv>
                     </DragDropContext>
                 )}
-                <button type="submit" >submit</button>
+                
             </Form>
         </Card>
     )
@@ -94,7 +100,10 @@ const Form = styled.form`
     flex-direction: column;
     
 `
-
+const ButtonDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
 const FormBtn = styled(Button)`
     flex-grow: 0;
     align-self: start;
@@ -107,4 +116,7 @@ const FormBtn = styled(Button)`
             margin: 0 .5rem 0 0;
         }
     }
+`
+const SubmitBtn = styled(FormBtn)`
+    background-color: var(--accent);
 `

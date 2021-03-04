@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { Main } from '../components/commonStyles'
 import FeedNav from '../components/feed/FeedNav'
 import Feed from '../components/feed/Feed'
-import Flash from '../components/shared/Flash'
 import { setFlash } from '../redux/actions/flashActions'
 
 function Home({user, dispatchSetFlash}) {
@@ -18,7 +17,6 @@ function Home({user, dispatchSetFlash}) {
     }, [pathname])
     return (
         <Main >
-            <Flash />
             <FeedNav loggedIn={!!user}/>
             <Switch>
                 <Route exact path="/feeds/home">

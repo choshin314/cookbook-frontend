@@ -30,6 +30,7 @@ const IngredientFieldset = React.forwardRef((props, ref) => {
                     errorMsg={''}
                     autoFocus={true}
                     onChange={onChange}
+                    noFeedback
                 />
                 <Input 
                     type="text"
@@ -38,6 +39,7 @@ const IngredientFieldset = React.forwardRef((props, ref) => {
                     value={values.unit}
                     errorMsg={''}
                     onChange={onChange}
+                    noFeedback
                 />
                 <Input 
                     type="text"
@@ -47,6 +49,7 @@ const IngredientFieldset = React.forwardRef((props, ref) => {
                     errorMsg={''}
                     onClick={addToList}
                     onChange={onChange}
+                    noFeedback
                 />
                 
             </Fieldset>

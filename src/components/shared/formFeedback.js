@@ -19,11 +19,12 @@ export default FormFeedback
 const Feedback = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 5px;
-    min-height: 19px;
+    margin-top: 4px;
+    min-height: 12px;
 `
 const ErrorMsg = styled.span`
-    font-size: .7rem;
+    font-size: .75rem;
+    line-height: 1;
     font-weight: 500;
     color: red;
 `
