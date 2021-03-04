@@ -16,6 +16,7 @@ function RecipeGridItem({ recipe }) {
                 unmountOnExit
         >
             <StyledCardWrapper>
+                <Link to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                 <ImgWrapper>
                     <picture>
                         <source srcset={transformImg(recipe.coverImg, `c_fit,w_300`)} media="(min-width: 768px)"/>
@@ -27,6 +28,7 @@ function RecipeGridItem({ recipe }) {
                         />
                     </picture>
                 </ImgWrapper>
+                </Link>
                 <Content>
                     <TitleLink to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                         {recipe.title}

@@ -11,7 +11,7 @@ import { updateUserDetails } from '../redux/actions/authActions'
 export default function useAccountEditForm(initValues, endpath) {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
-    const { patch, patchMulti } = ajax()
+    const { patch, patchMulti } = ajax;
 
     const handleSubmit = async (inputValues) => {
         let result;

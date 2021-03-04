@@ -13,8 +13,9 @@ import EditTitle from './recipeEdit/EditTitle'
 import useRecipeViewContext from '../../hooks/recipeViewContextHook'
 import TagsSection from './TagsSection'
 import ReviewsSection from './ReviewsSection'
+import DeleteRecipe from './DeleteRecipe'
 
-function RecipeView() {
+function RecipeView({ onDelete }) {
     const { recipe, isOwnedByUser } = useRecipeViewContext();
     console.log(recipe);
     return (
@@ -26,6 +27,9 @@ function RecipeView() {
                         <PageTitle align="left">{recipe.title}</PageTitle>
                         <BookmarkBtn recipe={recipe} />
                         {isOwnedByUser && <EditTitle recipe={recipe} />}
+                        {isOwnedByUser && <DeleteBtnWrapper>
+                            <DeleteRecipe onDelete={onDelete}/>
+                        </DeleteBtnWrapper>}
                     </TitleDiv>
                     
                     <div className="margin-btm-1">
@@ -72,10 +76,19 @@ const Container = styled.div`
 const TitleDiv = styled.div`
     display: flex;
     justify-content: space-between;
+    position: relative;
 `
 const Headline = styled.div`
 `
 
 const StyledDiv = styled.div`
     margin-bottom: 1rem;
+`
+const DeleteBtnWrapper = styled.span`
+    position: absolute;
+    top: 2rem;
+    right: .75rem;
+    display: flex;
+    align-items: start;
+    color: ${p => p.light ? 'white' : 'var(--med-grey)'};
 `
