@@ -6,9 +6,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faBookmark, faFolder } from '@fortawesome/free-regular-svg-icons'
 
 import {fetchProfileRecipesBookmarks, fetchProfileRecipesOwn} from '../../redux/actions/profileRecipesActions'
-import RecipeCard from '../recipe/RecipeCard'
 import {GridContainer, media} from '../commonStyles'
 import Spinner from '../shared/Spinner'
+import RecipeGridItem from './RecipeGridItem'
 
 const USER = 'user'
 const BOOKMARKS = 'bookmarks'
@@ -49,16 +49,16 @@ function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
                 {(recipes.loading || bookmarks.loading) && <Spinner />}
                 {recipeView === USER && (
                     <>
-                        <GridContainer cols="2" colsLg="3" gap="5px">
-                            {recipes.recipes && recipes.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
+                        <GridContainer cols="2" colsMd="3" gap="5px">
+                            {recipes.recipes && recipes.recipes.map(r => <RecipeGridItem key={r.id} recipe={r} user={r.User}/>)}
                         </GridContainer>
                         {recipes.recipes && recipes.recipes.length === 0 && <EmptyDiv>No recipes yet</EmptyDiv>}
                     </>
                 )}
                 {recipeView === BOOKMARKS && (
                     <>
-                        <GridContainer cols="2" colsLg="3" gap="5px">
-                            {bookmarks.recipes && bookmarks.recipes.map(r => <RecipeCard key={r.id} recipe={r} user={r.User}/>)}
+                        <GridContainer cols="2" colsMd="3" gap="5px">
+                            {bookmarks.recipes && bookmarks.recipes.map(r => <RecipeGridItem key={r.id} recipe={r} user={r.User}/>)}
                         </GridContainer>
                         {bookmarks.recipes && bookmarks.recipes.length === 0 && <EmptyDiv>No bookmarks yet</EmptyDiv>}
                     </>
@@ -96,10 +96,10 @@ const GridNav = styled.nav`
 
 const Tab = styled.button`
     cursor: pointer;
-    padding: 1rem 2rem;
+    padding: .5rem 1rem;
     font-weight: 500;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: .75rem;
     color: var(--med-grey);
     background-color: transparent;
     border-radius: 5px 5px 0 0;
@@ -118,6 +118,13 @@ const Tab = styled.button`
     &.tab--active {
         background-color: var(--teal);
         color: var(--lite-grey);
+    }
+    @media(min-width: ${media.small}) {
+        font-size: .9rem;
+    }
+    @media(min-width: ${media.medium}) {
+        padding: 1rem;
+        font-size: 1rem;
     }
 `
 

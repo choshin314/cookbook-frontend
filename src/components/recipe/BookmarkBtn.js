@@ -25,12 +25,8 @@ const mapDispatch = { toggleBookmark: toggleSocial }
 export default connect(mapState, mapDispatch)(BookmarkBtn);
 
 const StyledWrapper = styled.div`
-    font-size: 1rem;
     color: var(--accent);
     display: flex;
     align-items: center;
     cursor: pointer;
-    @media(min-width: ${media.medium}) {
-        font-size: 1.5rem;
-    }
 `
