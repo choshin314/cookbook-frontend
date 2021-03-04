@@ -7,12 +7,11 @@ import Home from './pages/Home'
 import ProfilePage from './pages/ProfilePage'
 import RecipePage from './pages/RecipePage'
 import RecipeCreatePage from './pages/RecipeCreatePage'
-import RegisterPage from './pages/RegisterPage'
-import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
 import ProtectedRoute from './components/shared/ProtectedRoute'
 import { RecipeViewProvider } from './context/recipeViewContext';
 import SearchPage from './pages/SearchPage';
+import Flash from './components/shared/Flash';
 
 function App({user, redirect}) {
   return (
@@ -20,6 +19,7 @@ function App({user, redirect}) {
       <ScrollToTop />
       <Layout>
         {redirect.to && <Redirect to={redirect.to} />}
+        <Flash />
         <Switch>
           <Route exact path="/">
             {user && <Redirect to="/feeds/home" />}

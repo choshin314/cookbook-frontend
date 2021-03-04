@@ -20,7 +20,8 @@ function Input(props) {
         onChange,
         type, 
         label,
-        errorMsg
+        errorMsg,
+        noFeedback
     } = props;
 
     const [charCount, setCharCount] = useState(value && value.length || 0);
@@ -92,11 +93,11 @@ function Input(props) {
                 </FlexRow>
                 
             )}
-            <FormFeedback 
+            {!noFeedback && <FormFeedback 
                 errorMsg={errorMsg}
                 charCount={charCount}
                 charLimit={charLimit}
-            />
+            />}
         </Container>
     )
 }

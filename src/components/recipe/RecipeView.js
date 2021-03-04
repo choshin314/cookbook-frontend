@@ -7,7 +7,6 @@ import IngredientsSection from './IngredientsSection'
 import InstructionsSection from './InstructionsSection'
 import BookmarkBtn from './BookmarkBtn'
 import FollowBtn from '../profile/FollowBtn'
-import Flash from '../shared/Flash'
 import AvatarLink from '../shared/AvatarLink'
 import EditTitle from './recipeEdit/EditTitle'
 import useRecipeViewContext from '../../hooks/recipeViewContextHook'
@@ -20,7 +19,6 @@ function RecipeView({ onDelete }) {
     console.log(recipe);
     return (
         <Main>
-            <Flash />
             <Container>
                 <Wrapper as="div">
                     <TitleDiv>
