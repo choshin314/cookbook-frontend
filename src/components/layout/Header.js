@@ -31,6 +31,8 @@ export default function Header() {
 
 const StyledHeader = styled.header`
     box-shadow: 0px 4px 8px;
+    position: relative;
+    z-index: 3;
 `
 
 const FlexRow = styled.div`

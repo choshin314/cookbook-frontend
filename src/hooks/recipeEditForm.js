@@ -10,7 +10,7 @@ export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
     const dispatch = useDispatch();
     const token = useSelector(state => state.auth.accessToken)
     const { recipe, updateRecipe } = useRecipeViewContext();
-    const { patch, patchMulti } = ajax()
+    const { patch, patchMulti } = ajax;
     const initValues = {};
     fields.forEach(field => initValues[field] = recipe[field]);
 

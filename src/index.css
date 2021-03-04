@@ -100,9 +100,7 @@ a {
   color: var(--teal);
   font-weight: 500;
 }
-a:visited {
-  color: var(--dark-teal);
-}
+
 a:hover {
   color: var(--accent);
 }

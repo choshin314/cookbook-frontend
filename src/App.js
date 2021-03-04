@@ -22,6 +22,10 @@ function App({user, redirect}) {
         {redirect.to && <Redirect to={redirect.to} />}
         <Switch>
           <Route exact path="/">
+            {user && <Redirect to="/feeds/home" />}
+            {!user && <Redirect to="/feeds/top" />}
+          </Route>
+          <Route path="/feeds">
             <Home />
           </Route>
           <Route path="/account">

@@ -6,6 +6,7 @@ import {media, CardWrapper} from '../commonStyles'
 import Ratings from './Ratings'
 import AvatarLink from '../shared/AvatarLink'
 import BookmarkBtn from './BookmarkBtn'
+import { transformImg } from '../../helpers'
 
 export default function RecipeCard({recipe}) {
     return (
@@ -22,11 +23,20 @@ export default function RecipeCard({recipe}) {
                         <AvatarLink 
                             user={recipe.user}
                             showCreatedBy
+                            imgSize="40px"
                         />
                         <BookmarkBtn recipe={recipe} />
                     </Header>
                     <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
-                        <img src={recipe.coverImg} />
+                        <picture>
+                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_800`)} media="(min-width: 768px)"/>
+                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_700`)} media="(min-width: 600px)"/>
+                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_600`)} media="(min-width: 500px)"/>
+                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_500`)} media="(min-width: 400px)"/>
+                            <img src={transformImg(recipe.coverImg, `c_fit,w_412`)} 
+                                alt={`Finished result of recipe for ${recipe.title}`}
+                            />
+                        </picture>
                     </ImgCover>
                     <Content>
                         <Link to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
@@ -73,9 +83,11 @@ const CardLayout = styled.div`
 `
 
 const Header = styled.header`
-    padding: 1.5rem 1rem;
+    padding: .5rem 1rem;
     display: flex;
     justify-content: space-between;
+    font-size: 1rem;
+    
 `
 
 const ImgCover = styled(Link)`
@@ -95,23 +107,14 @@ const ImgCover = styled(Link)`
 `
 
 const Content = styled.div`
-    padding: 1.5rem 1rem;
+    padding: .5rem 1rem;
     display: grid;
-    grid-template-columns: 
-    a > h2 {
-        font-size: 1rem;
-        margin-bottom: 1rem;
+    @media(min-width: ${media.medium}) {
+        padding: 1rem;
     }
-
 `
 
 const CardTitle = styled.h2`
     font-size: 1rem;
-    margin-bottom: 1rem;
-    @media(min-width: ${media.small}) {
-        font-size: 1.25rem;
-    }
-    @media(min-width:${media.medium}) {
-        margin-bottom: .5rem;
-    }
+    margin-bottom: .5rem;
 `

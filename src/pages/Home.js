@@ -21,11 +21,11 @@ function Home({user, dispatchSetFlash}) {
             <Flash />
             <FeedNav loggedIn={!!user}/>
             <Switch>
-                <Route path="/feeds/home">
+                <Route exact path="/feeds/home">
                     {!user && <Redirect to="/feeds/top" />}
                     {user && <Feed feedType="private" />}
                 </Route>
-                <Route path="/feeds/top">
+                <Route exact path="/feeds/top">
                     <Feed feedType="public" />
                 </Route>
             </Switch>

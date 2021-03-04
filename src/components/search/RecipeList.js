@@ -15,7 +15,7 @@ function RecipeList({recipes}) {
                         <RecipeBy to={`/profile/view/${r.user.username}`}>By {r.user.username}</RecipeBy>
                     </RecipeInfo>
                     <RecipeImgWrap>
-                        <img src={transformImg(r.coverImg, 'c_fit,h_110,w_110')} />
+                        <img src={transformImg(r.coverImg, 'c_fit,w_150')} />
                     </RecipeImgWrap>
                 </RecipeListItem>
             ))}
