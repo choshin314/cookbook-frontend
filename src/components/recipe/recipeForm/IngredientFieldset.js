@@ -22,10 +22,9 @@ const IngredientFieldset = React.forwardRef((props, ref) => {
                 }}
             >
                 <Input 
-                    type="number"
+                    type="text"
                     name="qty"
                     label={{ text: 'Qty'}}
-                    min="0"
                     value={values.qty}
                     errorMsg={''}
                     autoFocus={true}

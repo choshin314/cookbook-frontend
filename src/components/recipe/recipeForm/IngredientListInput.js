@@ -14,6 +14,7 @@ function IngredientListInput(props) {
         e.preventDefault();
         setDraftError(null);
         if (!ingredientDraft.qty) return setDraftError('Quantity is required');
+        if (ingredientDraft.qty.trim().length > 10) return setDraftError('Max 10 characters for qty');
         if (!ingredientDraft.unit) return setDraftError('Unit is required');
         const length = ingredientDraft.content.trim().length;
         if (length < 3) {

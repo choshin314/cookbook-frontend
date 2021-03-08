@@ -16,9 +16,9 @@ export default function useAccountEditForm(initValues, endpath) {
     const handleSubmit = async (inputValues) => {
         let result;
         if (endpath === "profile-pic") {
-            result = await patchMulti(`/users/account/${endpath}`, inputValues, ['profilePic'])
+            result = await patchMulti(`/account/${endpath}`, inputValues, ['profilePic'])
         } else {
-            result = await patch(`/users/account/${endpath}`, inputValues)
+            result = await patch(`/account/${endpath}`, inputValues)
         }
         if (result.error) {
             dispatch(setFlash('error', result.error))
