@@ -16,37 +16,51 @@ function FilterMenu({queries}) {
             <h3>Filters</h3>
             <FilterDiv>
                 <Link 
-                    className={(pathname === '/search/all' && !activeFilter) && 'active-filter'} 
+                    className={(pathname === '/search/all' && !activeFilter) ? 'active-filter' : undefined} 
                     to={`/search/all?q=${convertToQueryString(queries.q)}`}
                 >
                     All
                 </Link>
                 <Link 
-                    className={(activeFilter === 'all' || (pathname === '/search/people' && !activeFilter)) && 'active-filter'} 
+                    className={
+                        ((activeFilter === 'all' && pathname === '/search/people') || 
+                        (pathname === '/search/people' && !activeFilter)) ?
+                        'active-filter' : undefined
+                    } 
                     to={`/search/people?q=${convertToQueryString(queries.q)}&filter=all`}
                 >
                     People
                 </Link>
                 <Link 
-                    className={activeFilter === 'full' && 'active-filter'} 
+                    className={activeFilter === 'full' ? 'active-filter' : undefined} 
                     to={`/search/people?q=${convertToQueryString(queries.q)}&filter=full`}
                 >
                     Name
                 </Link>
                 <Link 
-                    className={activeFilter === 'username' && 'active-filter'} 
+                    className={activeFilter === 'username' ? 'active-filter' : undefined} 
                     to={`/search/people?q=${convertToQueryString(queries.q)}&filter=username`}
                 >
                     Username
                 </Link>
                 <Link 
-                    className={activeFilter === 'title' && 'active-filter'} 
+                    className={
+                        ((activeFilter === 'all' && pathname === '/search/recipes') || 
+                        (pathname === '/search/recipes' && !activeFilter)) ?
+                        'active-filter' : undefined
+                    } 
+                    to={`/search/recipes?q=${convertToQueryString(queries.q)}&filter=all`}
+                >
+                    Recipes
+                </Link>
+                <Link 
+                    className={activeFilter === 'title' ? 'active-filter' : undefined} 
                     to={`/search/recipes?q=${convertToQueryString(queries.q)}&filter=title`}
                 >
                     Title
                 </Link>
                 <Link 
-                    className={activeFilter === 'tags' && 'active-filter'} 
+                    className={activeFilter === 'tags' ? 'active-filter' : undefined} 
                     to={`/search/recipes?q=${convertToQueryString(queries.q)}&filter=tags`}
                 >
                     Tags

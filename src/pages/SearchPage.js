@@ -47,12 +47,18 @@ function SearchPage({ dispatchGetSearchResults, dispatchResetResults, searchStat
                         <SearchResults 
                             users={users} 
                             queries={queries}
+                            fetchMoreResults={() => {
+                                dispatchGetSearchResults('users', queries.q, queries.filter)
+                            }}
                         />
                     </Route>
                     <Route path={`${match.path}/recipes`}>
                         <SearchResults 
                             recipes={recipes} 
                             queries={queries}
+                            fetchMoreResults={() => {
+                                dispatchGetSearchResults('recipes', queries.q, queries.filter)
+                            }}
                         />
                     </Route>
                 </Switch>
@@ -69,9 +75,8 @@ const Container = styled.div`
     background-color: var(--lite-grey);
     padding: 1rem;
     height: 100%;
-<<<<<<< HEAD
-=======
-    min-height: 600px;
->>>>>>> search
     border-radius: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 `

@@ -152,7 +152,6 @@ export const StyledOL = styled.ol`
     list-style: none;
     border-top: 2px solid rgba(0,0,0,.3);
     background-color: white;
-    height: 85%;
     overflow: auto;
 `
 

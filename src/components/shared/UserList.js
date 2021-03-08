@@ -3,7 +3,7 @@ import { media, StyledOL } from '../commonStyles';
 import FollowBtn from '../profile/FollowBtn'
 import AvatarLink from './AvatarLink'
 
-function UserList({users}) {
+function UserList({users, observer}) {
     return (
         <StyledOL>
             {users && users.map(u => (
@@ -12,6 +12,10 @@ function UserList({users}) {
                     <FollowBtn profileUser={u} />
                 </UserCard>
             ))}
+            {observer && observer} {/*
+                Will pass down intersectionObserver component if/when I want some
+                action to be triggered at the bottom of the list (e.g. infinite scroll)
+            */}
         </StyledOL>
     )
 }

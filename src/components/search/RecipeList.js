@@ -4,7 +4,7 @@ import { media, StyledOL } from '../commonStyles';
 import Ratings from '../recipe/Ratings'
 import { transformImg } from '../../helpers'
 
-function RecipeList({recipes}) {
+function RecipeList({recipes, observer}) {
     return (
         <StyledOL>
             {recipes && recipes.map(r => (
@@ -19,6 +19,10 @@ function RecipeList({recipes}) {
                     </RecipeImgWrap>
                 </RecipeListItem>
             ))}
+            {observer && observer} {/*
+                Will pass down intersectionObserver component if/when I want some
+                action to be triggered at the bottom of the list (e.g. infinite scroll)
+            */}
         </StyledOL>
     )
 }
@@ -35,7 +39,7 @@ const RecipeListItem = styled.li`
 `
 
 const RecipeInfo = styled.div`
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;

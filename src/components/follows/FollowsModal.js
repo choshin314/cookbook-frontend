@@ -56,6 +56,8 @@ const ContentWrapper = styled.article`
     position: fixed;
     top: 50%;
     left: 50%;
+    display: flex;
+    flex-direction: column;
     transform: translate(-50%, -50%);
     width: 100%;
     max-width: 400px;
