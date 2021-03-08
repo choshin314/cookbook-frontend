@@ -24,7 +24,7 @@ function RecipeFormIntro({step, values, errors, addToList, removeFromList}) {
                         <ImgInput 
                             name="coverImg" 
                             label={{ text: 'Cover Image' }} 
-                            imgSize="5mb" 
+                            imgSize="1mb" 
                             file={values.coverImg}
                             errorMsg={errors.coverImg}
                         />

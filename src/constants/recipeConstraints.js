@@ -20,7 +20,7 @@ export const RECIPE_CONSTRAINTS = {
     },
     coverImg: {
         required: true,
-        size: 5120000,
+        size: 1024000,
         type: ["image/jpeg", "image/jpg", "image/png"]
     },
     instructions: {
