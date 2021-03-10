@@ -1,9 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import useForm from './form'
 import { ajax } from '../helpers/sendAjax'
 import { RECIPE_CONSTRAINTS } from '../constants/recipeConstraints'
 import { setFlash } from '../redux/actions/flashActions'
+import { checkAndHandleAuthErr } from '../redux/actions/authActions'
 import useRecipeViewContext from './recipeViewContextHook'
 
 export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
@@ -21,7 +22,7 @@ export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
             result = await patch(`/recipes/${recipe.id}/${endpath}`, inputValues)
         }
         if (result.error) {
-            dispatch(setFlash('error', result.error))
+            dispatch(checkAndHandleAuthErr(result, 'Login required to edit recipe'))
         } else {
             dispatch(setFlash('success', 'Recipe was updated'));
             updateRecipe(result.data);

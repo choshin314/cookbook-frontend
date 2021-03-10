@@ -34,7 +34,7 @@ function Nav({logout, user}) {
                     label="Sign In"
                     icon={faSignInAlt}
                 />)}
-                {user && (<AuthBtn type="button" aria-label="Sign Out" onClick={logout}>
+                {user && (<AuthBtn type="button" aria-label="Sign Out" onClick={() => logout()}>
                     <FontAwesomeIcon icon={faSignOutAlt} title="Sign Out" />
                 </AuthBtn>)}
             </ul>

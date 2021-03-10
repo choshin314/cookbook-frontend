@@ -28,6 +28,9 @@ function App({user, redirect}) {
           <Route path="/feeds">
             <Home />
           </Route>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
           <Route path="/account">
             <AccountPage />
           </Route>
@@ -38,18 +41,12 @@ function App({user, redirect}) {
           <Route path="/profile/view/:username">
             <ProfilePage />
           </Route>
-          <ProtectedRoute path="/profile/viewprotected/:username">
-            <ProfilePage />
-          </ProtectedRoute>
           <Route path="/recipes/view/:id-:slug" >
             <RecipeViewProvider><RecipePage /></RecipeViewProvider>
           </Route>
-          <Route path="/recipes/create">
+          <ProtectedRoute path="/recipes/create">
             <RecipeCreatePage />
-          </Route>
-          <Route path="/search">
-            <SearchPage />
-          </Route>
+          </ProtectedRoute>
         </Switch>
       </Layout>
     </Router>

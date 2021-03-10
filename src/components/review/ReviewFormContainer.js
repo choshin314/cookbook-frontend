@@ -9,9 +9,10 @@ import ReviewForm from "./ReviewForm"
 import useToggle from '../../hooks/toggle'
 import ModalForm from '../shared/ModalForm'
 import { setFlash } from "../../redux/actions/flashActions"
+import { checkAndHandleAuthErr } from "../../redux/actions/authActions"
 import useRecipeViewContext from "../../hooks/recipeViewContextHook"
 
-function ReviewFormContainer({auth, dispatchSetFlash}) {
+function ReviewFormContainer({auth, dispatchSetFlash, dispatchHandleErr }) {
     const { id: recipeId } = useParams();
     const [ formOpen, toggleFormOpen ] = useToggle(false);
     const { recipe, updateRecipe } = useRecipeViewContext();
@@ -21,14 +22,18 @@ function ReviewFormContainer({auth, dispatchSetFlash}) {
         const valuesAndID = { ...values, recipeId: parseInt(recipeId) };
         const result = await postMulti('/reviews', valuesAndID, ['reviewImg']);
         if (result.error) {
-            result.error === "Not authorized" ? 
-                dispatchSetFlash('error', 'Login required to write review') :
-                dispatchSetFlash('error', result.error);
+            dispatchHandleErr(result, 'Login required')
         } else if (result.data) {
             updateRecipe(result.data); //receives updated list of reviews for recipe
             dispatchSetFlash('success', 'Thanks for your review!')
         }
         return result;
+    }
+
+    const handleFormOpen = () => {
+        auth.user ?
+            toggleFormOpen() :
+            dispatchSetFlash('info', 'Login required to write review')
     }
 
     const {
@@ -43,7 +48,7 @@ function ReviewFormContainer({auth, dispatchSetFlash}) {
     
     return (
         <>
-            <Button type="button" onClick={toggleFormOpen}>Write a review</Button>
+            <Button type="button" onClick={handleFormOpen}>Write a review</Button>
             {formOpen && (
                 <ModalForm 
                     open={formOpen} 
@@ -63,7 +68,7 @@ function ReviewFormContainer({auth, dispatchSetFlash}) {
 }
 
 const mapState = (state) => ({ auth: state.auth })
-const mapDispatch = { dispatchSetFlash: setFlash }
+const mapDispatch = { dispatchSetFlash: setFlash, dispatchHandleErr: checkAndHandleAuthErr }
 export default connect(mapState, mapDispatch)(ReviewFormContainer)
 
 function initValues() {

@@ -6,7 +6,7 @@ import { ACCOUNT_CONSTRAINTS } from '../constants'
 import { setFlash } from '../redux/actions/flashActions'
 import { getLocalStorage } from '../helpers/index'
 import useRecipeViewContext from './recipeViewContextHook'
-import { updateUserDetails } from '../redux/actions/authActions'
+import { checkAndHandleAuthErr, logoutUser, updateUserDetails } from '../redux/actions/authActions'
 
 export default function useAccountEditForm(initValues, endpath) {
     const dispatch = useDispatch();
@@ -20,11 +20,10 @@ export default function useAccountEditForm(initValues, endpath) {
         } else {
             result = await patch(`/account/${endpath}`, inputValues)
         }
-        if (result.error) {
-            dispatch(setFlash('error', result.error))
-        } else {
+        if (result.error) dispatch(checkAndHandleAuthErr(result, 'Login required to edit account'))
+        if (result.data) {
             if (endpath === "general" || endpath === "profile-pic") {
-                dispatch(updateUserDetails(result.data))
+                dispatch(updateUserDetails(result.data)) 
             }
             dispatch(setFlash('success', 'Updated account'));   
         }

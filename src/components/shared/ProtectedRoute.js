@@ -2,10 +2,14 @@ import { useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setReferrer } from '../../redux/actions/redirectActions'
+import { setFlash } from '../../redux/actions/flashActions'
 
-function ProtectedRoute({ location, setReferrer, children, auth, ...rest }) {
+function ProtectedRoute({ location, dispatchSetReferrer, dispatchSetFlash, children, auth, ...rest }) {
     useEffect(() => {
-        if (!auth.user) setReferrer(location.pathname)
+        if (!auth.user) {
+            dispatchSetReferrer(location.pathname)
+            dispatchSetFlash('info', 'Login required to access page')
+        }
     }, [])
     
     return (
@@ -16,5 +20,5 @@ function ProtectedRoute({ location, setReferrer, children, auth, ...rest }) {
 }
 
 const mapStateToProps = global => ({ auth: global.auth })
-const mapDispatchToProps = { setReferrer: setReferrer }
+const mapDispatchToProps = { dispatchSetReferrer: setReferrer, dispatchSetFlash: setFlash }
 export default connect(mapStateToProps, mapDispatchToProps)(ProtectedRoute)

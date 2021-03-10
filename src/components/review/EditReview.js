@@ -4,11 +4,12 @@ import useForm from '../../hooks/form'
 import { ajax } from '../../helpers/sendAjax'
 import { REVIEW_CONSTRAINTS } from '../../constants/reviewConstraints';
 import { setFlash } from '../../redux/actions/flashActions';
+import { checkAndHandleAuthErr } from '../../redux/actions/authActions';
 import useRecipeViewContext from '../../hooks/recipeViewContextHook';
 import EditWrapper from '../shared/EditWrapper';
 import ReviewForm from './ReviewForm';
 
-function EditReview({ review, user, dispatchSetFlash }) {
+function EditReview({ review, user, dispatchSetFlash, dispatchHandleErr }) {
     const { setRecipe } = useRecipeViewContext(); 
     const { patchMulti } = ajax;
     const initVals = {
@@ -25,7 +26,7 @@ function EditReview({ review, user, dispatchSetFlash }) {
         const result = await patchMulti(`/reviews/${review.id}`, inputValues, ['reviewImg']);
         const successfulEdits = result.data;
         if (result.error) {
-            dispatchSetFlash('error', result.error);
+            dispatchHandleErr(result, 'Must be logged in to edit review');
         } else {
             setRecipe(recipe => ({
                 ...recipe,
@@ -55,5 +56,5 @@ function EditReview({ review, user, dispatchSetFlash }) {
     )
 }
 const mapState = state => ({ user: state.auth.user })
-const mapDispatch = { dispatchSetFlash: setFlash }
+const mapDispatch = { dispatchSetFlash: setFlash, dispatchHandleErr: checkAndHandleAuthErr }
 export default connect(mapState, mapDispatch)(EditReview)

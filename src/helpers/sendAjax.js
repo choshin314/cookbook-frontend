@@ -81,9 +81,6 @@ export async function deleteAjax(apiPath, values) {
     }
 }
 
-
-
-
 const getAccessToken = () => getLocalStorage('accessToken')
 
 const getRefreshToken = () => getLocalStorage('refreshToken')
@@ -134,4 +131,3 @@ const attemptRefresh = async () => {
     setLocalStorage('accessToken', newAccessToken);
     return true;
 }
-

@@ -42,13 +42,14 @@ export function registerUser(values) {
     }
 }
 
-export function logoutUser() {
+export function logoutUser(flashMsg=null) {
     return async (dispatch, getState) => {
         await ajax.delete('/auth/logout/single-location', { 
-            refreshToken: getState().auth.refreshToken
+            refreshToken: getLocalStorage('refreshToken')
         })
         dispatch({ type: LOGOUT });
         dispatch(setRedirect('/account/login'));
+        if (flashMsg) dispatch(setFlash('error', flashMsg))
     }
 }
 
@@ -62,5 +63,15 @@ export function checkAuth(referrer) {
             dispatch(redirectWithReferrer('/account/login', referrer));
         }
         dispatch(userAuthSuccess(result.data))
+    }
+}
+
+export const checkAndHandleAuthErr = (result, authErrMsg) => {
+    return dispatch => {
+        if (result.status === 401 || result.status === 403) {
+            dispatch(logoutUser(authErrMsg))
+        } else {
+            dispatch(setFlash('error', result.error))
+        }
     }
 }

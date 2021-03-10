@@ -14,10 +14,12 @@ function AccountPage({redirect, auth}) {
             <StyledDiv>
                 <Switch>
                     <Route path={`${match.path}/login`} >
-                        <LoginForm />
+                        {!auth.user && <LoginForm />}
+                        {auth.user && <Redirect to="/" />}
                     </Route> 
                     <Route path={`${match.path}/register`} >
-                        <RegisterForm />
+                        {!auth.user && <RegisterForm />}
+                        {auth.user && <Redirect to="/" />}
                     </Route> 
                     <Route path={match.path}>
                         {!auth.user && <Redirect to={`${match.path}/login`} />}

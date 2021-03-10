@@ -7,6 +7,7 @@ import {Main} from '../../commonStyles'
 import RecipeForm from './RecipeForm.js'
 import { setRedirect } from '../../../redux/actions/redirectActions'
 import { setFlash } from '../../../redux/actions/flashActions'
+import { checkAndHandleAuthErr } from '../../../redux/actions/authActions'
 import useForm from '../../../hooks/form'
 import { RECIPE_CONSTRAINTS } from '../../../constants'
 import { ajax } from '../../../helpers/sendAjax'
@@ -23,7 +24,7 @@ const initValues = {
     tags: []
 }
 
-function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
+function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash, dispatchHandleErr }) {
     const [step, setStep] = useState(1);
     const {
         addToList,
@@ -39,7 +40,7 @@ function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
     async function handleSubmit(values) {
         const result = await ajax.postMulti('/recipes', values, ['coverImg'])
         if (result.error) {
-            dispatchSetFlash('error', result.error);
+            dispatchHandleErr(result, 'Must be logged in to create recipe')
         } else if (result.data) {
             dispatchSetRedirect(`/recipes/view/${result.data.id}-${result.data.slug}`);
             dispatchSetFlash('success', 'Recipe created, yay!');
@@ -67,6 +68,10 @@ function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash }) {
     )
 }
 const mapStateToProps = (global) => ({ auth: global.auth });
-const mapDispatchToProps = { dispatchSetRedirect: setRedirect, dispatchSetFlash: setFlash }
+const mapDispatchToProps = { 
+    dispatchSetRedirect: setRedirect, 
+    dispatchSetFlash: setFlash,
+    dispatchHandleErr: checkAndHandleAuthErr 
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeCreateForm)
