@@ -20,7 +20,7 @@ function EditReview({ review, user, dispatchSetFlash, dispatchHandleErr }) {
     }
     const { 
         handleChange, validateAndSubmit, inputValues, inputErrors, resetForm 
-    } = useForm(initVals, REVIEW_CONSTRAINTS, handleSubmit, 'reviewEdit', 'reviewImg')
+    } = useForm(initVals, REVIEW_CONSTRAINTS, handleSubmit)
 
     async function handleSubmit(inputValues) {
         const result = await patchMulti(`/reviews/${review.id}`, inputValues, ['reviewImg']);

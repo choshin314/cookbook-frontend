@@ -17,7 +17,7 @@ function LoginForm({login, user, error, submitting }) {
         inputValues,  
         inputErrors,  
         handleChange 
-    } = useForm(initVals, {}, handleSubmit, 'loginForm' );
+    } = useForm(initVals, {}, handleSubmit);
 
     const { emailUsername, password } = inputValues;
 

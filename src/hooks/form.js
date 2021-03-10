@@ -1,35 +1,11 @@
 import { useState, useEffect } from 'react'
 import {uuid} from 'uuidv4'
 
-import { getLocalStorage, setLocalStorage } from '../helpers'
-
-export default function useForm(initValues, constraints, handleSubmit, formName=null, imgName=null) {
-    const localValues = getLocalStorage(formName);
-    const [ inputValues, setInputValues ] = useState(localValues || initValues);
+export default function useForm(initValues, constraints, handleSubmit) {
+    const [ inputValues, setInputValues ] = useState(initValues);
     const [ inputErrors, setInputErrors ] = useState({}); 
     const [ isSubmitting, setIsSubmitting ] = useState(false);
     const [ formErrors, setFormErrors ] = useState([]); //server error msg
-
-    useEffect(() => {
-        if (!formName) return;
-        let persist = {};
-        for (let key in inputValues) {
-            if (key === imgName) {
-                persist[key] = ''
-            } else if (['password','passwordConfirmation','oldPassword'].includes(key)) {
-                persist[key] = ''
-            } else {
-                persist[key] = inputValues[key]
-            }
-        }
-        setLocalStorage(formName, { ...persist });
-    }, [inputValues])
-
-    useEffect(() => {
-        return () => {
-            if(formName) setLocalStorage(formName, initValues)
-        }
-    }, [])
 
     function clearErrors() {
         setInputErrors({});

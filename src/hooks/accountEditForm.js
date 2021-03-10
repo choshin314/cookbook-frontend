@@ -30,5 +30,5 @@ export default function useAccountEditForm(initValues, endpath) {
         return result;      
     }
 
-    return useForm(initValues, ACCOUNT_CONSTRAINTS, handleSubmit, null, 'profilePic')
+    return useForm(initValues, ACCOUNT_CONSTRAINTS, handleSubmit)
 }

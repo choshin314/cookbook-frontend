@@ -27,7 +27,7 @@ function RegisterForm({ register, user, error, submitting }) {
         validateForm, 
         handleChange,
         validateAndSubmit
-    } = useForm(initVals, ACCOUNT_CONSTRAINTS, handleSubmit, 'registerForm' );
+    } = useForm(initVals, ACCOUNT_CONSTRAINTS, handleSubmit);
 
     const { 
         email, 

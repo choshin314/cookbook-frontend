@@ -35,7 +35,7 @@ function RecipeCreateForm({ auth, dispatchSetRedirect, dispatchSetFlash, dispatc
         removeFromList, 
         validateAndSubmit,
         isSubmitting
-    } = useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, 'recipeForm', 'coverImg' );
+    } = useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit);
 
     async function handleSubmit(values) {
         const result = await ajax.postMulti('/recipes', values, ['coverImg'])

@@ -44,7 +44,7 @@ function ReviewFormContainer({auth, dispatchSetFlash, dispatchHandleErr }) {
         validateAndSubmit,
         isSubmitting,
         resetForm 
-    } = useForm(initValues(), REVIEW_CONSTRAINTS, handleSubmit, 'reviewForm', 'reviewImg');
+    } = useForm(initValues(), REVIEW_CONSTRAINTS, handleSubmit);
     
     return (
         <>

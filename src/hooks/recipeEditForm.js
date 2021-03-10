@@ -30,5 +30,5 @@ export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
         return result;           
     }
 
-    return useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit, null, imgFieldName)
+    return useForm(initValues, RECIPE_CONSTRAINTS, handleSubmit)
 }
