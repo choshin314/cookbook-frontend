@@ -1,7 +1,11 @@
 import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, UPDATE_USER_DETAILS, LOGOUT } from '../actions/types'
 import { getLocalStorage } from "../../helpers"
 
-let initAuth = getLocalStorage('auth') || { accessToken: null, user: null, loading: false, error: null };
+let initAuth = getLocalStorage('auth') || { 
+    user: null, 
+    loading: false, 
+    error: null 
+};
 
 export default function authReducer(authState=initAuth, action) {
     switch (action.type) {
@@ -9,14 +13,12 @@ export default function authReducer(authState=initAuth, action) {
             return { ...authState, loading: true }
         case USER_AUTH_FAIL:
             return { 
-                accessToken: null, 
                 user: null, 
                 loading: false, 
                 error: action.payload
             }
         case USER_AUTH_SUCCESS:
             return { 
-                accessToken: action.payload.accessToken, 
                 user: action.payload.user,
                 error: null,
                 loading: false
@@ -28,10 +30,9 @@ export default function authReducer(authState=initAuth, action) {
             }
         case LOGOUT:
             return {
-                accessToken: null,
-                user: null,
-                error: null,
-                loading: false
+                user: null, 
+                loading: false, 
+                error: null 
             }
         default: 
             return authState

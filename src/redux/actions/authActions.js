@@ -3,6 +3,7 @@ import {setFlash} from './flashActions'
 import { setRedirect, redirectWithReferrer, backToReferrer } from './redirectActions'
 import { ajax } from '../../helpers/sendAjax'
 import { fetchAllSocial } from './socialActions'
+import { getLocalStorage, setLocalStorage } from '../../helpers'
 
 //ajax return is always either error msg (string) or { accessToken, user }
 export const userAuthStart = () => ({ type: USER_AUTH_START })
@@ -15,6 +16,8 @@ export function loginUser(values) {
         dispatch(userAuthStart());
         const { data, error } = await ajax.post('/auth/login', values);
         if (error) return dispatch(userAuthFail(error));
+        setLocalStorage('accessToken', data.accessToken);
+        setLocalStorage('refreshToken', data.refreshToken);
         dispatch(userAuthSuccess(data))
         await dispatch(fetchAllSocial())
         dispatch(backToReferrer()) 
@@ -24,21 +27,26 @@ export function loginUser(values) {
 export function registerUser(values) {
     return async (dispatch) =>  {
         dispatch(userAuthStart());
-        const result = await ajax.post('/auth/register', values);
-        if (result.data) {
-            dispatch(userAuthSuccess(result.data))
+        const { data, error } = await ajax.post('/auth/register', values);
+        if (error) {
+            dispatch(userAuthFail(error))
+            dispatch(setFlash('error', error))
+        }
+        if (data) {
+            setLocalStorage('accessToken', data.accessToken);
+            setLocalStorage('refreshToken', data.refreshToken);
+            dispatch(userAuthSuccess(data))
             dispatch(setFlash('success', "Success! Let's get cookin!"))
             dispatch(backToReferrer())
-        }
-        if (result.error) {
-            dispatch(userAuthFail(result.error))
-            dispatch(setFlash('error', result.error))
         }
     }
 }
 
 export function logoutUser() {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+        await ajax.delete('/auth/logout/single-location', { 
+            refreshToken: getState().auth.refreshToken
+        })
         dispatch({ type: LOGOUT });
         dispatch(setRedirect('/account/login'));
     }

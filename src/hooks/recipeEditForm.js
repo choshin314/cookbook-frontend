@@ -8,14 +8,12 @@ import useRecipeViewContext from './recipeViewContextHook'
 
 export default function useRecipeEditForm(fields, endpath, imgFieldName=null) {
     const dispatch = useDispatch();
-    const token = useSelector(state => state.auth.accessToken)
     const { recipe, updateRecipe } = useRecipeViewContext();
     const { patch, patchMulti } = ajax;
     const initValues = {};
     fields.forEach(field => initValues[field] = recipe[field]);
 
     const handleSubmit = async (inputValues) => {
-        if(!token) return dispatch(setFlash('error','Login required'));
         let result;
         if (imgFieldName) {
             result = await patchMulti(`/recipes/${recipe.id}/${endpath}`, inputValues, [imgFieldName])

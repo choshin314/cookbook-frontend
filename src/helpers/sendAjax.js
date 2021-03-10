@@ -1,4 +1,4 @@
-import {getLocalStorage} from './index'
+import {getLocalStorage, setLocalStorage} from './index'
 import { API_BASE } from '../constants'
 
 export const ajax = {
@@ -15,18 +15,14 @@ export const ajax = {
 }
 
 export async function sendJSON(apiPath, values, method='POST') {
-    const accessToken = getLocalStorage('auth').accessToken;
-    const authHeader = accessToken ? { authorization: `Bearer ${accessToken}` } : null;
     try {
-        const res = await fetch(API_BASE + apiPath, { 
-            method: method, 
-            body: JSON.stringify(values),
-            headers: { 
-                'Content-Type': 'application/json', 
-                ...authHeader
-            } 
-        });
-        const result = await res.json();
+        let result = await mainRequestJSON(apiPath, values, method);
+        if (result.error && result.error === 'token expired') {
+            const refreshed = await attemptRefresh();
+            if (refreshed) {
+                result = await mainRequestJSON(apiPath, values, method);
+            }
+        }
         return result;
     } catch(err) {
         return { error: err.message }
@@ -34,8 +30,6 @@ export async function sendJSON(apiPath, values, method='POST') {
 }
 
 export async function sendMulti(apiPath, values, fileKeysArray, method='POST') {
-    const accessToken = getLocalStorage('auth').accessToken;
-    const authHeader = accessToken ? { authorization: `Bearer ${accessToken}` } : null;
     const formData = new FormData();
     const stringified = {};
     fileKeysArray.forEach(fileKey => formData.append(fileKey, values[fileKey]));
@@ -44,45 +38,100 @@ export async function sendMulti(apiPath, values, fileKeysArray, method='POST') {
     }
     formData.append('formJSON', JSON.stringify(stringified));
     try {
-        const res = await fetch(API_BASE + apiPath, { 
-            method: method, 
-            body: formData,
-            headers: { ...authHeader }
-        });
-        return await res.json();
+        let result = await mainRequestMulti(apiPath, formData, method)
+        if (result.error && result.error === 'token expired') {
+            const refreshed = await attemptRefresh();
+            if (refreshed) {
+                result = await mainRequestMulti(apiPath, formData, method);
+            }
+        }
+        return result;
     } catch(err) {
         return { error: err.message }
     }
 }
 
 export async function getJSON(apiPath) {
-    const accessToken = getLocalStorage('auth').accessToken;
-    const authHeader = accessToken ? { authorization: `Bearer ${accessToken}` } : null;
     try {
-        const res = await fetch(API_BASE + apiPath, { 
-            headers: { 
-                ...authHeader
-            } 
-        });
-        return await res.json();
+        let result = await mainRequestGet(apiPath);
+        if (result.error && result.error === 'token expired') {
+            const refreshed = await attemptRefresh();
+            if (refreshed) {
+                result = await mainRequestGet(apiPath);
+            }
+        }
+        return result;
     } catch(err) {
         return { error: err.message }
     }
 }
 
-export async function deleteAjax(apiPath) {
-    const accessToken = getLocalStorage('auth').accessToken;
-    const authHeader = accessToken ? { authorization: `Bearer ${accessToken}` } : null;
+export async function deleteAjax(apiPath, values) {
     try {
-        const res = await fetch(API_BASE + apiPath, { 
-            method: 'DELETE',
-            headers: { 
-                ...authHeader
-            } 
-        });
-        return await res.json();
+        let result = await mainRequestJSON(apiPath, values, 'DELETE');
+        if (result.error && result.error === 'token expired') {
+            const refreshed = await attemptRefresh();
+            if (refreshed) {
+                result = await mainRequestJSON(apiPath, values, 'DELETE');
+            }
+        }
+        return result;
     } catch(err) {
         return { error: err.message }
     }
+}
+
+
+
+
+const getAccessToken = () => getLocalStorage('accessToken')
+
+const getRefreshToken = () => getLocalStorage('refreshToken')
+
+const getAuthHeader = () => {
+    const accessToken = getAccessToken();
+    return accessToken ? { authorization: `Bearer ${accessToken}` } : null;
+}
+
+const mainRequestGet = async (apiPath) => {
+    const response = await fetch(API_BASE + apiPath, { 
+        headers: { ...getAuthHeader() } 
+    });
+    return await response.json();  
+}
+
+const mainRequestJSON = async (apiPath, values, method) => {
+    const response = await fetch(API_BASE + apiPath, { 
+        method: method, 
+        body: JSON.stringify(values),
+        headers: { 
+            'Content-Type': 'application/json', 
+            ...getAuthHeader()
+        } 
+    });
+    return await response.json();
+}
+
+const mainRequestMulti = async (apiPath, formData, method) => {
+    const response = await fetch(API_BASE + apiPath, { 
+        method: method, 
+        body: formData,
+        headers: { ...getAuthHeader() }
+    });
+    return await response.json();
+}
+
+const attemptRefresh = async () => {
+    const refreshToken = getRefreshToken();
+    if (!refreshToken) return null;
+    const refreshResponse = await fetch(API_BASE + '/auth/refresh', {
+        method: 'POST',
+        body: JSON.stringify({ refreshToken }),
+        headers: { 'Content-Type': 'application/json'}
+    })
+    const { data: newAccessToken, error: refreshError } = await refreshResponse.json();
+    if (refreshError) return null;
+    setLocalStorage('accessToken', newAccessToken);
+    return true;
 }
 
