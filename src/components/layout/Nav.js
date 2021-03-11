@@ -79,10 +79,10 @@ const ListItem = styled.li`
         font-size: 1.15rem;
         color: var(--teal);
         @media(min-width: 320px) {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
         @media(min-width: ${media.small}) {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
     }
 `
@@ -95,9 +95,9 @@ const AuthBtn = styled.button`
     font-size: 1.15rem;
     color: var(--teal);
     @media(min-width: 320px) {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
     @media(min-width: ${media.small}) {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 `

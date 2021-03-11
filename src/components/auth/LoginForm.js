@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import useForm from '../../hooks/form'
-import logo from '../../assets/recipeshare-logo.png'
+import logo from '../../assets/cookbook-logo.png'
 import { StyledHeader, Center, Card, Form, SubmitBtn, StyledLink } from './RegisterForm'
 import Input from '../shared/Input'
 import FormFeedback from '../shared/FormFeedback'

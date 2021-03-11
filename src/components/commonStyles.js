@@ -11,7 +11,7 @@ export const media = {
 
 export const Main = styled.main`
     width: 100%;
-    max-width: 768px;
+    max-width: ${media.medium};
     position: relative;
     padding: 1rem 0;
     @media(min-width: ${media.medium}) {
@@ -35,10 +35,9 @@ export const PageTitle = styled.h1`
 
 export const Wrapper = styled.section`
     width: 100%;
-    max-width: 1250px;
+    max-width: ${media.medium};
     margin: 0 auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    position: relative;
 `
 
 export const GridContainer = styled.section`
