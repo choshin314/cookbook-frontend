@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import EditWrapper from "../shared/EditWrapper";
 import Input from "../shared/Input";
 import EditSection from "./EditSection";
-import { ACCOUNT_CONSTRAINTS } from '../../constants'
 import useAccountEditForm from "../../hooks/accountEditForm";
 
 function EditEmail({ user }) {
@@ -24,6 +23,7 @@ function EditEmail({ user }) {
                 onChange={handleChange}
                 onSubmit={validateAndSubmit}
                 resetForm={resetForm}
+                isSubmitting={isSubmitting}
             >
                 <Input
                     type="email"

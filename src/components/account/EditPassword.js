@@ -3,7 +3,6 @@ import useAccountEditForm from "../../hooks/accountEditForm";
 import EditWrapper from "../shared/EditWrapper";
 import Input from "../shared/Input";
 import EditSection from "./EditSection";
-import { ACCOUNT_CONSTRAINTS } from '../../constants'
 
 function EditPassword({ user }) {
     const {
@@ -23,6 +22,7 @@ function EditPassword({ user }) {
                 onChange={handleChange}
                 onSubmit={validateAndSubmit}
                 resetForm={resetForm}
+                isSubmitting={isSubmitting}
             >
                 <Input
                     type="password"

@@ -2,7 +2,6 @@ import useRecipeEditForm from "../../../hooks/recipeEditForm";
 import EditWrapper from '../../shared/EditWrapper';
 import IngredientListInput from "../recipeForm/IngredientListInput";
 import { DragDropContext } from "react-beautiful-dnd";
-import Spinner from '../../shared/Spinner';
 
 function EditIngredients({recipe}) {
     const { 
@@ -24,8 +23,8 @@ function EditIngredients({recipe}) {
             onChange={handleChange} 
             onSubmit={validateAndSubmit}
             resetForm={resetForm}
+            isSubmitting={isSubmitting}
         >
-            {isSubmitting && <Spinner />} 
             <DragDropContext onDragEnd={handleDragEnd} >
                 <IngredientListInput 
                     addToList={addToList}

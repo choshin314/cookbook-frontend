@@ -19,7 +19,7 @@ function EditReview({ review, user, dispatchSetFlash, dispatchHandleErr }) {
         rating: review.rating
     }
     const { 
-        handleChange, validateAndSubmit, inputValues, inputErrors, resetForm 
+        handleChange, validateAndSubmit, inputValues, inputErrors, resetForm, isSubmitting 
     } = useForm(initVals, REVIEW_CONSTRAINTS, handleSubmit)
 
     async function handleSubmit(inputValues) {
@@ -47,6 +47,7 @@ function EditReview({ review, user, dispatchSetFlash, dispatchHandleErr }) {
             onChange={handleChange} 
             onSubmit={validateAndSubmit} 
             resetForm={resetForm}
+            isSubmitting={isSubmitting}
         >
             <ReviewForm 
                 values={inputValues}

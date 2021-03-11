@@ -2,13 +2,24 @@ import useToggle from '../../hooks/toggle'
 import ModalForm from './ModalForm'
 import EditBtn from './EditBtn'
 import { EditBtnWrapper } from '../recipe/recipeEdit/EditBtnWrapper';
+import Spinner from './Spinner'
 
-function EditWrapper({onChange, onSubmit, resetForm, height, maxWidth, children}) {
+function EditWrapper(props) {
+    const {
+        onChange, 
+        onSubmit, 
+        resetForm,
+        isSubmitting, 
+        height, 
+        maxWidth, 
+        children
+    } = props;
     const [ formOpen, toggleFormOpen ] = useToggle(false);
     
     return (
         <EditBtnWrapper>
             <EditBtn onClick={toggleFormOpen} />
+            {isSubmitting && <Spinner />}
             {formOpen && (
                 <ModalForm 
                     open={formOpen} 

@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import EditWrapper from "../shared/EditWrapper";
 import ImgInput from "../shared/ImgInput";
 import EditSection from "./EditSection";
-import { ACCOUNT_CONSTRAINTS } from '../../constants'
 import useAccountEditForm from "../../hooks/accountEditForm";
 
 function EditProfilePic({ user }) {
@@ -24,6 +23,7 @@ function EditProfilePic({ user }) {
                 onChange={handleChange}
                 onSubmit={validateAndSubmit}
                 resetForm={resetForm}
+                isSubmitting={isSubmitting}
             >
                 <ImgInput
                     name="profilePic"

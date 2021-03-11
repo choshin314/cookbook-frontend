@@ -1,7 +1,6 @@
 import useRecipeEditForm from "../../../hooks/recipeEditForm";
 import EditWrapper from '../../shared/EditWrapper'
 import Input from "../../shared/Input";
-import Spinner from '../../shared/Spinner';
 
 function EditIntro({recipe}) {
     const { 
@@ -9,8 +8,12 @@ function EditIntro({recipe}) {
     } = useRecipeEditForm(['intro'],'general')
 
     return (
-        <EditWrapper onChange={handleChange} onSubmit={validateAndSubmit} resetForm={resetForm}>
-            {isSubmitting && <Spinner />} 
+        <EditWrapper 
+            onChange={handleChange} 
+            onSubmit={validateAndSubmit} 
+            resetForm={resetForm}
+            isSubmitting={isSubmitting}
+        >
             <Input 
                 name="intro"
                 value={inputValues.intro}
