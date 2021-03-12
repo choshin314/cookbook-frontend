@@ -65,6 +65,13 @@ export default function reducer(feeds=initFeed, action) {
             let newIds = {};
             let oldestFetched;
             fetched = fetched.filter(rec => !feeds[feedName].ids[rec.id]);
+
+            if (fetched.length === 0) return {
+                ...feeds,
+                error: null,
+                loading: false
+            }
+
             fetched.forEach(rec => newIds[rec.id] = true);
             oldestFetched = fetched.length > 0 ? 
                 fetched[fetched.length - 1].createdAt : 
@@ -95,7 +102,7 @@ export default function reducer(feeds=initFeed, action) {
                 [feedName]: {
                     ...feeds[feedName],
                     newRecipes: [ ...fetched, ...feeds[feedName].newRecipes ],
-                    newestTime: fetched[0].createdAt || feeds[feedName].newestTime
+                    newestTime: fetched[0].createdAt || feeds[feedName].newestTime 
                 }
             }
         }
