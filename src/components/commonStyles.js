@@ -38,6 +38,10 @@ export const Wrapper = styled.section`
     max-width: ${media.medium};
     margin: 0 auto;
     position: relative;
+    padding: .5rem 1rem;
+    @media(min-width: ${media.full}) {
+        padding: .5rem 0;
+    }
 `
 
 export const GridContainer = styled.section`

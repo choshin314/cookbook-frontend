@@ -1,11 +1,13 @@
+import React from 'react'
 import styled from 'styled-components'
 import { media, StyledOL } from '../commonStyles';
 import FollowBtn from '../profile/FollowBtn'
 import AvatarLink from './AvatarLink'
 
-function UserList({users, observer}) {
+const UserList = React.forwardRef((props, ref) => {
+    const {users, observer, id} = props;
     return (
-        <StyledOL>
+        <StyledOL ref={ref}>
             {users && users.map(u => (
                 <UserCard key={u.id}>
                     <AvatarLink user={u} showNames/>
@@ -18,7 +20,7 @@ function UserList({users, observer}) {
             */}
         </StyledOL>
     )
-}
+})
 
 export default UserList;
 

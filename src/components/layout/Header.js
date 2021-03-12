@@ -39,12 +39,8 @@ const StyledHeader = styled.header`
 const FlexRow = styled.div`
     display: flex;
     justify-content: center;
-    padding: .5rem 1rem;
     @media(min-width: ${media.small}) {
         justify-content: space-between;
-    }
-    @media(min-width: ${media.full}) {
-        padding: .5rem 0;
     }
 `
 

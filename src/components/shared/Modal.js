@@ -32,7 +32,7 @@ const Backdrop = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-
+    z-index: 3;
     width: 100%;
     height: 100%;
     background-color: ${p => p.backdrop ? 'rgba(0,0,0,.1)' : 'transparent'};
@@ -58,4 +58,5 @@ const StyledModal = styled.div`
     flex-direction: column;
     position: relative;
     margin-bottom: 1rem;
+    z-index: 10;
 `
