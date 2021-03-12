@@ -15,12 +15,16 @@ export function loginUser(values) {
     return async (dispatch) => {
         dispatch(userAuthStart());
         const { data, error } = await ajax.post('/auth/login', values);
-        if (error) return dispatch(userAuthFail(error));
-        setLocalStorage('accessToken', data.accessToken);
-        setLocalStorage('refreshToken', data.refreshToken);
-        dispatch(userAuthSuccess(data))
-        await dispatch(fetchAllSocial())
-        dispatch(backToReferrer()) 
+        if (error) {
+            dispatch(userAuthFail(error))
+            dispatch(setFlash('error', error))
+        } else {
+            setLocalStorage('accessToken', data.accessToken);
+            setLocalStorage('refreshToken', data.refreshToken);
+            dispatch(userAuthSuccess(data))
+            dispatch(fetchAllSocial())
+            dispatch(backToReferrer()) 
+        }
     }
 }
 

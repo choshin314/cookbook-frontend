@@ -23,6 +23,13 @@ function FeedList(props) {
                 {loading && <Spinner />}
                 {recipes.map(r => <li key={r.id}><RecipeCard recipe={r} /></li>)}
             </StyledList>
+            {recipes.length === 0 && <EmptyMessage>
+                <span>
+                    {feedType === 'private' ? 
+                    'Make sure to follow people to see their newest recipes here!' : 
+                    'No recipes to show'}
+                </span>
+            </EmptyMessage>}
             <Bottom 
                 id={feedType === "public" ? "btm-public-feed" : "btm-private-feed"}
             >
@@ -82,4 +89,9 @@ const NewRecipesBtn = styled(Button)`
 const Bottom = styled.div`
     position: absolute;
     bottom: 0;
+`
+
+const EmptyMessage = styled.div`
+    text-align: center;
+    padding: 2rem;
 `

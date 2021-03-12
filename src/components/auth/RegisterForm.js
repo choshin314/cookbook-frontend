@@ -6,7 +6,6 @@ import useForm from '../../hooks/form'
 import logo from '../../assets/cookbook-logo.png'
 import { CardWrapper, Button, media } from '../commonStyles'
 import Input from '../shared/Input'
-import FormFeedback from '../shared/FormFeedback'
 import Spinner from '../shared/Spinner'
 import {connect} from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
@@ -16,15 +15,13 @@ const initVals = {
     email: '', firstName: '', lastName: '', username: '', password: '', passwordConfirmation: ''
 }
 
-function RegisterForm({ register, user, error, submitting }) {
+function RegisterForm({ register, submitting }) {
     const handleSubmit = async (values) => {
         return await register(values, ['profilePic'])
     }
     const {
         inputValues, 
         inputErrors,
-        formErrors,
-        validateForm, 
         handleChange,
         validateAndSubmit
     } = useForm(initVals, ACCOUNT_CONSTRAINTS, handleSubmit);
@@ -94,20 +91,13 @@ function RegisterForm({ register, user, error, submitting }) {
                 </StyledDiv>
                 <SubmitBtn type="submit">Get Cookin'</SubmitBtn>
                 <StyledLink to="/account/login">Already have an account?  Sign in</StyledLink>
-                <Center>
-                    <FormFeedback errorMsg={formErrors[0] || error} /> 
-                </Center>
             </Form>
         </Card>
     )
 }
 
-const mapStateToProps = (global) => ({ 
-    submitting: global.auth.loading, 
-    error: global.auth.error,
-    user: global.auth.user 
-})
-export default connect(null, { register: registerUser })(RegisterForm);
+const mapStateToProps = state => ({ submitting: state.auth.loading })
+export default connect(mapStateToProps, { register: registerUser })(RegisterForm);
 
 const StyledDiv = styled.div`
     display: grid;

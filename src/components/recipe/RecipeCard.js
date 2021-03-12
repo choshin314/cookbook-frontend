@@ -29,10 +29,10 @@ export default function RecipeCard({recipe}) {
                     </Header>
                     <ImgCover to={`/recipes/view/${recipe.id}-${recipe.slug}`}>
                         <picture>
-                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_800`)} media="(min-width: 768px)"/>
-                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_700`)} media="(min-width: 600px)"/>
-                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_600`)} media="(min-width: 500px)"/>
-                            <source srcset={transformImg(recipe.coverImg, `c_fit,w_500`)} media="(min-width: 400px)"/>
+                            <source srcSet={transformImg(recipe.coverImg, `c_fit,w_800`)} media="(min-width: 768px)"/>
+                            <source srcSet={transformImg(recipe.coverImg, `c_fit,w_700`)} media="(min-width: 600px)"/>
+                            <source srcSet={transformImg(recipe.coverImg, `c_fit,w_600`)} media="(min-width: 500px)"/>
+                            <source srcSet={transformImg(recipe.coverImg, `c_fit,w_500`)} media="(min-width: 400px)"/>
                             <img src={transformImg(recipe.coverImg, `c_fit,w_412`)} 
                                 alt={`Finished result of recipe for ${recipe.title}`}
                             />

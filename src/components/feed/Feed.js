@@ -12,7 +12,7 @@ function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
         if (recipes.length === 0) {
             getOlderRecipes();
         }
-    }, [feedType])
+    }, [feedType, recipes.length])
 
     useEffect(() => {
         const checkStuff = setInterval(() => {
@@ -21,7 +21,7 @@ function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
             }
         }, 120000)
         return () => clearInterval(checkStuff);
-    }, [loading, recipes])
+    }, [loading, recipes, feedType])
 
     useEffect(() => {
         const targetId = feedType === 'public' ? 'btm-public-feed' : 'btm-private-feed';
@@ -38,7 +38,7 @@ function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
             })
         }, options)
         observer.observe(document.getElementById(targetId));
-    }, [endOfList])
+    }, [endOfList, feedType])
 
     return (
         <FeedList 
