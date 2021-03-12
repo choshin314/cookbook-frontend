@@ -1,4 +1,6 @@
 import { ajax } from '../../helpers/sendAjax'
+import { setFlash } from './flashActions';
+import { setRedirect } from './redirectActions';
 
 import {
     SET_PROFILE_STATS, 
@@ -33,7 +35,11 @@ export const fetchProfile = (username) => {
         dispatch(fetchProfileStart());
         const { data:userData, error:userErr } = await ajax.get(`/users/${username}`);
         const { data:statsData, error:statsErr } = await ajax.get(`/users/${username}/stats`);
-        if (userErr || statsErr) return dispatch(fetchProfileFail('Could not retrieve profile info'));
+        if (userErr || statsErr) {
+            dispatch(setFlash('error', 'Could not find the requested profile'))
+            dispatch(setRedirect('/'))
+            return dispatch(fetchProfileFail('Could not retrieve profile info'));
+        }
         dispatch(fetchProfileSuccess({ user: userData, stats: statsData }))
     }
 }
@@ -41,7 +47,11 @@ export const fetchProfile = (username) => {
 export const fetchProfileStats = (username) => {
     return async (dispatch, getState) => {
         const { data, error } = await ajax.get(`/users/${username}/stats`);
-        if (error) return dispatch(fetchProfileFail('Could not update user stats'));
+        if (error) {
+            dispatch(setFlash('error', 'Could not find the requested info'))
+            dispatch(setRedirect('/'))
+            return dispatch(fetchProfileFail('Could not update user stats'));
+        }
         dispatch(setProfileStats(data))
     }
 }
