@@ -14,7 +14,7 @@ const UserList = React.forwardRef((props, ref) => {
                     <FollowBtn profileUser={u} />
                 </UserCard>
             ))}
-            {observer && observer} {/*
+            {observer && <li>{observer}</li>} {/*
                 Will pass down intersectionObserver component if/when I want some
                 action to be triggered at the bottom of the list (e.g. infinite scroll)
             */}

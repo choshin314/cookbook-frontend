@@ -54,6 +54,7 @@ export default FollowsModal
 
 const ContentWrapper = styled.article`
     position: fixed;
+    z-index: 3;
     top: 50%;
     left: 50%;
     display: flex;

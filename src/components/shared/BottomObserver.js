@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Spinner from './Spinner'
 
-function BottomObserver({ onIntersect, loading, endOfList, root }) {
+function BottomObserver({ onIntersect, loading, endOfList, root, deps=[] }) {
     const bottomRef = useRef(null);
 
     useEffect(() => {
@@ -11,7 +11,6 @@ function BottomObserver({ onIntersect, loading, endOfList, root }) {
             rootMargin: '0px',
             threshold: .5
         }
-        console.log(options)
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !loading && !endOfList) {
@@ -23,7 +22,7 @@ function BottomObserver({ onIntersect, loading, endOfList, root }) {
         return () => {
             if (bottomRef.current) observer.unobserve(bottomRef.current)
         };
-    }, [endOfList])
+    }, [endOfList, ...deps])
 
     return (
         <BottomDiv ref={bottomRef}>

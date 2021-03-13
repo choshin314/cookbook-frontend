@@ -108,7 +108,7 @@ export default function reducer(searchResults=initSearch, action) {
                     loading: false,
                     ids: { ...searchResults[category].ids, ...additionalIds },
                     results: [ ...searchResults[category].results, ...newResults ],
-                    endOfList: newResults.length === 0
+                    endOfResults: newResults.length === 0
                 }
             }
         }

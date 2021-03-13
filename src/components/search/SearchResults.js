@@ -16,14 +16,14 @@ function SearchResults({ users, recipes, queries, fetchMoreResults }) {
                 {users.loading && <Spinner />}
                 {users.results.length === 0 && <NoResults>Search returned no results</NoResults>}
                 {users.results.length > 0 && <UserList users={users.results} />}
-                {!users.endOfList && <SeeMoreBtn category="users" query={queries.q} filter={queries.filter || 'all'} />}
+                {!users.endOfResults && <SeeMoreBtn category="users" query={queries.q} filter={queries.filter || 'all'} />}
             </Results>
             <Results maxHeight="50%">
                 <h2>Recipe Results</h2>
                 {recipes.loading && <Spinner />}
                 {recipes.results.length === 0 && <NoResults>Search returned no results</NoResults>}
                 {recipes.results.length > 0 && <RecipeList recipes={recipes.results} />}
-                {!recipes.endOfList && <SeeMoreBtn category="recipes" query={queries.q} filter={queries.filter || 'all'} />}
+                {!recipes.endOfResults && <SeeMoreBtn category="recipes" query={queries.q} filter={queries.filter || 'all'} />}
             </Results>
         </>
     )
@@ -38,7 +38,7 @@ function SearchResults({ users, recipes, queries, fetchMoreResults }) {
                     observer={<BottomObserver 
                         onIntersect={fetchMoreResults} 
                         loading={users.loading}
-                        endOfList={users.endOfList} 
+                        endOfList={users.endOfResults} 
                     />}
                 />
             )}
@@ -55,7 +55,7 @@ function SearchResults({ users, recipes, queries, fetchMoreResults }) {
                     observer={<BottomObserver 
                         onIntersect={fetchMoreResults} 
                         loading={recipes.loading} 
-                        endOfList={recipes.endOfList}
+                        endOfList={recipes.endOfResults}
                     />}
                 />
             )}
