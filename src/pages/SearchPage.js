@@ -9,6 +9,7 @@ import { Main } from "../components/commonStyles"
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 import { getSearchResults, resetSearch } from '../redux/actions/searchActions'
 import FilterMenu from '../components/search/FilterMenu'
+import HelmetHead from '../components/shared/HelmetHead'
 
 function SearchPage({ dispatchGetSearchResults, dispatchResetResults, searchState }) {
     const match = useRouteMatch();
@@ -33,6 +34,7 @@ function SearchPage({ dispatchGetSearchResults, dispatchResetResults, searchStat
     if (match.isExact) return <Redirect to="/" />
     return (
         <Main>
+            <HelmetHead title="Search Results" />
             <Container>
                 <FilterMenu queries={queries} />
                 <Switch>

@@ -9,6 +9,7 @@ import useRecipeViewContext from '../hooks/recipeViewContextHook'
 import { ajax } from '../helpers/sendAjax'
 import RecipeView from '../components/recipe/RecipeView'
 import Spinner from '../components/shared/Spinner'
+import HelmetHead from '../components/shared/HelmetHead';
 
 function RecipePage({user, dispatchSetFlash, dispatchSetRedirect }) {
     const { recipe, updateRecipe, setIsOwnedByUser } = useRecipeViewContext();
@@ -45,7 +46,12 @@ function RecipePage({user, dispatchSetFlash, dispatchSetRedirect }) {
 
     if (loading) return <Spinner />
     if (error) return <Redirect to="/" />
-    return <RecipeView onDelete={handleDelete} />
+    return (
+        <>
+            <HelmetHead title={recipe.title} />
+            <RecipeView onDelete={handleDelete} />
+        </>
+    )
 }
 
 const mapState = state => ({ user: state.auth.user })

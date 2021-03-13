@@ -10,6 +10,7 @@ import Spinner from '../shared/Spinner'
 import {connect} from 'react-redux'
 import { registerUser } from '../../redux/actions/authActions'
 import { ACCOUNT_CONSTRAINTS } from '../../constants'
+import HelmetHead from '../shared/HelmetHead'
 
 const initVals = {
     email: '', firstName: '', lastName: '', username: '', password: '', passwordConfirmation: ''
@@ -38,6 +39,7 @@ function RegisterForm({ register, submitting }) {
     return (
         <Card>
             {submitting && <Spinner />}
+            <HelmetHead title="Registration Page" />
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
             <Form onChange={handleChange} onSubmit={validateAndSubmit} noValidate={true}>
                 <StyledDiv>

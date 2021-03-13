@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 
 import styled from 'styled-components'
+import HelmetHead from "../shared/HelmetHead";
 import EditBio from './EditBio'
 import EditEmail from './EditEmail'
 import EditPassword from './EditPassword'
@@ -10,6 +11,7 @@ import EditUsername from './EditUsername'
 function AccountView ({user}) {
     return (
         <Container>
+            <HelmetHead title="Account Settings" />
             <h1>Account Settings</h1>
             <EditUsername user={user} />
             <EditEmail user={user} />

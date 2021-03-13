@@ -8,6 +8,7 @@ import Input from '../shared/Input'
 import Spinner from '../shared/Spinner'
 import {connect} from 'react-redux'
 import { loginUser } from '../../redux/actions/authActions'
+import HelmetHead from '../shared/HelmetHead'
 
 const initVals = { emailUsername: null, password: null };
 
@@ -27,6 +28,7 @@ function LoginForm({login, user, error, submitting }) {
 
     return (
         <Card>
+            <HelmetHead title="Login Page" />
             {submitting && <Spinner />}
             <StyledHeader><img src={logo} alt="cookbook"/></StyledHeader>
             <Form onChange={handleChange} onSubmit={handleSubmit} noValidate={true}>
