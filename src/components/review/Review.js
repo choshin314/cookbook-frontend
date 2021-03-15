@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { transformImg } from '../../helpers';
 import Ratings from '../recipe/Ratings';
 import { EditBtnWrapper } from '../recipe/recipeEdit/EditBtnWrapper';
 
@@ -27,7 +28,7 @@ function Review({review}) {
             <StyledContent>
                 <ReviewBody>{review.content}</ReviewBody>
                 {review.reviewImg && (<ImgWrapper>
-                    <img src={review.reviewImg} />
+                    <img src={transformImg(review.reviewImg, 'c_fit,w_120')} />
                 </ImgWrapper>)}
             </StyledContent>
         </Container>
