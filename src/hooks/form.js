@@ -82,6 +82,7 @@ export default function useForm(initValues, constraints, handleSubmit) {
                 formErrors.push(`${key.toUpperCase()}: Required`);
             }
         }
+        console.log(formErrors)
         if (formErrors.length > 0) {
             setFormErrors(formErrors);
             setInputErrors(inputErrors);

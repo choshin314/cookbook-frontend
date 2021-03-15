@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext } from 'react'
-import { Redirect, useParams } from 'react-router-dom'
+import { Redirect, useParams, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
 
 import { setFlash } from '../redux/actions/flashActions'
@@ -11,16 +11,17 @@ import RecipeView from '../components/recipe/RecipeView'
 import Spinner from '../components/shared/Spinner'
 import HelmetHead from '../components/shared/HelmetHead';
 
-function RecipePage({user, dispatchSetFlash, dispatchSetRedirect }) {
+function RecipePage({ user, dispatchSetFlash, dispatchSetRedirect }) {
     const { recipe, updateRecipe, setIsOwnedByUser } = useRecipeViewContext();
     const [ error, setError ] = useState(null);
     const [ loading, setLoading ] = useState(true);
     const params = useParams();
+    const history = useHistory();
 
     async function handleDelete() {
         const result = await ajax.delete(`/recipes/${recipe.id}`)
         if (result.error) return dispatchSetFlash('error', result.error);
-        dispatchSetRedirect('/profile/me')
+        history.push('/profile/me')
         dispatchSetFlash('success', 'Your recipe has been deleted')
     }
 

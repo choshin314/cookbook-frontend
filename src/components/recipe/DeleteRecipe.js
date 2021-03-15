@@ -43,6 +43,7 @@ const Confirmation = styled.div`
     width: 200px;
     padding: 1rem;
     border-radius: 5px;
+    z-index: 3;
 `
 
 const ButtonDiv = styled.div`

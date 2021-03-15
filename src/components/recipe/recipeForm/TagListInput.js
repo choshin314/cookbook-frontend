@@ -32,8 +32,6 @@ function TagListInput(props) {
         </Tag>
     ))
 
-    console.log('list: ', list)
-
     return (
         <ListDraggable
             direction="row"

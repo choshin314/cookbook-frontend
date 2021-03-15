@@ -7,6 +7,7 @@ import { CardWrapper, Button, media } from '../../commonStyles'
 import RecipeFormIntro from './RecipeFormIntro'
 import RecipeFormDetails from './RecipeFormDetails'
 import Spinner from '../../shared/Spinner'
+import FormFeedback from '../../shared/FormFeedback'
 
 function RecipeForm(props) {
     const { 
@@ -15,18 +16,20 @@ function RecipeForm(props) {
         changeStep,
         inputValues,
         inputErrors,
+        formErrors,
         handleChange,
         handleDragEnd,
         removeFromList,
         validateAndSubmit,
         isSubmitting
     } = props;
+
     return (
         <Card>
-            {isSubmitting && <Spinner />}
             <Form onChange={handleChange} onSubmit={validateAndSubmit}>
                 {step === 1 && (
                     <>
+                    {isSubmitting && <Spinner />}
                     <RecipeFormIntro 
                         step={step} 
                         values={inputValues} 
@@ -47,6 +50,7 @@ function RecipeForm(props) {
                 )}
                 {step === 2 && (
                     <DragDropContext onDragEnd={handleDragEnd} >
+                    {isSubmitting && <Spinner />}
                     <RecipeFormDetails 
                         step={step} 
                         values={inputValues} 
@@ -73,8 +77,8 @@ function RecipeForm(props) {
                     </ButtonDiv>
                     </DragDropContext>
                 )}
-                
             </Form>
+            <FormFeedback formErrors={formErrors} />
         </Card>
     )
 }

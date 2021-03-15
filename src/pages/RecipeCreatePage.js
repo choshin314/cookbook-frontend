@@ -23,6 +23,7 @@ function RecipeCreatePage(props) {
         addToList,
         inputValues, 
         inputErrors, 
+        formErrors,
         handleChange, 
         handleDragEnd, 
         removeFromList, 
@@ -52,6 +53,7 @@ function RecipeCreatePage(props) {
                 changeStep={() => step === 1 ? setStep(2) : setStep(1)}
                 inputValues={inputValues}
                 inputErrors={inputErrors}
+                formErrors={formErrors}
                 handleChange={handleChange}
                 handleDragEnd={handleDragEnd}
                 removeFromList={removeFromList}

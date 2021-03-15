@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 
-function FormFeedback({errorMsg, charCount, charLimit}) {
+function FormFeedback({errorMsg, formErrors, charCount, charLimit}) {
     return (
         <Feedback>
             {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
+            {formErrors && <FormErrorMsgs>
+                    {formErrors.map(err => <li key={err}>{err}</li>)}    
+                </FormErrorMsgs>
+            }
             {charLimit && !errorMsg && (
                 <CharCount overLimit={charCount > charLimit}>
                     {charCount > charLimit && <span>Oh no! Too many characters!</span>}
@@ -28,6 +32,13 @@ const ErrorMsg = styled.span`
     font-weight: 500;
     color: red;
 `
+
+const FormErrorMsgs = styled.ul`
+    list-style: none;
+    color: red;
+    padding: 1rem;
+`
+
 const CharCount = styled.div`
     display: flex;
     justify-content: flex-end;
