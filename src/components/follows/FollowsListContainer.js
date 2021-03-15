@@ -24,6 +24,9 @@ function FollowsListContainer({username, userType}) {
                 if (result.error) setError(result.error);
                 if (result.data) {
                     setUsers(prev => [ ...prev, ...result.data ])
+                    if (result.data.length === 0) {
+                        setEndOfList(true);
+                    }
                 }
             })
             .catch(err => {
