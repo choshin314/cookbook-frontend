@@ -7,7 +7,6 @@ import DeleteReview from './DeleteReview';
 import EditReview from './EditReview';
 
 function Review({review}) {
-    console.log(review);
     const formattedDate = () => {
         let date = new Date(review.updatedAt).toDateString();
         return date.split(' ').slice(1).join(' ')

@@ -19,12 +19,12 @@ function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
 
     useEffect(() => {
         getRecipes(username);
-    }, [])
+    }, [getRecipes, username])
 
     useEffect(() => {
         if(recipeView !== BOOKMARKS) return;
         getBookmarks(username);
-    }, [recipeView])
+    }, [recipeView, getBookmarks, username])
     
     return (
         <section>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { ajax } from '../../helpers/sendAjax';
 import { setFlash } from '../../redux/actions/flashActions';
@@ -11,8 +11,9 @@ function FollowsListContainer({username, userType, dispatchSetFlash }) {
     const [ users, setUsers ] = useState([]);
     const [ endOfList, setEndOfList ] = useState(false);
     const listRef = useRef(null)
+    const initFetchCalled = useRef(false);
 
-    const getMoreUsers = () => {
+    const getMoreUsers = useCallback((users) => {
         const lastUser = users[users.length - 1];
         const query = lastUser ? 
             `?ff=${lastUser.firstName}&fl=${lastUser.lastName}&fu=${lastUser.username}` : 
@@ -33,14 +34,18 @@ function FollowsListContainer({username, userType, dispatchSetFlash }) {
                 setFlash('error', err.message)
             })
         setLoading(prev => false); 
-    }
+    }, [dispatchSetFlash, username, userType])
     
-    const observerCallback = () => {
-        if (users.length === 0) return;
-        getMoreUsers()
-    }
+    const observerCallback = useCallback(() => {
+        if (users.length === 0 || endOfList) return;
+        getMoreUsers(users)
+    }, [users, endOfList, getMoreUsers])
 
-    useEffect(getMoreUsers, [])
+    useEffect(() => {
+        if (initFetchCalled.current || users.length > 0) return;
+        getMoreUsers(users)
+        initFetchCalled.current = true;
+    }, [users, getMoreUsers])
     
     return (
         <>
@@ -49,11 +54,10 @@ function FollowsListContainer({username, userType, dispatchSetFlash }) {
                 ref={listRef}
                 users={users} 
                 observer={<BottomObserver 
-                    users={users}
                     onIntersect={observerCallback} 
                     loading={loading}
                     endOfList={endOfList} 
-                    deps={[users]}
+                    deps={[ users, observerCallback ]}
                 />}
             />
         </>

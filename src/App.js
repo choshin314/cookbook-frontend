@@ -34,10 +34,9 @@ function App({user, redirect}) {
           <Route path="/account">
             <AccountPage />
           </Route>
-          <Route path="/profile/me">
-            {user && <Redirect to={`/profile/view/${user.username}`} />}
-            {!user && <Redirect to="/account/login" />}
-          </Route>
+          <ProtectedRoute path="/profile/me" 
+            render={(user) => <Redirect to={`/profile/view/${user.username}`} />}
+          />
           <Route path="/profile/view/:username">
             <ProfilePage />
           </Route>

@@ -5,14 +5,14 @@ import FeedList from './FeedList';
 
 function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
     const { loading, error, [feedType]: { recipes, newRecipes, endOfList } } = feed;
-    const getOlderRecipes = () => fetchFeed(feedType)
+
     const showNewerRecipes = () => showNew(feedType)
 
     useEffect(() => {
         if (recipes.length === 0) {
-            getOlderRecipes();
+            fetchFeed(feedType)
         }
-    }, [feedType, recipes.length])
+    }, [feedType, recipes.length, fetchFeed])
 
     useEffect(() => {
         const checkStuff = setInterval(() => {
@@ -21,7 +21,7 @@ function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
             }
         }, 120000)
         return () => clearInterval(checkStuff);
-    }, [loading, recipes, feedType])
+    }, [loading, recipes, feedType, fetchNew])
 
     useEffect(() => {
         const targetId = feedType === 'public' ? 'btm-public-feed' : 'btm-private-feed';
@@ -32,13 +32,13 @@ function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
         }
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !loading && !endOfList) {
-                    getOlderRecipes();
+                if (entry.isIntersecting && !endOfList) {
+                    fetchFeed(feedType)
                 } 
             })
         }, options)
         observer.observe(document.getElementById(targetId));
-    }, [endOfList, feedType])
+    }, [endOfList, feedType, fetchFeed])
 
     return (
         <FeedList 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import queryString from 'query-string'
@@ -29,7 +29,15 @@ function SearchPage({ dispatchGetSearchResults, dispatchResetResults, searchStat
         if (pathname === '/search/recipes') {
             dispatchGetSearchResults('recipes', queries.q, queries.filter)
         }
-    }, [pathname, search])
+    }, [pathname, queries.q, queries.filter, dispatchGetSearchResults, dispatchResetResults])
+
+    const userCallback = useCallback(() => {
+        dispatchGetSearchResults('users', queries.q, queries.filter)
+    }, [queries.q, queries.filter, dispatchGetSearchResults])
+
+    const recipeCallback = useCallback(() => {
+        dispatchGetSearchResults('recipes', queries.q, queries.filter)
+    }, [queries.q, queries.filter, dispatchGetSearchResults])
 
     if (match.isExact) return <Redirect to="/" />
     return (
@@ -49,18 +57,14 @@ function SearchPage({ dispatchGetSearchResults, dispatchResetResults, searchStat
                         <SearchResults 
                             users={users} 
                             queries={queries}
-                            fetchMoreResults={() => {
-                                dispatchGetSearchResults('users', queries.q, queries.filter)
-                            }}
+                            fetchMoreResults={userCallback}
                         />
                     </Route>
                     <Route path={`${match.path}/recipes`}>
                         <SearchResults 
                             recipes={recipes} 
                             queries={queries}
-                            fetchMoreResults={() => {
-                                dispatchGetSearchResults('recipes', queries.q, queries.filter)
-                            }}
+                            fetchMoreResults={recipeCallback}
                         />
                     </Route>
                 </Switch>

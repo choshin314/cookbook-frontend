@@ -11,7 +11,7 @@ import Spinner from '../components/shared/Spinner'
 import HelmetHead from '../components/shared/HelmetHead';
 
 function RecipePage({ user, dispatchSetFlash, dispatchSetRedirect }) {
-    const { recipe, updateRecipe, setIsOwnedByUser } = useRecipeViewContext();
+    const { recipe, updateRecipe, checkRecipeOwner } = useRecipeViewContext();
     const [ error, setError ] = useState(null);
     const [ loading, setLoading ] = useState(true);
     const params = useParams();
@@ -31,18 +31,13 @@ function RecipePage({ user, dispatchSetFlash, dispatchSetRedirect }) {
                 if(result.error) {
                     setError(result.error);
                     dispatchSetFlash("Could not find that recipe :(");
-                };
-                if(result.data) {
+                } else if (result.data) {
                     updateRecipe(result.data);
-                    if (user && user.id === result.data.user.id) {
-                        setIsOwnedByUser(true)
-                    } else {
-                        setIsOwnedByUser(false)
-                    };
+                    checkRecipeOwner(result.data);
                 };
                 setLoading(prev => !prev);
             })
-    }, [])
+    }, [dispatchSetFlash, updateRecipe, checkRecipeOwner, params.id])
 
     if (loading) return <Spinner />
     if (error) return <Redirect to="/" />

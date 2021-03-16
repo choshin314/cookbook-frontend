@@ -14,7 +14,7 @@ function Home({user, dispatchSetFlash}) {
         if (!user && pathname === '/feeds/home') {
             dispatchSetFlash('info', 'Log in to see your friends\' recipes')
         }
-    }, [pathname, user])
+    }, [pathname, user, dispatchSetFlash])
     return (
         <Main >
             <HelmetHead title="Home" />

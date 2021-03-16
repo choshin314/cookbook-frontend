@@ -12,12 +12,13 @@ import {
 import { clearFlash } from '../../redux/actions/flashActions'
 import { CSSTransition } from 'react-transition-group'
 
-
 function Flash({ flash, clear }) {
     useEffect(() => {
-        const autoClear = setTimeout(() => clear(), 10000)
-        return () => clearTimeout(autoClear);
-    }, [flash])
+        if (flash) {
+            const autoClear = setTimeout(() => clear(), 10000)
+            return () => clearTimeout(autoClear);
+        }
+    }, [flash, clear])
 
     if(!flash) return null;
 

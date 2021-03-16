@@ -15,7 +15,7 @@ function ProfilePage({ profile, authedUser, dispatchFetchProfile }) {
 
     useEffect(() => {
         dispatchFetchProfile(username);
-    }, [username])
+    }, [username, dispatchFetchProfile])
     
     return (
         <Main>
