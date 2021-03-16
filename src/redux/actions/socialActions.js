@@ -7,8 +7,7 @@ import {
     FETCH_SOCIAL_FAIL,
     FETCH_SOCIAL_SUCCESS,
     DELETE_SOCIAL_SUCCESS,
-    ADD_SOCIAL_SUCCESS,
-    TOGGLE_SOCIAL
+    ADD_SOCIAL_SUCCESS
 } from './types'
 import { fetchProfileStats } from "./profileActions";
 

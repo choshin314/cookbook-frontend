@@ -14,7 +14,6 @@ import HelmetHead from '../components/shared/HelmetHead'
 function RecipeCreatePage(props) {
     const [step, setStep] = useState(1);
     const { 
-        auth, 
         dispatchSetRedirect, 
         dispatchSetFlash, 
         dispatchHandleErr 

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import {uuid} from 'uuidv4'
+import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function useForm(initValues, constraints, handleSubmit) {
     const [ inputValues, setInputValues ] = useState(initValues);
@@ -102,7 +102,7 @@ export default function useForm(initValues, constraints, handleSubmit) {
     }
 
     function addToList(listName, draftItem) {
-        const newListItem = { id: uuid() };
+        const newListItem = { id: uuidv4() };
         const trimIfString = (value) => typeof value === "string" ? value.trim() : value;
         for (let key in draftItem) {
             newListItem[key] = trimIfString(draftItem[key])

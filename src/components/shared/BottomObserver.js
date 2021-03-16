@@ -18,9 +18,10 @@ function BottomObserver({ onIntersect, loading, endOfList, root, deps=[] }) {
                 }
             })
         }, options)
-        observer.observe(bottomRef.current)
+        let divRef = bottomRef.current;
+        observer.observe(divRef)
         return () => {
-            if (bottomRef.current) observer.unobserve(bottomRef.current)
+            observer.unobserve(divRef)
         };
     }, [endOfList, ...deps])
 

@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as bookmarkSolid } from '@fortawesome/free-solid-svg-icons/faBookmark'
 import { faBookmark as bookmarkEmpty } from '@fortawesome/free-regular-svg-icons/faBookmark'
 import { connect } from "react-redux";
 import { toggleSocial } from "../../redux/actions/socialActions";
-import { media } from '../commonStyles';
 
 function BookmarkBtn({ recipe, auth, bookmarks, toggleBookmark }) {
     const currentBookmarks = bookmarks.recipeIds;

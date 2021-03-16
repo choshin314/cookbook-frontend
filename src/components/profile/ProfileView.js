@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {GridContainer, PageTitle, Wrapper} from '../commonStyles'
+import {GridContainer} from '../commonStyles'
 import RecipeGrid from './RecipeGrid'
 import AvatarLink from '../shared/AvatarLink'
 import FollowBtn from './FollowBtn'

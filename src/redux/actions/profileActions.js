@@ -9,8 +9,6 @@ import {
     FETCH_PROFILE_FAIL
 } from './types'
 
-const apiBase = process.env.REACT_APP_API_BASE;
-
 export const setProfileStats = (stats) => ({
     type: SET_PROFILE_STATS,
     payload: stats

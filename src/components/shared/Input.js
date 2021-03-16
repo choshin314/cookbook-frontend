@@ -24,7 +24,7 @@ function Input(props) {
         noFeedback
     } = props;
 
-    const [charCount, setCharCount] = useState(value && value.length || 0);
+    const [charCount, setCharCount] = useState((value && value.length) || 0);
 
     return (
         <Container>

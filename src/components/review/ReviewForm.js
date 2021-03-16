@@ -2,11 +2,13 @@ import styled from 'styled-components'
 
 import ImgInput from '../shared/ImgInput'
 import Input from '../shared/Input';
+import Spinner from '../shared/Spinner';
 import RatingRadioGrp from './RatingRadioGrp';
 
-function ReviewForm({ values, errors }) {
+function ReviewForm({ values, errors, isSubmitting }) {
     return (
         <StyledDiv>
+            {isSubmitting && <Spinner />}
             <ImgInput 
                 name="reviewImg"
                 label={{text: "Optional Photo", hide: false }}

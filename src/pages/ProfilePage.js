@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams, useRouteMatch, Link, Route } from 'react-router-dom'
+import { useParams, useRouteMatch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { fetchProfile } from '../redux/actions/profileActions'

@@ -22,6 +22,18 @@ function Flash({ flash, clear }) {
     if(!flash) return null;
 
     const { type, message } = flash;
+    const getFlashIcon = () => {
+        switch (type) {
+            case "success":
+                return success;
+            case "error":
+                return warning;
+            case "info":
+                return info;
+            default:
+                return info;
+        }
+    }
 
     return (
         <CSSTransition 
@@ -33,7 +45,7 @@ function Flash({ flash, clear }) {
         >
             <StyledFigure type={type}>
                 <IconWrapper type={type}>
-                    <FontAwesomeIcon icon={success}/>
+                    <FontAwesomeIcon icon={getFlashIcon()}/>
                 </IconWrapper>
                 <FlashHeader>{type}</FlashHeader>
                 <FlashMessage>
@@ -61,6 +73,7 @@ const accent = css`
             case "success": return 'var(--accent)';
             case "info": return 'var(--teal)';
             case "error": return 'var(--error)';
+            default: return 'var(--teal)';
         }
     }
 }`
@@ -71,6 +84,7 @@ const listStyle = css`
             case "success": return '👍';
             case "info": return 'ℹ️';
             case "error": return '🙁';
+            default: return 'ℹ️';
         }
     }
 }`

@@ -16,7 +16,7 @@ import DeleteRecipe from './DeleteRecipe'
 
 function RecipeView({ onDelete }) {
     const { recipe, isOwnedByUser } = useRecipeViewContext();
-    console.log(recipe);
+
     return (
         <Main>
             <Container>
@@ -76,9 +76,6 @@ const TitleDiv = styled.div`
     justify-content: space-between;
     position: relative;
 `
-const Headline = styled.div`
-`
-
 const StyledDiv = styled.div`
     margin-bottom: 1rem;
 `

@@ -1,16 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import useForm from './form'
 import { ajax } from '../helpers/sendAjax'
 import { ACCOUNT_CONSTRAINTS } from '../constants'
 import { setFlash } from '../redux/actions/flashActions'
-import { getLocalStorage } from '../helpers/index'
-import useRecipeViewContext from './recipeViewContextHook'
-import { checkAndHandleAuthErr, logoutUser, updateUserDetails } from '../redux/actions/authActions'
+import { checkAndHandleAuthErr, updateUserDetails } from '../redux/actions/authActions'
 
 export default function useAccountEditForm(initValues, endpath) {
     const dispatch = useDispatch();
-    const { user } = useSelector(state => state.auth);
     const { patch, patchMulti } = ajax;
 
     const handleSubmit = async (inputValues) => {

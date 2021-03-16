@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { EditBtnWrapper } from './recipeEdit/EditBtnWrapper';
 import EditInstructions from './recipeEdit/EditInstructions';
 
 import RecipeSection from './RecipeSection'

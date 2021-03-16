@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import {CSSTransition} from 'react-transition-group'
@@ -50,13 +50,4 @@ const Backdrop = styled.div`
         opacity: 0;
         transition: opacity .2s ease-in;
     }
-`
-
-const StyledModal = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-bottom: 1rem;
-    z-index: 10;
 `

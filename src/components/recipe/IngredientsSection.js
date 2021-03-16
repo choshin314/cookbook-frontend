@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 import RecipeSection from './RecipeSection'
 import Checkbox from '../shared/Checkbox'
-import {EditBtnWrapper} from './recipeEdit/EditBtnWrapper'
 import EditIngredients from './recipeEdit/EditIngredients'
 
 function IngredientsSection({isOwnedByUser, ingredients, recipe}) {

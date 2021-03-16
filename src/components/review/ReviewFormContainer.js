@@ -15,7 +15,7 @@ import useRecipeViewContext from "../../hooks/recipeViewContextHook"
 function ReviewFormContainer({auth, dispatchSetFlash, dispatchHandleErr }) {
     const { id: recipeId } = useParams();
     const [ formOpen, toggleFormOpen ] = useToggle(false);
-    const { recipe, updateRecipe } = useRecipeViewContext();
+    const { updateRecipe } = useRecipeViewContext();
     const { postMulti } = ajax;
 
     const handleSubmit = async (values) => {
@@ -39,7 +39,6 @@ function ReviewFormContainer({auth, dispatchSetFlash, dispatchHandleErr }) {
     const {
         inputValues,
         inputErrors,
-        formErrors,
         handleChange,
         validateAndSubmit,
         isSubmitting,
@@ -60,6 +59,7 @@ function ReviewFormContainer({auth, dispatchSetFlash, dispatchHandleErr }) {
                     <ReviewForm 
                         values={inputValues}
                         errors={inputErrors}
+                        isSubmitting={isSubmitting}
                     />
                 </ModalForm>
             )}

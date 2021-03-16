@@ -1,7 +1,6 @@
-import {useEffect, useState} from 'react'
+import { useEffect } from 'react'
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 
 import { Main } from '../components/commonStyles'
 import FeedNav from '../components/feed/FeedNav'
@@ -15,7 +14,7 @@ function Home({user, dispatchSetFlash}) {
         if (!user && pathname === '/feeds/home') {
             dispatchSetFlash('info', 'Log in to see your friends\' recipes')
         }
-    }, [pathname])
+    }, [pathname, user])
     return (
         <Main >
             <HelmetHead title="Home" />

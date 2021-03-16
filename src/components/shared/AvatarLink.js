@@ -10,7 +10,10 @@ function AvatarLink({user, imgSize="50px", showCreatedBy, showNames}) {
         <AuthorDiv>
             <Link to={`/profile/view/${user.username}`}>
                 <ImgDiv size={imgSize || '50px'}>
-                    <img src={transformImg(user.profilePic, `c_fit,h_${parsedSize},w_${parsedSize}`) || genericAvatar}/>
+                    <img 
+                        src={transformImg(user.profilePic, `c_fit,h_${parsedSize},w_${parsedSize}`) || genericAvatar}
+                        alt={`${user.username}'s avatar`}
+                    />
                 </ImgDiv>
             </Link>
             {showCreatedBy && <NameLink to={`/profile/view/${user.username}`}>by {user.firstName} {user.lastName}</NameLink>}

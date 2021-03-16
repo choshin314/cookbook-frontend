@@ -1,6 +1,5 @@
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
-import Ratings from '../recipe/Ratings'
 import UserList from '../shared/UserList'
 import Spinner from '../shared/Spinner'
 import RecipeList from './RecipeList'

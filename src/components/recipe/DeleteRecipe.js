@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import DeleteBtn from '../shared/DeleteBtn';
 import styled from 'styled-components';
 import Modal from '../shared/Modal';
@@ -8,12 +7,7 @@ import useToggle from '../../hooks/toggle';
 function DeleteRecipe({ onDelete }) {
     const [ isOpen, toggleIsOpen ] = useToggle(false);
     const [isIn, toggleIsIn] = useToggle(true);
-    const delayToggleModal = () => {
-        toggleIsIn();
-        setTimeout(() => {
-            toggleIsOpen();
-        }, 200)
-    }
+
     return (
         <>
             <DeleteBtn onClick={toggleIsOpen} />

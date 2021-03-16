@@ -7,7 +7,6 @@ import {
     RESET_SEARCH,
     LOGOUT
 } from '../actions/types'
-import { SEARCH_LIMIT } from '../../constants'
 
 let initSearch = getLocalStorage('searchResults') || {
     users: {

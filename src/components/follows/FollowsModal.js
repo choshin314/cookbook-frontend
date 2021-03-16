@@ -1,7 +1,5 @@
-import { useHistory, useRouteMatch, Route, Link, NavLink } from 'react-router-dom'
+import { useHistory, useRouteMatch, Route, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import Modal from "../shared/Modal";
 import useToggle from '../../hooks/toggle'

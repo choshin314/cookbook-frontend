@@ -5,7 +5,7 @@ import FollowBtn from '../profile/FollowBtn'
 import AvatarLink from './AvatarLink'
 
 const UserList = React.forwardRef((props, ref) => {
-    const {users, observer, id} = props;
+    const {users, observer} = props;
     return (
         <StyledOL ref={ref}>
             {users && users.map(u => (

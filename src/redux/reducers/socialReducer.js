@@ -6,7 +6,6 @@ import {
     FETCH_SOCIAL_SUCCESS,
     DELETE_SOCIAL_SUCCESS,
     ADD_SOCIAL_SUCCESS,
-    TOGGLE_SOCIAL,
     LOGOUT
 } from '../actions/types'
 
@@ -36,7 +35,6 @@ let initSocial = getLocalStorage('social') || {
 export default function reducer(social=initSocial, action) {
     switch(action.type) {
         case LOGOUT:
-            console.log('test')
             return {
                 following: {
                     loading: false,
@@ -148,8 +146,6 @@ export default function reducer(social=initSocial, action) {
                 }
             }
         }
-
-        
 
         default:
             return social

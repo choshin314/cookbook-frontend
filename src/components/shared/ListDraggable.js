@@ -42,7 +42,6 @@ function ListDraggable(props) {
                                     {(provided) => (
                                         <ListItemDraggable
                                             provided={provided}
-                                            itemId={item.id}
                                             content={displayContent(item)}
                                             onDelete={() => handleDelete(item.id)}
                                         />
@@ -82,11 +81,6 @@ const Container = styled.div`
     height: 100%;
 `
 
-const Label = styled.label`
-    font-weight: 500;
-    margin-top: .5rem;
-    margin-bottom: .5rem;
-`
 const InputWrapper = styled.div`
     position: relative;
     width: 100%;

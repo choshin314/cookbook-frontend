@@ -1,7 +1,5 @@
-import {useState, useEffect, useContext} from 'react'
 import styled from 'styled-components'
 import {CSSTransition} from 'react-transition-group'
-import {Draggable} from 'react-beautiful-dnd'
 
 import { GridContainer, GridColumn, media } from '../../commonStyles'
 import ImgInput from '../../shared/ImgInput'

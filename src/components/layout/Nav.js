@@ -2,15 +2,13 @@ import {connect} from 'react-redux'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUsers, faUserCircle, faPlus, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUserCircle, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons'
 
 import {logoutUser} from '../../redux/actions/authActions'
 import {media} from '../commonStyles'
-import {useState} from 'react'
 
 function Nav({logout, user}) {
-    const [modalOpen, setModalOpen] = useState(false);
     return (
         <Navbar>
             <ul>

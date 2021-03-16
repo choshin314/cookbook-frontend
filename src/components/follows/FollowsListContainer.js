@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
+import { connect } from 'react-redux'
 import { ajax } from '../../helpers/sendAjax';
 import { setFlash } from '../../redux/actions/flashActions';
 import BottomObserver from '../shared/BottomObserver';
 import Spinner from '../shared/Spinner';
 import UserList from '../shared/UserList';
 
-function FollowsListContainer({username, userType}) {
+function FollowsListContainer({username, userType, dispatchSetFlash }) {
     const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState(null);
     const [ users, setUsers ] = useState([]);
     const [ endOfList, setEndOfList ] = useState(false);
     const listRef = useRef(null)
@@ -21,7 +21,7 @@ function FollowsListContainer({username, userType}) {
         setLoading(prev => true);
         ajax.get(`/users/${username}/${userType+query}`)
             .then(result => {
-                if (result.error) setError(result.error);
+                if (result.error) dispatchSetFlash('error', result.error);
                 if (result.data) {
                     setUsers(prev => [ ...prev, ...result.data ])
                     if (result.data.length === 0) {
@@ -60,4 +60,5 @@ function FollowsListContainer({username, userType}) {
     )
 }
 
-export default FollowsListContainer
+const mapDispatch = { dispatchSetFlash: setFlash }
+export default connect(null, mapDispatch)(FollowsListContainer)

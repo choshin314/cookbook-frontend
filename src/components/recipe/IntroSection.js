@@ -1,10 +1,7 @@
 import styled from 'styled-components'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faInfoCircle} from '@fortawesome/free-solid-svg-icons'
 
 import RecipeSection from './RecipeSection'
 import QuickFacts from './QuickFacts'
-import {EditBtnWrapper} from './recipeEdit/EditBtnWrapper'
 import EditCoverImg from './recipeEdit/EditCoverImg'
 import EditIntro from './recipeEdit/EditIntro'
 import useRecipeViewContext from '../../hooks/recipeViewContextHook'
@@ -16,7 +13,7 @@ function IntroSection() {
         <RecipeSection>
             <CoverImg>
                 <div>
-                <img src={coverImg} alt={`Cover photo for ${title}`} />
+                <img src={coverImg} alt={`Finished result of recipe: ${title}`} />
                 </div>
                 {isOwnedByUser && <EditCoverImg recipe={recipe} /> }
             </CoverImg>

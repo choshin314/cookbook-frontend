@@ -1,4 +1,4 @@
-import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, UPDATE_USER_DETAILS, LOGOUT, BACK_TO_REFERRER } from './types'
+import {USER_AUTH_FAIL, USER_AUTH_START, USER_AUTH_SUCCESS, UPDATE_USER_DETAILS, LOGOUT } from './types'
 import {setFlash} from './flashActions'
 import { setRedirect, redirectWithReferrer, backToReferrer } from './redirectActions'
 import { ajax } from '../../helpers/sendAjax'

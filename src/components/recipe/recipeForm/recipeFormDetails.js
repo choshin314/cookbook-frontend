@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react'
 import {CSSTransition} from 'react-transition-group'
 
 import InstructionListInput from './InstructionListInput'

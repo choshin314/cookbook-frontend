@@ -1,4 +1,4 @@
-import { SET_REDIRECT, CLEAR_REDIRECT, SET_REFERRER, REDIRECT_WITH_REFERRER, BACK_TO_REFERRER } from './types'
+import { SET_REDIRECT, SET_REFERRER, REDIRECT_WITH_REFERRER, BACK_TO_REFERRER } from './types'
 
 export function setRedirect(path) {
     return (dispatch) => {

@@ -1,12 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faPlus} from '@fortawesome/free-solid-svg-icons'
 
 import Input from '../../shared/Input'
 import FormFeedback from '../../shared/FormFeedback'
-import {Button} from '../../commonStyles'
-import AddBtn from '../../shared/AddBtn'
 
 const IngredientFieldset = React.forwardRef((props, ref) => {
     const {values, draftError, errors, addToList, onChange} = props;

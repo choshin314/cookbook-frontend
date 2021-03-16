@@ -15,7 +15,7 @@ function RecipeList({recipes, observer}) {
                         <RecipeBy to={`/profile/view/${r.user.username}`}>By {r.user.username}</RecipeBy>
                     </RecipeInfo>
                     <RecipeImgWrap>
-                        <img src={transformImg(r.coverImg, 'c_fit,w_150')} />
+                        <img src={transformImg(r.coverImg, 'c_fit,w_150')} alt={`Finished result of recipe: ${r.title}`}/>
                     </RecipeImgWrap>
                 </RecipeListItem>
             ))}

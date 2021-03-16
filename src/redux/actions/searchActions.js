@@ -6,8 +6,7 @@ import {
     SEARCH_START,
     SEARCH_FAIL,
     SEARCH_SUCCESS,
-    RESET_SEARCH,
-    LOGOUT
+    RESET_SEARCH
 } from './types'
 
 export const searchAllStart = () => ({ type: SEARCH_ALL_START })

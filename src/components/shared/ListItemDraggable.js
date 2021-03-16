@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Button} from '../commonStyles'
 
 function ListItemDraggable(props) {
-    const { provided, itemId, content, onDelete } = props;
+    const { provided, content, onDelete } = props;
     return (
         <ListItem 
             {...provided.draggableProps}

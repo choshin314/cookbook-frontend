@@ -1,10 +1,9 @@
-import { useEffect, useState, createContext } from 'react'
+import { useEffect, useState } from 'react'
 import { Redirect, useParams, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
 
 import { setFlash } from '../redux/actions/flashActions'
 import { setRedirect } from '../redux/actions/redirectActions'
-import { RecipeViewProvider } from '../context/recipeViewContext'
 import useRecipeViewContext from '../hooks/recipeViewContextHook'
 import { ajax } from '../helpers/sendAjax'
 import RecipeView from '../components/recipe/RecipeView'

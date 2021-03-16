@@ -26,7 +26,6 @@ function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
         getBookmarks(username);
     }, [recipeView])
     
-    console.log(recipes)
     return (
         <section>
             <GridNav id="recipe-grid">

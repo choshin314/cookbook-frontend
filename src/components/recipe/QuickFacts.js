@@ -72,12 +72,3 @@ const Table = styled.table`
         font-size: 1rem;
     }
 `
-
-const EditWrapper = styled.span`
-    position: absolute;
-    top: .5rem;
-    right: .5rem;
-    display: flex;
-    align-items: start;
-    color: ${p => p.light ? 'white' : 'var(--med-grey)'};
-`

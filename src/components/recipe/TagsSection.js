@@ -1,6 +1,5 @@
 import RecipeSection from "./RecipeSection";
 import Tag from "../shared/Tag";
-import {EditBtnWrapper} from './recipeEdit/EditBtnWrapper'
 import EditTags from "./recipeEdit/EditTags";
 import styled from "styled-components";
 
