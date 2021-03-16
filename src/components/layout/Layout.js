@@ -2,8 +2,10 @@ import styled from 'styled-components';
 
 import Header from './Header'
 import Footer from './Footer'
+import useScrollToTop from '../../hooks/scrollToTop'
 
 function Layout({children}) {
+    useScrollToTop()
     return (
         <FlexColumn>
             <Header />

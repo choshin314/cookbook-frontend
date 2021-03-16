@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-import ScrollToTop from './components/shared/ScrollToTop'
 import Layout from './components/layout/Layout'
 import Home from './pages/Home'
 import ProfilePage from './pages/ProfilePage'
@@ -14,9 +13,9 @@ import SearchPage from './pages/SearchPage';
 import Flash from './components/shared/Flash';
 
 function App({user, redirect}) {
+
   return (
     <Router>
-      <ScrollToTop />
       <Layout>
         {redirect.to && <Redirect to={redirect.to} />}
         <Flash />
