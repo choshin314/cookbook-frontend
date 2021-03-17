@@ -14,13 +14,17 @@ function IngredientListInput(props) {
         e.preventDefault();
         setDraftError(null);
         if (!ingredientDraft.qty) return setDraftError('Quantity is required');
-        if (ingredientDraft.qty.trim().length > 10) return setDraftError('Max 10 characters for qty');
-        if (!ingredientDraft.unit) return setDraftError('Unit is required');
-        const length = ingredientDraft.content.trim().length;
-        if (length < 3) {
-            return setDraftError('Minimum 3 characters per ingredient')
-        } 
-        addToList('ingredients', ingredientDraft);
+        if (!ingredientDraft.content) return setDraftError('Ingredient is required');
+        const finalDraft = {
+            qty: ingredientDraft.qty.trim(),
+            unit: ingredientDraft.unit.trim(),
+            content: ingredientDraft.content.trim()
+        }
+        if (finalDraft.qty.length > 30) return setDraftError('Max 30 characters for qty');
+        if (finalDraft.unit && finalDraft.unit.length > 30) return setDraftError('Max 30 characters for unit');
+        if (finalDraft.content.length < 3) return setDraftError('Min3 characters per ingredient');
+        if (finalDraft.content.length > 255) return setDraftError('Max 255 characters for ingredient');
+        addToList('ingredients', finalDraft);
         setIngredientDraft({ qty: '', unit: '', content: '' });
         fieldsetRef.current.querySelector('input').focus() //refocus on "qty" input
     }
