@@ -6,7 +6,8 @@ import {
     SET_PROFILE_STATS, 
     FETCH_PROFILE_START, 
     FETCH_PROFILE_SUCCESS, 
-    FETCH_PROFILE_FAIL
+    FETCH_PROFILE_FAIL,
+    CLEAR_PROFILE
 } from './types'
 
 export const setProfileStats = (stats) => ({
@@ -27,6 +28,8 @@ export const fetchProfileFail = (errorMsg) => ({
     type: FETCH_PROFILE_FAIL,
     payload: errorMsg
 })
+
+export const clearProfile = () => ({ type: CLEAR_PROFILE })
 
 export const fetchProfile = (username) => {
     return async (dispatch, getState) => {

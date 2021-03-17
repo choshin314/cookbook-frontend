@@ -3,7 +3,8 @@ import {
     FETCH_PROFILE_START, 
     FETCH_PROFILE_FAIL, 
     FETCH_PROFILE_SUCCESS, 
-    SET_PROFILE_STATS
+    SET_PROFILE_STATS,
+    CLEAR_PROFILE
 } from '../actions/types'
 
 const initProfileState = getLocalStorage('profile') || {
@@ -28,6 +29,8 @@ export default function profileReducer(profileState=initProfileState, action) {
             }
         case SET_PROFILE_STATS:
             return { ...profileState, stats: action.payload }
+        case CLEAR_PROFILE:
+            return initProfileState
 
         default: 
             return profileState

@@ -4,9 +4,11 @@ import {GridContainer} from '../commonStyles'
 import RecipeGrid from './RecipeGrid'
 import AvatarLink from '../shared/AvatarLink'
 import FollowBtn from './FollowBtn'
+import Spinner from '../shared/Spinner'
 
-function ProfileView({profile, profileUrl, isOwnedByUser}) {
+function ProfileView({profile, profileUrl, isOwnedByUser=false}) {
     const { user, stats } = profile;
+    if (!user) return <Spinner />
     return (
         <Container>
             {isOwnedByUser && <EditAccountBtn >
