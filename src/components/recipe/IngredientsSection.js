@@ -11,7 +11,7 @@ function IngredientsSection({isOwnedByUser, ingredients, recipe}) {
                 {ingredients.map(ing => (
                     <li key={ing.id}>
                         <Checkbox>
-                            {ing.qty} {ing.unit} {ing.content}
+                            {ing.qty} {ing.unit || ""} {ing.content}
                         </Checkbox>
                     </li>
                 ))}
