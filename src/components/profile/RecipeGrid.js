@@ -33,7 +33,7 @@ function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
                     <li>
                         <Tab onClick={() => setRecipeView(USER)} className={recipeView === USER && 'tab--active'}>
                             <FontAwesomeIcon icon={faFolder} />
-                            <span>User Recipes</span>
+                            <span>Your Recipes</span>
                         </Tab>
                     </li>
                     <li>
