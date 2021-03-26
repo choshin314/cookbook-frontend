@@ -26,7 +26,7 @@ export const RECIPE_CONSTRAINTS = {
     },
     intro: {
         required: true,
-        minChars: 50,
+        minChars: 20,
         maxChars: 400
     },
     servings: {
