@@ -22,6 +22,20 @@ export const storeFreshFeedItems = (feedName, recipes) => ({
 })
 export const showFreshFeedItems = (feedName) => ({ type: SHOW_FRESH_FEED_ITEMS, payload: feedName })
 
+export function fetchFeedFirst(feedName) {
+    return async (dispatch, getState) => {
+        dispatch(resetFeeds());
+        dispatch(fetchFeedStart());
+        let oldestTime = getState().feeds[feedName].oldestTime;
+        const result = await ajax.get(`/recipes/feed/${feedName}?older=${oldestTime || new Date().toISOString()}`);
+        if (result.error) {
+            dispatch(fetchFeedFail(result.error))
+            dispatch(setFlash('error', 'Could not retrieve feed'))
+        } else {
+            dispatch(fetchFeedSuccess(feedName, result.data))
+        }
+    }
+}
 export function fetchFeedArchive(feedName) {
     return async (dispatch, getState) => {
         if (feedName !== 'public' && feedName !== 'private') return;

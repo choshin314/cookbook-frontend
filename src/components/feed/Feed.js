@@ -1,25 +1,23 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchFeedArchive, fetchFreshFeedItems, showFreshFeedItems } from '../../redux/actions/feedsActions'
+import { fetchFeedArchive, fetchFeedFirst, fetchFreshFeedItems, showFreshFeedItems } from '../../redux/actions/feedsActions'
 import FeedList from './FeedList';
 
-function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
+function Feed({ feedType, feed, fetchInitial, fetchOlder, fetchNew, showNew }) {
     const { loading, error, [feedType]: { recipes, newRecipes, endOfList } } = feed;
 
     const showNewerRecipes = () => showNew(feedType)
 
     useEffect(() => {
-        if (recipes.length === 0) {
-            fetchFeed(feedType)
-        }
-    }, [feedType, recipes.length, fetchFeed])
+        fetchInitial(feedType)
+    }, [ feedType, fetchInitial ])
 
     useEffect(() => {
         const checkStuff = setInterval(() => {
             if (!loading && recipes.length > 0) {
                 fetchNew(feedType)
             }
-        }, 120000)
+        }, 60000)
         return () => clearInterval(checkStuff);
     }, [loading, recipes, feedType, fetchNew])
 
@@ -33,12 +31,12 @@ function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !endOfList) {
-                    fetchFeed(feedType)
+                    fetchOlder(feedType)
                 } 
             })
         }, options)
         observer.observe(document.getElementById(targetId));
-    }, [endOfList, feedType, fetchFeed])
+    }, [endOfList, feedType, fetchOlder])
 
     return (
         <FeedList 
@@ -54,7 +52,8 @@ function Feed({ feedType, feed, fetchFeed, fetchNew, showNew }) {
 
 const mapState = state => ({ feed: state.feeds });
 const mapDispatch = { 
-    fetchFeed: fetchFeedArchive, 
+    fetchInitial: fetchFeedFirst,
+    fetchOlder: fetchFeedArchive, 
     fetchNew: fetchFreshFeedItems, 
     showNew: showFreshFeedItems 
 };
