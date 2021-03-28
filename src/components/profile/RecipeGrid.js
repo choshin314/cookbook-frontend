@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faBookmark, faFolder } from '@fortawesome/free-regular-svg-icons'
 
-import {fetchProfileRecipesBookmarks, fetchProfileRecipesOwn} from '../../redux/actions/profileRecipesActions'
+import {clearProfileRecipes, fetchProfileRecipesBookmarks, fetchProfileRecipesOwn} from '../../redux/actions/profileRecipesActions'
 import {GridContainer, media} from '../commonStyles'
 import Spinner from '../shared/Spinner'
 import RecipeGridItem from './RecipeGridItem'
@@ -13,13 +13,14 @@ import RecipeGridItem from './RecipeGridItem'
 const USER = 'user'
 const BOOKMARKS = 'bookmarks'
 
-function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes}) {
+function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes, clearRecipes}) {
     const [ recipeView, setRecipeView ] = useState(USER);
     const { username } = useParams();
 
     useEffect(() => {
         getRecipes(username);
-    }, [getRecipes, username])
+        return () => clearRecipes();
+    }, [getRecipes, clearRecipes, username])
 
     useEffect(() => {
         if(recipeView !== BOOKMARKS) return;
@@ -73,7 +74,8 @@ const mapStateToProps = (global) => ({
 })
 const mapDispatchToProps = {
     getBookmarks: fetchProfileRecipesBookmarks,
-    getRecipes: fetchProfileRecipesOwn
+    getRecipes: fetchProfileRecipesOwn,
+    clearRecipes: clearProfileRecipes
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeGrid);
