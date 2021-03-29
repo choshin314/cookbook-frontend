@@ -2,8 +2,13 @@ import { ajax } from '../../helpers/sendAjax'
 import {
     FETCH_PROFILE_RECIPES_START,
     FETCH_PROFILE_RECIPES_SUCCESS,
-    FETCH_PROFILE_RECIPES_FAIL
+    FETCH_PROFILE_RECIPES_FAIL,
+    CLEAR_PROFILE_RECIPES
 } from './types'
+
+export const clearProfileRecipes = () => ({
+    type: CLEAR_PROFILE_RECIPES
+})
 
 export function fetchProfileRecipesStart(category) {
     return {

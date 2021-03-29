@@ -1,7 +1,8 @@
 import {
     FETCH_PROFILE_RECIPES_START,
     FETCH_PROFILE_RECIPES_SUCCESS,
-    FETCH_PROFILE_RECIPES_FAIL 
+    FETCH_PROFILE_RECIPES_FAIL, 
+    CLEAR_PROFILE_RECIPES
 } from '../actions/types'
 
 const initProfileRecipes = {
@@ -20,6 +21,8 @@ const initProfileRecipes = {
 export default function profileRecipesReducer(profileRecipes=initProfileRecipes, action) {
     const payload = action.payload;
     switch(action.type) {
+        case CLEAR_PROFILE_RECIPES:
+            return initProfileRecipes;
         case FETCH_PROFILE_RECIPES_START:
             return {
                 ...profileRecipes,
