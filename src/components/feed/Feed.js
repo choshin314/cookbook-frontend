@@ -9,8 +9,10 @@ function Feed({ feedType, feed, fetchInitial, fetchOlder, fetchNew, showNew }) {
     const showNewerRecipes = () => showNew(feedType)
 
     useEffect(() => {
-        fetchInitial(feedType)
-    }, [ feedType, fetchInitial ])
+        if (recipes.length === 0) {
+            fetchInitial(feedType)
+        } else fetchNew(feedType)
+    }, [ feedType, fetchInitial, fetchNew ])
 
     useEffect(() => {
         const checkStuff = setInterval(() => {
