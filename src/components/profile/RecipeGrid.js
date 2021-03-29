@@ -23,9 +23,9 @@ function RecipeGrid({recipes, bookmarks, getBookmarks, getRecipes, clearRecipes}
     }, [getRecipes, clearRecipes, username])
 
     useEffect(() => {
-        if(recipeView !== BOOKMARKS) return;
+        if(recipeView !== BOOKMARKS || bookmarks.recipes.length > 0) return;
         getBookmarks(username);
-    }, [recipeView, getBookmarks, username])
+    }, [recipeView, bookmarks.recipes.length, getBookmarks, username])
     
     return (
         <section>
