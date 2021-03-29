@@ -8,6 +8,7 @@ import {
 } from './types'
 import { ajax } from '../../helpers/sendAjax'
 import { setFlash } from './flashActions'
+import { logoutUser } from './authActions'
 
 export const resetFeeds = () => ({ type: RESET_FEEDS })
 export const fetchFeedStart = () => ({ type: FETCH_FEED_START })
@@ -29,6 +30,7 @@ export function fetchFeedFirst(feedName) {
         let oldestTime = getState().feeds[feedName].oldestTime;
         const result = await ajax.get(`/recipes/feed/${feedName}?older=${oldestTime || new Date().toISOString()}`);
         if (result.error) {
+            if(result.status === 401) return dispatch(logoutUser("Invalid token, please log back in"))
             dispatch(fetchFeedFail(result.error))
             dispatch(setFlash('error', 'Could not retrieve feed'))
         } else {
