@@ -31,17 +31,35 @@ export const fetchProfileFail = (errorMsg) => ({
 
 export const clearProfile = () => ({ type: CLEAR_PROFILE })
 
-export const fetchProfile = (username) => {
+export const fetchProfile = (username, userId, replaceHistory) => {
     return async (dispatch, getState) => {
         dispatch(fetchProfileStart());
-        const { data:userData, error:userErr } = await ajax.get(`/users/${username}`);
-        const { data:statsData, error:statsErr } = await ajax.get(`/users/${username}/stats`);
-        if (userErr || statsErr) {
+        const { data:userData, error:userErr, status:userStatus } = await ajax.get(`/users/${username}`);
+        const { data:statsData, error:statsErr, status:statsStatus } = await ajax.get(`/users/${username}/stats`);
+        if (userData && statsData) {
+            dispatch(fetchProfileSuccess({ user: userData, stats: statsData }))
+        } else if (userStatus === 404 && userId) { //retry with userId in case username was stale
+            const { 
+                data:userData2, error:userErr2, status:userStatus2 
+            } = await ajax.get(`/users/${userId}?by=id`);
+            const { 
+                data:statsData2, error:statsErr2, status:statsStatus2 
+            } = await ajax.get(`/users/${userId}/stats?by=id`);
+            if (userData2 && statsData2) {
+                dispatch(fetchProfileSuccess({ user: userData2, stats: statsData2 }))
+                replaceHistory(`/profile/view/${userData2.username}`)
+            } else {
+                dispatch(setFlash('error', 'Could not find the requested profile'))
+                // dispatch(setRedirect('/'))
+                replaceHistory('/')
+                return dispatch(fetchProfileFail('Could not retrieve profile info'));
+            }
+        } else {
             dispatch(setFlash('error', 'Could not find the requested profile'))
-            dispatch(setRedirect('/'))
+            // dispatch(setRedirect('/'))
+            replaceHistory('/')
             return dispatch(fetchProfileFail('Could not retrieve profile info'));
-        }
-        dispatch(fetchProfileSuccess({ user: userData, stats: statsData }))
+        } 
     }
 }
 

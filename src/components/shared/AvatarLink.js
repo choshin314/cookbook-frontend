@@ -6,9 +6,13 @@ import { transformImg } from '../../helpers';
 
 function AvatarLink({user, imgSize="50px", showCreatedBy, showNames}) {
     const parsedSize = parseInt(imgSize) + 10;
+    const location = {
+        pathname: `/profile/view/${user.username}`,
+        state: { userId: user.id }
+    }
     return user ? (
         <AuthorDiv>
-            <Link to={`/profile/view/${user.username}`}>
+            <Link to={location}>
                 <ImgDiv size={imgSize || '50px'}>
                     <img 
                         src={transformImg(user.profilePic, `c_fit,h_${parsedSize},w_${parsedSize}`) || genericAvatar}
@@ -16,8 +20,8 @@ function AvatarLink({user, imgSize="50px", showCreatedBy, showNames}) {
                     />
                 </ImgDiv>
             </Link>
-            {showCreatedBy && <NameLink to={`/profile/view/${user.username}`}>by {user.firstName} {user.lastName}</NameLink>}
-            {showNames && <NameLink to={`/profile/view/${user.username}`}>
+            {showCreatedBy && <NameLink to={location}>by {user.firstName} {user.lastName}</NameLink>}
+            {showNames && <NameLink to={location}>
                 <UsernameSpan>{user.username}</UsernameSpan>
                 <NameSpan>{user.firstName} {user.lastName}</NameSpan>
             </NameLink>}

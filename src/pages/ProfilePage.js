@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams, useRouteMatch, Route } from 'react-router-dom'
+import { useParams, useHistory, useLocation, useRouteMatch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { fetchProfile, clearProfile } from '../redux/actions/profileActions'
@@ -12,11 +12,23 @@ function ProfilePage({ profile, authedUser, dispatchFetchProfile, dispatchClearP
     const { username } = useParams();
     const { user : profileUser, stats, loading, error } = profile;
     const match = useRouteMatch()
+    const location = useLocation()
+    const history = useHistory();
+    console.log(history)
+    console.log(location)
 
     useEffect(() => {
-        dispatchFetchProfile(username);
+        if (location.state && location.state.userId) {
+            dispatchFetchProfile(username, location.state.userId, history.replace)
+        } else dispatchFetchProfile(username, null, history.replace)
         return () => dispatchClearProfile()
-    }, [username, dispatchFetchProfile, dispatchClearProfile ])
+    }, [
+        username, 
+        location.state,
+        history.replace,
+        dispatchFetchProfile, 
+        dispatchClearProfile 
+    ])
     
     return (
         <Main>
