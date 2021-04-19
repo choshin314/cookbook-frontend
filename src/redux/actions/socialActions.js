@@ -19,10 +19,12 @@ export const fetchSocialStart = (category) => ({
     payload: category 
 });
 
-export const fetchSocialFail = (category, error) => ({ 
-    type: FETCH_SOCIAL_FAIL, 
-    payload: { category, error }
-});
+export const fetchSocialFail = (category, error) => {
+    return (dispatch) => {
+        dispatch(setFlash('error', error))
+        dispatch({ type: FETCH_SOCIAL_FAIL, payload: { category, error } })
+    }
+};
 
 export const fetchSocialSuccess = (category, dataName, data) => ({ 
     type: FETCH_SOCIAL_SUCCESS, 
@@ -48,16 +50,18 @@ export function addSocial(category, dataName, id) {
             dispatch(setFlash('error', 'Login required'));
             dispatch(setRedirect('/account/login'));
         }
-        if (data) dispatch(addSocialSuccess(category, dataName, data ));
-        //if successful, backend will send back the newly added recipeId(bookmarks / likes) 
-        //or userId(following) in format { id: id }
-        const profileUser = getState().profile.user;
-        const currentUser = getState().auth.user;
-        if (profileUser && category === "following") {
-            if (profileUser.id === data.id || (currentUser && currentUser.id === profileUser.id)) {
-                dispatch(fetchProfileStats(profileUser.username))
-            }
-        } 
+        if (data) {
+            dispatch(addSocialSuccess(category, dataName, data ));
+            //if successful, backend will send back the newly added recipeId(bookmarks / likes) 
+            //or userId(following) in format { id: id }
+            const profileUser = getState().profile.user;
+            const currentUser = getState().auth.user;
+            if (profileUser && category === "following") {
+                if (profileUser.id === data.id || (currentUser && currentUser.id === profileUser.id)) {
+                    dispatch(fetchProfileStats(profileUser.username))
+                }
+            } 
+        }
         //if the profile of the person being followed/unfollowed is currently being viewed, OR
         //if the current user is viewing their own profile when adding/removing a follow,
         //fetch fresh 'profile stats' data
