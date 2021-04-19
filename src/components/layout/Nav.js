@@ -1,33 +1,35 @@
 import {connect} from 'react-redux'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserCircle, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons'
 
+import NavLink from './NavLink'
 import {logoutUser} from '../../redux/actions/authActions'
 import {media} from '../commonStyles'
+import Notification from '../notifications/Notification'
 
 function Nav({logout, user}) {
     return (
         <Navbar>
             <ul>
-                <NavItem
+                <NavLink
                     to="/"
                     label="Home Feed"
                     icon={faHome}
                 />
-                <NavItem
+                <NavLink
                     to="/recipes/create"
                     label="Create Recipe"
                     icon={faPlusSquare}
                 />
-                <NavItem
+                <NavLink
                     to="/profile/me"
                     label="Profile"
                     icon={faUserCircle}
                 />
-                {!user && (<NavItem
+                <Notification />
+                {!user && (<NavLink
                     to="/account/login"
                     label="Sign In"
                     icon={faSignInAlt}
@@ -44,15 +46,7 @@ const mapStateToProps = global => ({ user: global.auth.user })
 const mapDispatchToProps = { logout: logoutUser }
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);
 
-function NavItem({to, label, icon}) {
-    return (
-        <ListItem>
-            <Link to={to} aria-label={`Nav link to ${label}`} title={label}>
-                <FontAwesomeIcon icon={icon} />
-            </Link>
-        </ListItem>
-    )
-}
+
 
 const Navbar = styled.nav`
     flex: auto;
@@ -71,22 +65,8 @@ const Navbar = styled.nav`
     }
 `
 
-const ListItem = styled.li`
-    padding: 0 1rem;
-    a {
-        font-size: 1.15rem;
-        color: var(--teal);
-        @media(min-width: 320px) {
-            font-size: 1.25rem;
-        }
-        @media(min-width: ${media.small}) {
-            font-size: 1.5rem;
-        }
-    }
-`
-
 const AuthBtn = styled.button`
-    padding: 0 1rem;
+    padding: 0 .5rem;
     background: transparent;
     border: none;
     color: var(--teal);
@@ -97,5 +77,6 @@ const AuthBtn = styled.button`
     }
     @media(min-width: ${media.small}) {
         font-size: 1.5rem;
+        padding: 0 1rem;
     }
 `

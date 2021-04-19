@@ -28,3 +28,31 @@ export const transformImg = (originalURL, transformation) => {
     split[6] = transformation;
     return split.join('/')
 }
+
+export function formatDate(date) {
+    let diff = new Date() - date;
+    let diffSecs = Math.floor(diff/1000);
+    if (diffSecs < 60) return "just now";
+
+    let diffMins = Math.floor(diffSecs/60);
+    if (diffMins < 60) return `${diffMins} minutes ago`;
+    
+    let diffHours = Math.floor(diffMins/60);
+    if (diffHours <= 4) return `${diffHours} hours ago`;
+
+    date = date.toDateString().split(' '); //e.g. ['Thu', 'Jan', '01', '1970']
+
+    let day = (shortDay) => {
+        switch(shortDay) {
+            case "Mon": return "Monday,";
+            case "Tue": return "Tuesday,";
+            case "Wed": return "Wednesday,";
+            case "Thu": return "Thursday,";
+            case "Fri": return "Friday,";
+            case "Sat": return "Saturday,";
+            case "Sun": return "Sunday,";
+        }
+    }
+
+    return `${day(date[0])}, ${date[1]}. ${date[2]}`
+}
