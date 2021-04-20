@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { io } from 'socket.io-client'
 
 import { addNotification, fetchNotifications, checkNotifications } from '../../redux/actions/notificationsActions'
+import { setFlash } from '../../redux/actions/flashActions'
 import NotificationNavBtn from "./NotificationNavBtn"
 import NotificationList from './NotificationList'
 
@@ -14,16 +15,22 @@ function Notification(props) {
         notifications, 
         dispatchAddNotification, 
         dispatchFetchNotifications,
-        dispatchMarkChecked 
+        dispatchMarkChecked, 
+        dispatchSetFlash 
     } = props;
     const { notificationList, loading, uncheckedCount } = notifications;
     const [ show, setShow ] = useState(false);
 
     const toggleNotifications = () => {
-        setShow(prev => {
-            if (prev) dispatchMarkChecked();
-            return !prev
-        });
+        if (auth.user) {
+            setShow(prev => {
+                if (prev) dispatchMarkChecked();
+                return !prev
+            });
+        } else {
+            dispatchSetFlash('info', 'Login required for notifications')
+        }
+        
     }
 
     useEffect(() => {
@@ -61,6 +68,7 @@ const mapState = state => ({ auth: state.auth, notifications: state.notification
 const mapDispatch = { 
     dispatchAddNotification: addNotification,
     dispatchFetchNotifications: fetchNotifications,
-    dispatchMarkChecked: checkNotifications
+    dispatchMarkChecked: checkNotifications,
+    dispatchSetFlash: setFlash
 };
 export default connect(mapState, mapDispatch)(Notification)

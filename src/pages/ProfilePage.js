@@ -14,8 +14,6 @@ function ProfilePage({ profile, authedUser, dispatchFetchProfile, dispatchClearP
     const match = useRouteMatch()
     const location = useLocation()
     const history = useHistory();
-    console.log(history)
-    console.log(location)
 
     useEffect(() => {
         if (location.state && location.state.userId) {

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group'
 
 import NotificationItem from './NotificationItem'
+import EmptyItem from './EmptyItem'
 import { media, StyledOL } from '../commonStyles'
 
 function NotificationList({ notifications, show, toggle }) {
@@ -19,6 +20,7 @@ function NotificationList({ notifications, show, toggle }) {
                     {notifications.map(n => (
                         <NotificationItem key={n.id} notification={n} />
                     ))}
+                    {!notifications.length && <EmptyItem />}
                 </OL>
                 <Backdrop onClick={toggle}></Backdrop>
             </Container>

@@ -1,20 +1,13 @@
-import { useEffect } from 'react'
-import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { Main } from '../components/commonStyles'
 import FeedNav from '../components/feed/FeedNav'
 import Feed from '../components/feed/Feed'
-import { setFlash } from '../redux/actions/flashActions'
 import HelmetHead from '../components/shared/HelmetHead'
 
-function Home({user, dispatchSetFlash}) {
-    const { pathname } = useLocation();
-    useEffect(() => {
-        if (!user && pathname === '/feeds/home') {
-            dispatchSetFlash('info', 'Log in to see your friends\' recipes')
-        }
-    }, [pathname, user, dispatchSetFlash])
+function Home({user}) {
+    
     return (
         <Main >
             <HelmetHead title="Home" />
@@ -32,4 +25,4 @@ function Home({user, dispatchSetFlash}) {
     )
 }
 const mapState = state => ({ user: state.auth.user })
-export default connect(mapState, { dispatchSetFlash: setFlash })(Home);
+export default connect(mapState)(Home);
