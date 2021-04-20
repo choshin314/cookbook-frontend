@@ -10,6 +10,7 @@ import redirectReducer from './reducers/redirectReducer'
 import feedsReducer from './reducers/feedsReducer'
 import socialReducer from './reducers/socialReducer'
 import searchReducer from './reducers/searchReducer'
+import notificationsReducer from './reducers/notificationsReducer'
 
 const appReducer = combineReducers({
     auth: authReducer,
@@ -19,7 +20,8 @@ const appReducer = combineReducers({
     flash: flashReducer,
     redirect: redirectReducer,
     social: socialReducer,
-    search: searchReducer
+    search: searchReducer,
+    notifications: notificationsReducer
 })
 
 const rootReducer = (state, action) => {

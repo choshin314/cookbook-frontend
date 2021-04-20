@@ -1,26 +1,60 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { io } from 'socket.io-client'
 
-import NotificationNavBtn from "./NotificationNavBtn";
-import NotificationList from './NotificationList';
+import { addNotification, fetchNotifications, checkNotifications } from '../../redux/actions/notificationsActions'
+import NotificationNavBtn from "./NotificationNavBtn"
+import NotificationList from './NotificationList'
 
-function Notification() {
+const SERVER_URL = process.env.REACT_APP_BACKEND;
+
+function Notification(props) {
+    const { 
+        auth, 
+        notifications, 
+        dispatchAddNotification, 
+        dispatchFetchNotifications,
+        dispatchMarkChecked 
+    } = props;
     const [ show, setShow ] = useState(false);
-    const [ count, setCount ] = useState(2);
+    const { notificationList, loading, uncheckedCount } = notifications;
     const showNotifications = () => {
         setShow(true);
-        setCount(0);
+        dispatchMarkChecked();
     }
+    useEffect(() => {
+        let socket;
+        if (auth.user) {
+            socket = io(SERVER_URL, { extraHeaders: { "user": auth.user.id }});
+            socket.on("newNotification", data => {
+                dispatchAddNotification(data);
+            })
+        }
+        if (!auth.user && socket) socket.disconnect();
+        return () => {
+            if (socket) socket.disconnect();
+        }
+    }, [auth.user, dispatchAddNotification])
 
     return (
         <>
-            <NotificationNavBtn onClick={showNotifications} count={count} />
-            <NotificationList show={show} notifications={mockNotifications} />
+            <NotificationNavBtn onClick={showNotifications} count={uncheckedCount} />
+            <NotificationList 
+                show={show} 
+                loading={loading}
+                notifications={notificationList} 
+            />
         </>
     )
 }
 
-export default Notification
+const mapState = state => ({ auth: state.auth, notifications: state.notifications })
+const mapDispatch = { 
+    dispatchAddNotification: addNotification,
+    dispatchFetchNotifications: fetchNotifications,
+    dispatchMarkChecked: checkNotifications
+};
+export default connect(mapState, mapDispatch)(Notification)
 
 
 const mockNotifications = [
