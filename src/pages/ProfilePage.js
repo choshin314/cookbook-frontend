@@ -10,7 +10,7 @@ import HelmetHead from '../components/shared/HelmetHead';
 
 function ProfilePage({ profile, authedUser, dispatchFetchProfile, dispatchClearProfile }) {
     const { username } = useParams();
-    const { user : profileUser, stats, loading, error } = profile;
+    const { user : profileUser  } = profile;
     const match = useRouteMatch()
     const location = useLocation()
     const history = useHistory();

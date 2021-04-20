@@ -34,32 +34,30 @@ export const clearProfile = () => ({ type: CLEAR_PROFILE })
 export const fetchProfile = (username, userId, replaceHistory) => {
     return async (dispatch, getState) => {
         dispatch(fetchProfileStart());
-        const { data:userData, error:userErr, status:userStatus } = await ajax.get(`/users/${username}`);
-        const { data:statsData, error:statsErr, status:statsStatus } = await ajax.get(`/users/${username}/stats`);
-        if (userData && statsData) {
-            dispatch(fetchProfileSuccess({ user: userData, stats: statsData }))
-        } else if (userStatus === 404 && userId) { //retry with userId in case username was stale
-            const { 
-                data:userData2, error:userErr2, status:userStatus2 
-            } = await ajax.get(`/users/${userId}?by=id`);
-            const { 
-                data:statsData2, error:statsErr2, status:statsStatus2 
-            } = await ajax.get(`/users/${userId}/stats?by=id`);
-            if (userData2 && statsData2) {
-                dispatch(fetchProfileSuccess({ user: userData2, stats: statsData2 }))
-                replaceHistory(`/profile/view/${userData2.username}`)
-            } else {
-                dispatch(setFlash('error', 'Could not find the requested profile'))
-                // dispatch(setRedirect('/'))
-                replaceHistory('/')
-                return dispatch(fetchProfileFail('Could not retrieve profile info'));
+        try {
+            const { data:userData, error:userErr, status:userStatus } = await ajax.get(`/users/${username}`);
+            const { data:statsData, error:statsErr, status:statsStatus } = await ajax.get(`/users/${username}/stats`);
+            if (userData && statsData) return dispatch(fetchProfileSuccess({ user: userData, stats: statsData }));
+            if ((userStatus === 404 && userId) || (statsStatus === 404 && userId)) {
+                //retry with userId in case username was stale
+                const { data:userData2, error:userErr2 } = await ajax.get(`/users/${userId}?by=id`);
+                const { data:statsData2, error:statsErr2 } = await ajax.get(`/users/${userId}/stats?by=id`);
+                if (userData2 && statsData2) {
+                    dispatch(fetchProfileSuccess({ user: userData2, stats: statsData2 }))
+                    replaceHistory(`/profile/view/${userData2.username}`)
+                } 
+                if (statsErr2) throw new Error(statsErr2) 
+                if (userErr2) throw new Error(userErr2)
+            } else if ((userErr && userStatus !== 404) || (statsErr && statsStatus !==404)) {
+                if (userErr) throw new Error(userErr)
+                if (statsErr) throw new Error(statsErr)
             }
-        } else {
+        } catch (err) {
+            console.log('error: ' + err.message);
             dispatch(setFlash('error', 'Could not find the requested profile'))
-            // dispatch(setRedirect('/'))
             replaceHistory('/')
-            return dispatch(fetchProfileFail('Could not retrieve profile info'));
-        } 
+            return dispatch(fetchProfileFail('Could not retrieve profile info'))
+        }
     }
 }
 
