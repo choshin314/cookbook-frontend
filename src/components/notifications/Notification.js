@@ -16,12 +16,20 @@ function Notification(props) {
         dispatchFetchNotifications,
         dispatchMarkChecked 
     } = props;
-    const [ show, setShow ] = useState(false);
     const { notificationList, loading, uncheckedCount } = notifications;
-    const showNotifications = () => {
-        setShow(true);
-        dispatchMarkChecked();
+    const [ show, setShow ] = useState(false);
+
+    const toggleNotifications = () => {
+        setShow(prev => {
+            if (prev) dispatchMarkChecked();
+            return !prev
+        });
     }
+
+    useEffect(() => {
+        if (auth.user) dispatchFetchNotifications();
+    }, [ auth.user, dispatchFetchNotifications ])
+
     useEffect(() => {
         let socket;
         if (auth.user) {
@@ -38,11 +46,12 @@ function Notification(props) {
 
     return (
         <>
-            <NotificationNavBtn onClick={showNotifications} count={uncheckedCount} />
+            <NotificationNavBtn onClick={toggleNotifications} count={uncheckedCount} />
             <NotificationList 
                 show={show} 
                 loading={loading}
                 notifications={notificationList} 
+                toggle={toggleNotifications}
             />
         </>
     )
@@ -55,62 +64,3 @@ const mapDispatch = {
     dispatchMarkChecked: checkNotifications
 };
 export default connect(mapState, mapDispatch)(Notification)
-
-
-const mockNotifications = [
-    {
-        id: 1,
-        followerId: 123,
-        followerUsername: 'abc123',
-        reviewId: null,
-        recipeId: null,
-        recipeTitle: null,
-        createdAt: new Date(),
-        checked: false,
-        type: "follow"
-    },
-    {
-        id: 2,
-        followerId: 133,
-        followerUsername: 'bbc123',
-        reviewId: null,
-        recipeId: null,
-        recipeTitle: null,
-        createdAt: new Date(),
-        checked: false,
-        type: "follow"
-    },
-    {
-        id: 3,
-        followerId: null,
-        followerUsername: null,
-        reviewId: 2,
-        recipeId: 22,
-        recipeTitle: 'pork',
-        createdAt: new Date(),
-        checked: false,
-        type: "review"
-    },
-    {
-        id: 4,
-        followerId: null,
-        followerUsername: null,
-        reviewId: 4,
-        recipeId: 30,
-        recipeTitle: 'beef',
-        createdAt: new Date(),
-        checked: false,
-        type: "review"
-    },
-    {
-        id: 5,
-        followerId: 50,
-        followerUsername: 'cababc123',
-        reviewId: null,
-        recipeId: null,
-        recipeTitle: null,
-        createdAt: new Date(),
-        checked: false,
-        type: "follow"
-    }
-]

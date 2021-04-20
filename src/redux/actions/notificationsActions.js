@@ -37,7 +37,7 @@ export function fetchNotifications() {
             } else if (error) {
                 return dispatch(fetchNotificationsFail(error))
             }
-            return fetchNotificationsSuccess(data);
+            return dispatch(fetchNotificationsSuccess(data));
         } catch (err) {
             return dispatch(fetchNotificationsFail(err.message))
         }

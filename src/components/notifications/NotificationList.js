@@ -4,7 +4,8 @@ import { CSSTransition } from 'react-transition-group'
 import NotificationItem from './NotificationItem'
 import { media, StyledOL } from '../commonStyles'
 
-function NotificationList({ notifications, show }) {
+function NotificationList({ notifications, show, toggle }) {
+
     return (
         <CSSTransition
             in={show}
@@ -14,17 +15,33 @@ function NotificationList({ notifications, show }) {
             unmountOnExit={true}
         >
             <Container>
-                <StyledOL>
+                <OL onClick={toggle}>
                     {notifications.map(n => (
                         <NotificationItem key={n.id} notification={n} />
                     ))}
-                </StyledOL>
+                </OL>
+                <Backdrop onClick={toggle}></Backdrop>
             </Container>
         </CSSTransition>
     )
 }
 
 export default NotificationList
+
+const Backdrop = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+`
+
+export const OL = styled(StyledOL)`
+    position: relative;
+    border-top: none;
+    z-index: 1;
+`
 
 const Container = styled.div`
     position: absolute;
@@ -35,8 +52,11 @@ const Container = styled.div`
     height: calc(90vh - 90px);
     background-color: white;
     border: var(--lite-med-grey) 2px solid;
-    border-top: none;
+    border-top: .75rem solid var(--lite-grey);
+    border-bottom: .75rem solid var(--lite-grey);
     border-radius: 5px;
+    overflow-y: auto;
+    padding-top: .5rem;
 
     @media(min-width: ${media.small}) {
         top: 58px;

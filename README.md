@@ -9,4 +9,6 @@ This is the frontend repo for Cookbook, a site/app for creating recipes and savi
 
 #### Notes
 
-An environmental variable REACT_APP_API_BASE is used throughout, which should be set to the backend api base url (e.g. 'https://domain.com/api')
+An environmental variable REACT_APP_API_BASE is used throughout, which should be set to the backend api base url (e.g. 'https://domain.com/api').  No trailing slash.
+
+Environmental variable REACT_APP_BACKEND is also needed for real-time stuff, which should be set to the backend base domain (e.g. 'https://domain.com').  No trailing slash.  

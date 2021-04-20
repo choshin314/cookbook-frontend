@@ -61,7 +61,7 @@ export default function reducer(state=initState, action) {
                 if (!newIds.has(note.id)) {
                     newNotifications.push(note);
                     newIds.add(note.id);
-                    newCount++;
+                    if(!note.checked) newCount++;
                 }
             }
             return {
