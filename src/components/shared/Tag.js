@@ -1,10 +1,11 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 function Tag({ deletable, deleteTag, children }) {
     return (
         <TagContainer deletable={deletable}>
             {deletable && <TagBtn type="button" onClick={deleteTag}>X</TagBtn>}
-            {children}
+            <TagContent to={`/search/recipes?q=${children}&filter=tags`}>{children}</TagContent>
         </TagContainer>
     )
 }
@@ -27,4 +28,9 @@ const TagBtn = styled.button`
     border-right: 1px solid var(--lite-med-grey);
     font-family: inherit;
     cursor: pointer;
+`
+
+const TagContent = styled(Link)`
+    cursor: pointer;
+    color: inherit;
 `
